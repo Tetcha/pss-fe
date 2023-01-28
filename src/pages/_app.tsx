@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import type { AppProps } from 'next/app';
 import { NextSeo } from 'next-seo';
-import { hello } from '@base/base-utils';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+import { GetCurrentUserWrapper } from 'src/components/wrappers';
 import { store } from 'src/store';
 
 import 'antd/dist/antd.css';
@@ -14,7 +14,6 @@ const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }: AppProps) {
 	useEffect(() => {
-		hello();
 		return () => {};
 	}, []);
 
@@ -42,7 +41,9 @@ export default function App({ Component, pageProps }: AppProps) {
 					}}
 				/>
 				<QueryClientProvider client={queryClient}>
-					<Component {...pageProps} />
+					<GetCurrentUserWrapper>
+						<Component {...pageProps} />
+					</GetCurrentUserWrapper>
 				</QueryClientProvider>
 			</Provider>
 		</>
