@@ -1,0 +1,8 @@
+node_modules/**
+dist/**
+.next/**
+.analyzer/**
+build/**
+firebase-messaging-sw.js
+prebuild.js
+ 
