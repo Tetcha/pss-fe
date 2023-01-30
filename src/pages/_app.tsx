@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import type { AppProps } from 'next/app';
 import { NextSeo } from 'next-seo';
+import 'swiper/css';
+import 'swiper/css/bundle';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { GetCurrentUserWrapper } from 'src/components/wrappers';
