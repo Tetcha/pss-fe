@@ -6,7 +6,6 @@ import 'swiper/css';
 import 'swiper/css/bundle';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { GetCurrentUserWrapper } from 'src/components/wrappers';
 import { store } from 'src/store';
 
 import 'antd/dist/antd.css';
@@ -43,9 +42,7 @@ export default function App({ Component, pageProps }: AppProps) {
 					}}
 				/>
 				<QueryClientProvider client={queryClient}>
-					<GetCurrentUserWrapper>
-						<Component {...pageProps} />
-					</GetCurrentUserWrapper>
+					<Component {...pageProps} />
 				</QueryClientProvider>
 			</Provider>
 		</>

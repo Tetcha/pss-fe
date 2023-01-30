@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import * as React from 'react';
 import { FunctionComponent } from 'react';
 import { useForm } from 'react-hook-form';
@@ -18,6 +19,8 @@ const LoginAdmin: FunctionComponent<LoginProps> = () => {
 	const methods = useForm<AuthLoginDto>({
 		defaultValues,
 	});
+
+	const router = useRouter();
 	const { mutateLogin, isSuccess } = useLoginAdmin();
 
 	const handleOnSubmit = async (data: AuthLoginDto) => {
@@ -26,7 +29,7 @@ const LoginAdmin: FunctionComponent<LoginProps> = () => {
 
 	React.useEffect(() => {
 		if (isSuccess) {
-			window.location.reload();
+			router.push('/admin');
 		}
 	}, [isSuccess]);
 
