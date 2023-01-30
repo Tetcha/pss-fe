@@ -1,4 +1,4 @@
-import { addDoctor } from './../../api/admin/doctor';
+import { addDoctor } from '../../api/doctor';
 import { useMutation } from '@tanstack/react-query';
 
 export const useAddDoctor = () => {

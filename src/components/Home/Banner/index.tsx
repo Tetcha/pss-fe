@@ -30,46 +30,48 @@ export const Banner: React.FunctionComponent<BannerProps> = () => {
 	const navigationPrevRef = React.useRef(null);
 	const navigationNextRef = React.useRef(null);
 	return (
-		<div className="w-full">
-			<Swiper
-				spaceBetween={30}
-				modules={[Navigation]}
-				// autoplay={{
-				// 	delay: 5000,
-				// 	disableOnInteraction: false,
-				// }}
-				navigation={{
-					prevEl: navigationPrevRef.current,
-					nextEl: navigationNextRef.current,
-				}}
-				className="mySwiper"
-			>
-				{sliderItem.map((item) => (
-					<SwiperSlide key={`slider-${item.id}}`} className="w-full h-full">
-						<LazyLoadImage
-							src={item.image}
-							alt={item.image}
-							className="w-full h-[600px] overflow-hidden"
-						/>
-					</SwiperSlide>
-				))}
-				<div
-					ref={navigationPrevRef}
-					className="absolute z-10 flex items-center justify-center transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-full opacity-75 cursor-pointer h-9 w-9 left-8 sm:left-20 top-1/2"
+		<section className="flex justify-center w-full">
+			<div className="w-full max-w-6xl">
+				<Swiper
+					spaceBetween={30}
+					modules={[Navigation]}
+					// autoplay={{
+					// 	delay: 5000,
+					// 	disableOnInteraction: false,
+					// }}
+					navigation={{
+						prevEl: navigationPrevRef.current,
+						nextEl: navigationNextRef.current,
+					}}
+					className="mySwiper"
 				>
-					<span>
-						<ChevronLeftIcon className="w-6 h-6 text-gray-3" />
-					</span>
-				</div>
-				<div
-					ref={navigationNextRef}
-					className="absolute z-10 flex items-center justify-center transform translate-x-1/2 -translate-y-1/2 bg-white rounded-full opacity-75 cursor-pointer right-8 sm:right-20 h-9 w-9 top-1/2"
-				>
-					<span className="">
-						<ChevronRightIcon className="w-6 h-6 text-gray-3" />
-					</span>
-				</div>
-			</Swiper>
-		</div>
+					{sliderItem.map((item) => (
+						<SwiperSlide key={`slider-${item.id}}`} className="w-full h-full">
+							<LazyLoadImage
+								src={item.image}
+								alt={item.image}
+								className="w-full h-[600px] object-cover overflow-hidden"
+							/>
+						</SwiperSlide>
+					))}
+					<div
+						ref={navigationPrevRef}
+						className="absolute z-10 flex items-center justify-center transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-full opacity-75 cursor-pointer h-9 w-9 left-8 sm:left-20 top-1/2"
+					>
+						<span>
+							<ChevronLeftIcon className="w-6 h-6 text-gray-3" />
+						</span>
+					</div>
+					<div
+						ref={navigationNextRef}
+						className="absolute z-10 flex items-center justify-center transform translate-x-1/2 -translate-y-1/2 bg-white rounded-full opacity-75 cursor-pointer right-8 sm:right-20 h-9 w-9 top-1/2"
+					>
+						<span className="">
+							<ChevronRightIcon className="w-6 h-6 text-gray-3" />
+						</span>
+					</div>
+				</Swiper>
+			</div>
+		</section>
 	);
 };
