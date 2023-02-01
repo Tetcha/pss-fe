@@ -11,39 +11,63 @@ import { apiActions } from 'src/store/api';
 
 import { auth } from '../../../config/firebase';
 import { authLogin } from './action';
+// import { authLogin } from './action';
 import { AuthLoginDto } from './interface';
+// import { useLogin } from 'src/hooks/auth';
+
 const defaultValues: AuthLoginDto = {
-	password: '',
 	email: '',
+	accessToken: '',
+	displayName: '',
 };
 
 interface LoginProps {}
-
+const postAccessToken = async (data: AuthLoginDto) => {
+	const res = await authLogin(data);
+	return res;
+};
 const Login: FunctionComponent<LoginProps> = () => {
 	const methods = useForm<AuthLoginDto>({
 		defaultValues,
 	});
+
+	// const { mutateLogin, isSuccess } = useLogin();
+
+	// const handleOnSubmit = async (data: AuthLoginDto) => {
+	// 	mutateLogin(data);
+	// };
 
 	React.useEffect(() => {
 		store.dispatch(apiActions.resetState());
 		return () => {};
 	}, []);
 
-	const handleOnSubmit = async (data: AuthLoginDto) => {
-		const res = await authLogin(data);
-		// if (res) window.location.reload();
-		if (res) console.log('data', data);
-		// router.push(routes.homeUrl);
-	};
-
 	const googleAuth = new GoogleAuthProvider();
+	googleAuth.addScope('https://www.googleapis.com/auth/user.birthday.read');
+	// const [postToken, { status, data, error }] = useMutation(postAccessToken);
+
 	const handleGoogleLogin = async () => {
-		try {
-			const res = await signInWithPopup(auth, googleAuth);
-			console.log('respond', res);
-		} catch (error) {
-			console.log('error', error);
-		}
+		const res = await signInWithPopup(auth, googleAuth);
+		console.log('res', res.user);
+		res.user.getIdToken().then(async (token) => {
+			// console.log('token', token);
+			try {
+				const response = await fetch(
+					`https://graph.facebook.com/v9.0/me?fields=id,name,email&access_token=${token}`,
+				);
+				const data = await response.json();
+
+				const userId = data.id;
+				const name = data.name;
+				const email = data.email;
+
+				console.log('User ID:', userId);
+				console.log('Name:', name);
+				console.log('Email:', email);
+			} catch (error) {
+				console.error(error);
+			}
+		});
 	};
 
 	const facebookAuth = new FacebookAuthProvider();
@@ -59,7 +83,7 @@ const Login: FunctionComponent<LoginProps> = () => {
 			<div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
 				<div className="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
 					<FormWrapper methods={methods}>
-						<form onSubmit={methods.handleSubmit(handleOnSubmit)} className="space-y-5">
+						<form onSubmit={methods.handleSubmit(() => {})} className="space-y-5">
 							<TextField commonField={{ label: 'Email Address', name: 'email' }} type="email" />
 							<TextField commonField={{ label: 'Password', name: 'password' }} type="password" />
 							<FormErrorMessage />
