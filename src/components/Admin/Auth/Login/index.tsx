@@ -6,9 +6,9 @@ import { useRouter } from 'next/router';
 import { FormErrorMessage, FormWrapper, TextField } from 'src/components/Input';
 import { useLoginAdmin } from 'src/hooks/admin';
 
-import { AuthLoginDto } from './interface';
+import { LoginPayload } from 'src/interface/auth';
 
-const defaultValues: AuthLoginDto = {
+const defaultValues: LoginPayload = {
 	password: '',
 	email: '',
 };
@@ -16,14 +16,14 @@ const defaultValues: AuthLoginDto = {
 interface LoginAdminProps {}
 
 const LoginAdmin: FunctionComponent<LoginAdminProps> = () => {
-	const methods = useForm<AuthLoginDto>({
+	const methods = useForm<LoginPayload>({
 		defaultValues,
 	});
 
 	const router = useRouter();
 	const { mutateLogin, isSuccess } = useLoginAdmin();
 
-	const handleOnSubmit = async (data: AuthLoginDto) => {
+	const handleOnSubmit = async (data: LoginPayload) => {
 		mutateLogin(data);
 	};
 

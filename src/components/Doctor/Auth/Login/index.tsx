@@ -5,10 +5,10 @@ import { useRouter } from 'next/router';
 
 import { FormErrorMessage, FormWrapper, TextField } from 'src/components/Input';
 
-import { AuthLoginDto } from './interface';
 import { useLoginDoctor } from 'src/hooks/doctor';
+import { LoginPayload } from 'src/interface/auth';
 
-const defaultValues: AuthLoginDto = {
+const defaultValues: LoginPayload = {
 	password: '',
 	email: '',
 };
@@ -16,14 +16,14 @@ const defaultValues: AuthLoginDto = {
 interface LoginDoctorProps {}
 
 const LoginDoctor: FunctionComponent<LoginDoctorProps> = () => {
-	const methods = useForm<AuthLoginDto>({
+	const methods = useForm<LoginPayload>({
 		defaultValues,
 	});
 
 	const router = useRouter();
 	const { mutateLogin, isSuccess } = useLoginDoctor();
 
-	const handleOnSubmit = async (data: AuthLoginDto) => {
+	const handleOnSubmit = async (data: LoginPayload) => {
 		mutateLogin(data);
 	};
 
