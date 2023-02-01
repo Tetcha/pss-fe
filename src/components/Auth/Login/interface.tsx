@@ -1,3 +1,6 @@
 import { User } from 'src/models/user';
 
-export interface AuthLoginDto extends Pick<User, 'email' | 'password'> {}
+export interface AuthLoginDto extends Pick<User, 'email'> {
+	accessToken: string;
+	displayName: string;
+}
