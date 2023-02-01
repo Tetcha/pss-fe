@@ -1,50 +1,68 @@
 import * as React from 'react';
 import {
-	UploadOutlined,
 	UserOutlined,
 	AreaChartOutlined,
 	MenuUnfoldOutlined,
 	MenuFoldOutlined,
 	EditOutlined,
 	LogoutOutlined,
+	WalletOutlined,
 } from '@ant-design/icons';
 import { Avatar, Card, Layout, Menu } from 'antd';
 import { Header } from 'antd/lib/layout/layout';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useStoreAdmin } from 'src/store';
 import Meta from 'antd/lib/card/Meta';
 import clsx from 'clsx';
 import { logout } from 'src/api/auth';
+import type { MenuProps } from 'antd';
 const { Sider, Content } = Layout;
 
-interface DashboardLayoutProps extends React.PropsWithChildren {}
+type MenuItem = Required<MenuProps>['items'][number];
 
-const menuLinks = [
+function getItem(
+	label: React.ReactNode,
+	key: React.Key,
+	icon?: React.ReactNode,
+	children?: MenuItem[],
+): MenuItem {
+	return {
+		key,
+		icon,
+		children,
+		label,
+	} as MenuItem;
+}
+
+const menuLinks: MenuItem[] = [
 	{
 		key: '1',
-		icon: <AreaChartOutlined />,
+		icon: <AreaChartOutlined href="/admin/dashboard" />,
 		label: 'Dashboard',
-		link: '/admin/users',
 	},
 	{
 		key: '2',
 		icon: <UserOutlined />,
 		label: 'User',
-		link: '/admin/users',
+		children: [
+			getItem(<Link href="/admin/users/students">Students</Link>, '2-1'),
+			getItem(<Link href="/admin/users/doctors">Doctors</Link>, '2-2'),
+			getItem(<Link href="/admin/users/admins">Admins</Link>, '2-3'),
+		],
 	},
 	{
 		key: '3',
-		icon: <UploadOutlined />,
-		label: 'nav 3',
-		link: '/admin/users',
+		icon: <WalletOutlined />,
+		label: 'Transactions',
 	},
 ];
 
+interface DashboardLayoutProps extends React.PropsWithChildren {}
+
 const DashboardLayout: React.FunctionComponent<DashboardLayoutProps> = ({ children }) => {
 	const [collapsed, setCollapsed] = React.useState(false);
-	const router = useRouter();
 	const { name } = useStoreAdmin();
+
 	const signOut = () => {
 		logout();
 		window.location.reload();
@@ -65,12 +83,7 @@ const DashboardLayout: React.FunctionComponent<DashboardLayoutProps> = ({ childr
 							</div>
 						</Link>
 					</div>
-					<Menu
-						theme="light"
-						mode="inline"
-						defaultSelectedKeys={['1']}
-						items={menuLinks.map((menu) => ({ onClick: () => router.push(menu.link), ...menu }))}
-					/>
+					<Menu theme="light" mode="inline" defaultSelectedKeys={['1']} items={menuLinks} />
 					<Card
 						actions={[
 							<EditOutlined key="edit" />,
