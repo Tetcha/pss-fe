@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { useRouter } from 'next/router';
 
-import { useStoreAdmin } from 'src/store';
 import { ROUTES_URL } from 'src/constants/routes';
+import { useStoreAdmin } from 'src/store';
 
 interface RouterUnAuthAdminProtectionWrapperProps extends React.PropsWithChildren {}
 

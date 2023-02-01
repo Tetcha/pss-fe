@@ -1,15 +1,15 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { Admin } from 'src/models/admin';
+import { Doctor } from 'src/models/doctor';
 
 import { http } from '../../config/axios';
 
-export const adminThunk = {
-	getCurrentAdmin: createAsyncThunk<Admin, void>(
-		'getCurrentAdmin',
+export const doctorThunk = {
+	getCurrentDoctor: createAsyncThunk<Doctor, void>(
+		'getCurrentDoctor',
 		async (_, { rejectWithValue }) => {
 			try {
-				const res = await http.get<Admin>('/admin/me');
+				const res = await http.get<Doctor>('/doctor/me');
 				return res.data;
 			} catch (error) {
 				return rejectWithValue(null);

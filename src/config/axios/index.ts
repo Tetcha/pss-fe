@@ -1,10 +1,10 @@
 import axios, { AxiosError } from 'axios';
-import { constant } from 'src/constants/api/token';
+import Cookies from 'universal-cookie';
 
+import { constant } from 'src/constants/api/token';
 import { ENV_VARIABLES } from 'src/constants/env';
 import { store } from 'src/store';
 import { apiActions } from 'src/store/api';
-import Cookies from 'universal-cookie';
 
 const http = axios.create({
 	baseURL: ENV_VARIABLES.BASE_URL,

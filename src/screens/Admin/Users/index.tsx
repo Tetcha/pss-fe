@@ -1,8 +1,9 @@
 import * as React from 'react';
-import DashboardLayout from 'src/components/Admin/Layout/DashboardLayout';
+import Link from 'next/link';
 import { Space, Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import Link from 'next/link';
+
+import DashboardLayout from 'src/components/Admin/Layout/DashboardLayout';
 import { ROUTES_URL } from 'src/constants/routes';
 
 interface UsersProps {}
@@ -55,7 +56,7 @@ const columns: ColumnsType<DataType> = [
 	{
 		title: 'Action',
 		key: 'action',
-		render: (_, record) => (
+		render: () => (
 			<Space size="middle">
 				<Link href={'#'}>Edit</Link>
 				<Link href={'#'}>Delete</Link>
@@ -96,7 +97,7 @@ const Users: React.FunctionComponent<UsersProps> = () => {
 			<div className="py-4 md:flex md:items-center md:justify-between">
 				<div className="flex-1 min-w-0">
 					<h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
-						Back End Developer
+						Users
 					</h2>
 				</div>
 				<div className="flex mt-4 md:mt-0 md:ml-4">

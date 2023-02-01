@@ -1,12 +1,11 @@
 import * as React from 'react';
 import Link from 'next/link';
 import {
-	AreaChartOutlined,
+	CalendarOutlined,
 	EditOutlined,
 	LogoutOutlined,
 	MenuFoldOutlined,
 	MenuUnfoldOutlined,
-	UserOutlined,
 	WalletOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
@@ -16,53 +15,40 @@ import { Header } from 'antd/lib/layout/layout';
 import clsx from 'clsx';
 
 import { logout } from 'src/api/auth';
-import { useStoreAdmin } from 'src/store';
+import { useStoreDoctor } from 'src/store';
 const { Sider, Content } = Layout;
 
 type MenuItem = Required<MenuProps>['items'][number];
 
-function getItem(
-	label: React.ReactNode,
-	key: React.Key,
-	icon?: React.ReactNode,
-	children?: MenuItem[],
-): MenuItem {
-	return {
-		key,
-		icon,
-		children,
-		label,
-	} as MenuItem;
-}
-
 const menuLinks: MenuItem[] = [
 	{
 		key: '1',
-		icon: <AreaChartOutlined href="/admin/dashboard" />,
-		label: 'Dashboard',
+		icon: (
+			<Link href="/doctor/calendar">
+				<CalendarOutlined />
+			</Link>
+		),
+		label: 'Calendar',
 	},
+
 	{
 		key: '2',
-		icon: <UserOutlined />,
-		label: 'User',
-		children: [
-			getItem(<Link href="/admin/users/students">Students</Link>, '2-1'),
-			getItem(<Link href="/admin/users/doctors">Doctors</Link>, '2-2'),
-			getItem(<Link href="/admin/users/admins">Admins</Link>, '2-3'),
-		],
-	},
-	{
-		key: '3',
-		icon: <WalletOutlined />,
-		label: 'Transactions',
+		icon: (
+			<Link href="/doctor/transaction">
+				<WalletOutlined />
+			</Link>
+		),
+		label: 'Transaction',
 	},
 ];
 
-interface DashboardLayoutProps extends React.PropsWithChildren {}
+interface DashboardDoctorLayoutProps extends React.PropsWithChildren {}
 
-const DashboardLayout: React.FunctionComponent<DashboardLayoutProps> = ({ children }) => {
+const DashboardDoctorLayout: React.FunctionComponent<DashboardDoctorLayoutProps> = ({
+	children,
+}) => {
 	const [collapsed, setCollapsed] = React.useState(false);
-	const { name } = useStoreAdmin();
+	const { name } = useStoreDoctor();
 
 	const signOut = () => {
 		logout();
@@ -130,4 +116,4 @@ const DashboardLayout: React.FunctionComponent<DashboardLayoutProps> = ({ childr
 	);
 };
 
-export default DashboardLayout;
+export default DashboardDoctorLayout;

@@ -1,7 +1,9 @@
-import { DatePicker, DatePickerProps } from 'antd';
 import * as React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
+import { DatePicker, DatePickerProps } from 'antd';
+
 import { CommonFieldProps } from 'src/interface/form';
+
 import CommonFieldWrapper from './CommonFieldWrapper';
 
 interface InputDatePickerProps {

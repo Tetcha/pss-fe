@@ -4,24 +4,24 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
 import { FormErrorMessage, FormWrapper, TextField } from 'src/components/Input';
-import { useLoginAdmin } from 'src/hooks/admin';
 
 import { AuthLoginDto } from './interface';
+import { useLoginDoctor } from 'src/hooks/doctor';
 
 const defaultValues: AuthLoginDto = {
 	password: '',
 	email: '',
 };
 
-interface LoginAdminProps {}
+interface LoginDoctorProps {}
 
-const LoginAdmin: FunctionComponent<LoginAdminProps> = () => {
+const LoginDoctor: FunctionComponent<LoginDoctorProps> = () => {
 	const methods = useForm<AuthLoginDto>({
 		defaultValues,
 	});
 
 	const router = useRouter();
-	const { mutateLogin, isSuccess } = useLoginAdmin();
+	const { mutateLogin, isSuccess } = useLoginDoctor();
 
 	const handleOnSubmit = async (data: AuthLoginDto) => {
 		mutateLogin(data);
@@ -29,14 +29,14 @@ const LoginAdmin: FunctionComponent<LoginAdminProps> = () => {
 
 	React.useEffect(() => {
 		if (isSuccess) {
-			router.push('/admin');
+			router.push('/doctor');
 		}
 	}, [isSuccess]);
 
 	return (
 		<div className="flex flex-col justify-center w-full min-h-full py-12 intro-y sm:px-6 lg:px-8">
 			<div className="sm:mx-auto sm:w-full sm:max-w-md">
-				<h2 className="text-3xl font-semibold text-center text-gray-900">Admin Login</h2>
+				<h2 className="text-3xl font-semibold text-center text-gray-900">Doctor Login</h2>
 			</div>
 			<div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
 				<div className="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
@@ -62,4 +62,4 @@ const LoginAdmin: FunctionComponent<LoginAdminProps> = () => {
 	);
 };
 
-export default LoginAdmin;
+export default LoginDoctor;

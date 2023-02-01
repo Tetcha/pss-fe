@@ -1,34 +1,38 @@
 import { createSlice } from '@reduxjs/toolkit';
 import Cookies from 'universal-cookie';
 
-import { Admin } from 'src/models/admin';
-
 import { constant } from '../../constants/api/token';
-import { adminThunk } from './thunks';
+import { doctorThunk } from './thunks';
+import { Doctor } from 'src/models/doctor';
+import { Gender } from 'src/interface/common';
 
-export interface AdminState extends Admin {
+export interface DoctorState extends Doctor {
 	isLogin: boolean;
 }
 
-const initialState: AdminState = {
+const initialState: DoctorState = {
 	id: '',
 	name: '',
 	email: '',
+	balance: 0,
+	birthday: '',
+	phone: '',
+	gender: Gender.MALE,
 	isLogin: false,
 };
 
 const reducer = createSlice({
-	name: 'admin',
+	name: 'doctor',
 	initialState,
 	reducers: {
 		resetState: () => ({ ...initialState }),
 		updateLogin: (state) => ({ ...state, isLogin: true }),
 	},
 	extraReducers: (builder) => {
-		builder.addCase(adminThunk.getCurrentAdmin.fulfilled, (state, { payload }) => {
+		builder.addCase(doctorThunk.getCurrentDoctor.fulfilled, (state, { payload }) => {
 			return { ...state, ...payload, isLogin: true };
 		});
-		builder.addCase(adminThunk.getCurrentAdmin.rejected, (state) => {
+		builder.addCase(doctorThunk.getCurrentDoctor.rejected, (state) => {
 			const cookies = new Cookies();
 			cookies.set(constant.TOKEN_COOKIE_KEY, '', { maxAge: -999 });
 
@@ -36,7 +40,7 @@ const reducer = createSlice({
 		});
 	},
 });
-export const adminActions = {
+export const doctorActions = {
 	...reducer.actions,
 };
-export const adminReducer = reducer.reducer;
+export const doctorReducer = reducer.reducer;
