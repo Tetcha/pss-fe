@@ -24,9 +24,13 @@ http.interceptors.request.use(function (req) {
 
 http.interceptors.response.use(
 	function (response) {
+		if (response?.data?.message) store.dispatch(apiActions.updateSuccessMessage(response.data));
 		return response;
 	},
 	function (error: AxiosError) {
+		if (error.response?.status) {
+			store.dispatch(apiActions.updateErrorDetails(error.response.data as any));
+		}
 		return Promise.reject(error.response);
 	},
 );

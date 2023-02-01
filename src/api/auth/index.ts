@@ -9,3 +9,7 @@ export const login = (data: LoginPayload) => {
 export const register = (data: RegisterPayload) => {
 	return http.post(API_URL.REGISTER, data);
 };
+
+export const logout = () => {
+	return http.post(API_URL.LOGOUT);
+};
