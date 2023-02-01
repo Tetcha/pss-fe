@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface ApiState {
-	isLoading: boolean;
+	isGlobalLoading: boolean;
+	isLocalLoading: boolean;
 	errorDetails: Record<string, string>;
 	isError: boolean;
 	message: string;
@@ -9,7 +10,8 @@ export interface ApiState {
 }
 
 const initialState: ApiState = {
-	isLoading: false,
+	isGlobalLoading: false,
+	isLocalLoading: false,
 	errorDetails: {},
 	isError: false,
 	message: '',
@@ -20,17 +22,22 @@ const reducer = createSlice({
 	name: 'api',
 	initialState,
 	reducers: {
-		initReq: (state) => ({ ...state, isLoading: true, isError: false }),
-		setLoading: (state, { payload }: PayloadAction<{ isLoading: boolean }>) => ({
+		initReq: (state) => ({ ...state, isError: false, isGlobalLoading: true }),
+		setGlobalLoading: (state, { payload }: PayloadAction<boolean>) => ({
 			...state,
-			isLoading: payload.isLoading,
+			isGlobalLoading: payload,
+		}),
+		setLocalLoading: (state, { payload }: PayloadAction<boolean>) => ({
+			...state,
+			isLocalLoading: payload,
 		}),
 		resetState: () => ({ ...initialState }),
 		updateErrorDetails: (state, { payload }: PayloadAction<Record<string, string>>) => {
 			const newState = { ...state };
-			if (payload?.errorMessage) newState.errorMessage = payload.errorMessage;
+			const { errorMessage, message, ...others } = payload;
+			if (payload?.errorMessage) newState.errorMessage = errorMessage;
 
-			newState.errorDetails = payload;
+			newState.errorDetails = others;
 			newState.isError = true;
 			return newState;
 		},
