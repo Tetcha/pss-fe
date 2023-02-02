@@ -10,7 +10,7 @@ import { store } from 'src/store';
 import { apiActions } from 'src/store/api';
 
 import { auth } from '../../../config/firebase';
-import { authLogin } from './action';
+// import { authLogin } from './action';
 // import { authLogin } from './action';
 import { AuthLoginDto } from './interface';
 // import { useLogin } from 'src/hooks/auth';
@@ -22,10 +22,10 @@ const defaultValues: AuthLoginDto = {
 };
 
 interface LoginProps {}
-const postAccessToken = async (data: AuthLoginDto) => {
-	const res = await authLogin(data);
-	return res;
-};
+// const postAccessToken = async (data: AuthLoginDto) => {
+// 	const res = await authLogin(data);
+// 	return res;
+// };
 const Login: FunctionComponent<LoginProps> = () => {
 	const methods = useForm<AuthLoginDto>({
 		defaultValues,
@@ -43,30 +43,13 @@ const Login: FunctionComponent<LoginProps> = () => {
 	}, []);
 
 	const googleAuth = new GoogleAuthProvider();
-	googleAuth.addScope('https://www.googleapis.com/auth/user.birthday.read');
 	// const [postToken, { status, data, error }] = useMutation(postAccessToken);
 
 	const handleGoogleLogin = async () => {
 		const res = await signInWithPopup(auth, googleAuth);
-		console.log('res', res.user);
-		res.user.getIdToken().then(async (token) => {
-			// console.log('token', token);
-			try {
-				const response = await fetch(
-					`https://graph.facebook.com/v9.0/me?fields=id,name,email&access_token=${token}`,
-				);
-				const data = await response.json();
-
-				const userId = data.id;
-				const name = data.name;
-				const email = data.email;
-
-				console.log('User ID:', userId);
-				console.log('Name:', name);
-				console.log('Email:', email);
-			} catch (error) {
-				console.error(error);
-			}
+		console.log('respond', res);
+		res.user.getIdToken().then((token) => {
+			console.log('token', token);
 		});
 	};
 
