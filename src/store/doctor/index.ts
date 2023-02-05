@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import Cookies from 'universal-cookie';
 
+import { Gender } from 'src/interface/common';
+import { Doctor } from 'src/models/doctor';
+
 import { constant } from '../../constants/api/token';
 import { doctorThunk } from './thunks';
-import { Doctor } from 'src/models/doctor';
-import { Gender } from 'src/interface/common';
 
 export interface DoctorState extends Doctor {
 	isLogin: boolean;

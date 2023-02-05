@@ -1,7 +1,7 @@
-import { doctorReducer, DoctorState } from './doctor/index';
 import { useSelector } from 'react-redux';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
+import { doctorReducer, DoctorState } from './doctor/index';
 import { adminReducer, AdminState } from './admin';
 import { apiReducer, ApiState } from './api';
 import { userReducer, UserState } from './user';

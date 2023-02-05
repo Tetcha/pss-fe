@@ -1,7 +1,4 @@
 import * as React from 'react';
-
-import DashboardDoctorLayout from 'src/components/Doctor/Layout/DashboardDoctorLayout';
-
 import type { BadgeProps } from 'antd';
 import { Badge, Calendar } from 'antd';
 import { Moment } from 'moment';
@@ -70,7 +67,7 @@ const DoctorCalendar: React.FunctionComponent<DoctorCalendarProps> = () => {
 	};
 
 	return (
-		<DashboardDoctorLayout>
+		<>
 			<div className="py-4 md:flex md:items-center md:justify-between">
 				<div className="flex-1 min-w-0">
 					<h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
@@ -88,8 +85,12 @@ const DoctorCalendar: React.FunctionComponent<DoctorCalendarProps> = () => {
 					{/* </Link> */}
 				</div>
 			</div>
-			<Calendar dateCellRender={dateCellRender} monthCellRender={monthCellRender} />
-		</DashboardDoctorLayout>
+			<Calendar
+				dateCellRender={dateCellRender}
+				monthCellRender={monthCellRender}
+				className="px-4"
+			/>
+		</>
 	);
 };
 

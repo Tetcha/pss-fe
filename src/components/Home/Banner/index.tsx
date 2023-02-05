@@ -30,7 +30,7 @@ export const Banner: React.FunctionComponent<BannerProps> = () => {
 	const navigationPrevRef = React.useRef(null);
 	const navigationNextRef = React.useRef(null);
 	return (
-		<section className="flex justify-center w-full">
+		<section className="flex justify-center w-full mt-[60px]">
 			<div className="w-full max-w-6xl">
 				<Swiper
 					spaceBetween={30}

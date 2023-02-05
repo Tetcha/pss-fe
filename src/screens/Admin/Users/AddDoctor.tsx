@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import moment from 'moment';
 
-import DashboardLayout from 'src/components/Admin/Layout/DashboardLayout';
 import { FormErrorMessage, FormWrapper, InputRadioGroup, TextField } from 'src/components/Input';
 import InputDatePicker from 'src/components/Input/InputDatePicker';
 import { ROUTES_URL } from 'src/constants/routes';
@@ -46,12 +45,12 @@ const AddDoctor: React.FunctionComponent<AddDoctorProps> = () => {
 	React.useEffect(() => {
 		if (isSuccess) {
 			methods.reset(defaultValues);
-			router.push(ROUTES_URL.USERS);
+			router.push(ROUTES_URL.USER_DOCTORS);
 		}
 	}, [isSuccess]);
 
 	return (
-		<DashboardLayout>
+		<>
 			<div className="flex flex-col justify-center flex-1 py-12 sm:px-6 lg:px-8 intro-y">
 				<div className="sm:mx-auto sm:w-full sm:max-w-md">
 					<h2 className="mt-0 text-3xl font-extrabold text-center text-gray-900">Add Doctor</h2>
@@ -83,7 +82,7 @@ const AddDoctor: React.FunctionComponent<AddDoctorProps> = () => {
 
 								<FormErrorMessage />
 								<div className="flex space-x-2">
-									<Link href={ROUTES_URL.USERS}>
+									<Link href={ROUTES_URL.USER_DOCTORS}>
 										<div className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm cursor-pointer hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
 											Cancel
 										</div>
@@ -100,7 +99,7 @@ const AddDoctor: React.FunctionComponent<AddDoctorProps> = () => {
 					</div>
 				</div>
 			</div>
-		</DashboardLayout>
+		</>
 	);
 };
 

@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { Space, Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 
-import DashboardLayout from 'src/components/Admin/Layout/DashboardLayout';
 import { ROUTES_URL } from 'src/constants/routes';
 
 interface UsersProps {}
@@ -93,7 +92,7 @@ const Users: React.FunctionComponent<UsersProps> = () => {
 	const [data, setData] = React.useState<DataType[]>(defaultData);
 
 	return (
-		<DashboardLayout>
+		<>
 			<div className="py-4 md:flex md:items-center md:justify-between">
 				<div className="flex-1 min-w-0">
 					<h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
@@ -112,7 +111,7 @@ const Users: React.FunctionComponent<UsersProps> = () => {
 				</div>
 			</div>
 			<Table columns={columns} dataSource={data} />
-		</DashboardLayout>
+		</>
 	);
 };
 

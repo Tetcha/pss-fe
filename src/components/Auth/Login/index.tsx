@@ -42,6 +42,7 @@ const Login: FunctionComponent<LoginProps> = () => {
 		const res = await signInWithPopup(auth, googleAuth);
 		console.log('respond', res);
 		res.user.getIdToken().then((token) => {
+			console.log('token', token);
 			const studentData: AuthLoginDto = {
 				accessToken: token,
 			};
