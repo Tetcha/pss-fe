@@ -10,7 +10,10 @@ import { store } from 'src/store';
 
 import 'antd/dist/antd.css';
 import '../styles/globals.css';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 import { DynamicLayout } from 'src/components/Layouts/DynamicLayout';
+import { Contexts } from 'src/contexts';
 
 const queryClient = new QueryClient();
 
@@ -43,9 +46,12 @@ export default function App({ Component, pageProps }: AppProps) {
 					}}
 				/>
 				<QueryClientProvider client={queryClient}>
-					<DynamicLayout>
-						<Component {...pageProps} />
-					</DynamicLayout>
+					<Contexts>
+						<DynamicLayout>
+							<Component {...pageProps} />
+						</DynamicLayout>
+						<ToastContainer />
+					</Contexts>
 				</QueryClientProvider>
 			</Provider>
 		</>
