@@ -2,7 +2,7 @@ import * as React from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Disclosure } from '@headlessui/react';
+import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 
 import { routes } from '../routes';
@@ -66,6 +66,82 @@ export const Navigation: React.FunctionComponent<NavigationProps> = () => {
 										<Bars3Icon className="block h-6 w-6" aria-hidden="true" />
 									)}
 								</Disclosure.Button>
+							</div>
+							<div className="flex items-center">
+								{/* <div className="hidden lg:ml-4 lg:flex lg:items-center">
+									{userState.id ? (
+										<Menu as="div" className="relative flex-shrink-0 ml-4">
+											<div>
+												<Menu.Button className="flex text-sm bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+													<img
+														className="w-8 h-8 rounded-full"
+														src={
+															userState.imageUrl
+																? userState.imageUrl
+																: '/asset/images/avatar/default-avatar.png'
+														}
+														alt="avatar"
+													/>
+												</Menu.Button>
+											</div>
+											<Transition
+												as={Fragment}
+												enter="transition ease-out duration-100"
+												enterFrom="transform opacity-0 scale-95"
+												enterTo="transform opacity-100 scale-100"
+												leave="transition ease-in duration-75"
+												leaveFrom="transform opacity-100 scale-100"
+												leaveTo="transform opacity-0 scale-95"
+											>
+												<Menu.Items className="absolute right-0 z-10 w-48 mt-2 overflow-hidden origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+													<div className="flex flex-col font-semibold text-white bg-blue-500 cursor-none">
+														<p className={'block px-4 py-2 text-sm  capitalize cursor-pointer '}>
+															Hello, {userState.name}
+														</p>
+													</div>
+													{COMMON_ACTION_LINK.map((item) => (
+														<Menu.Item key={item.label}>
+															{({ active }) => (
+																<Link href={item.link}>
+																	<a
+																		className={classNames(
+																			active ? 'bg-gray-100' : '',
+																			'block hover:bg-gray-100 cursor-pointer px-4 py-2 text-sm text-gray-700 capitalize',
+																		)}
+																	>
+																		{item.label}
+																	</a>
+																</Link>
+															)}
+														</Menu.Item>
+													))}
+													<Menu.Item>
+														{({ active }) => (
+															<div
+																onClick={() => _onLogout()}
+																className={classNames(
+																	active ? 'bg-gray-100' : '',
+																	'block hover:bg-gray-100 px-4 cursor-pointer py-2 text-sm text-gray-700',
+																)}
+															>
+																Sign out
+															</div>
+														)}
+													</Menu.Item>
+												</Menu.Items>
+											</Transition>
+										</Menu>
+									) : (
+										<Link href={routes.loginUrl} passHref>
+											<a
+												type="button"
+												className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+											>
+												Login
+											</a>
+										</Link>
+									)}
+								</div> */}
 							</div>
 						</div>
 					</div>
