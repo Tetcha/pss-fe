@@ -4,8 +4,8 @@ import { API_URL } from 'src/constants/api/url';
 
 // import { LoginPayload, RegisterPayload } from 'src/interface/auth';
 
-export const login = (data: AuthLoginDto) => {
-	return http.post(API_URL.LOGIN, data);
+export const loginApi = (data: AuthLoginDto) => {
+	return http.post<string>(API_URL.LOGIN, data);
 };
 
 export const logout = () => {

@@ -2,28 +2,19 @@ import * as React from 'react';
 import { useRouter } from 'next/router';
 
 import { routes } from 'src/components/routes';
-import { UserRole } from 'src/models/user';
 import { useStoreUser } from 'src/store';
 
-interface RouterProtectionWrapperProps extends React.PropsWithChildren {
-	acceptRoles: Array<UserRole>;
-}
+interface RouterProtectionWrapperProps extends React.PropsWithChildren {}
 
-export const RouterProtectionWrapper: React.FC<RouterProtectionWrapperProps> = ({
-	children,
-	acceptRoles,
-}) => {
+export const RouterProtectionWrapper: React.FC<RouterProtectionWrapperProps> = ({ children }) => {
 	const user = useStoreUser();
 	const router = useRouter();
 
 	React.useEffect(() => {
-		if (
-			user.isLogin &&
-			(!user.id || acceptRoles.findIndex((item) => user.role && item === user.role) === -1)
-		) {
+		if (user.isLogin && !user.id) {
 			router.push(routes.loginUrl);
 		}
-	}, [acceptRoles, user, router]);
+	}, [user, router]);
 
 	return <>{children}</>;
 };

@@ -9,41 +9,40 @@ import { useLogin } from 'src/hooks/auth';
 
 import { auth } from '../../../config/firebase';
 // import { authLogin } from './action';
-import { AuthLoginDto } from './interface';
+import { LoginPayload } from './interface';
 
-const defaultValues: AuthLoginDto = {
+const defaultValues: LoginPayload = {
 	accessToken: '',
 };
 
 interface LoginProps {}
 
 const Login: FunctionComponent<LoginProps> = () => {
-	const methods = useForm<AuthLoginDto>({
+	const methods = useForm<LoginPayload>({
 		defaultValues,
 	});
 
 	const router = useRouter();
 	const { mutateLogin, isSuccess } = useLogin();
 
-	const handleOnSubmit = async (data: AuthLoginDto) => {
+	const handleOnSubmit = async (data: LoginPayload) => {
 		mutateLogin(data);
 	};
 
 	React.useEffect(() => {
 		if (isSuccess) {
-			router.push('/student');
+			router.push('/');
 		}
 	}, [isSuccess]);
 
 	const googleAuth = new GoogleAuthProvider();
-	// const [postToken, { status, data, error }] = useMutation(postAccessToken);
 
 	const handleGoogleLogin = async () => {
 		const res = await signInWithPopup(auth, googleAuth);
 		console.log('respond', res);
 		res.user.getIdToken().then((token) => {
 			console.log('token', token);
-			const studentData: AuthLoginDto = {
+			const studentData: LoginPayload = {
 				accessToken: token,
 			};
 			handleOnSubmit(studentData);
@@ -55,6 +54,7 @@ const Login: FunctionComponent<LoginProps> = () => {
 		const res = await signInWithPopup(auth, facebookAuth);
 		console.log('respond', res);
 	};
+
 	return (
 		<div className="flex flex-col justify-center w-full min-h-full py-12 intro-y sm:px-6 lg:px-8">
 			<div className="sm:mx-auto sm:w-full sm:max-w-md">
