@@ -14,7 +14,7 @@ import { store } from 'src/store';
 
 import 'antd/dist/antd.css';
 import '../styles/globals.css';
-import '../styles/output.css';
+// import '../styles/output.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 const queryClient = new QueryClient();
@@ -50,8 +50,7 @@ export default function App({ Component, pageProps }: AppProps) {
 				<QueryClientProvider client={queryClient}>
 					<Contexts>
 						<DynamicLayout>
-							<div className="w-full h-auto relative">
-								<Navigation />
+							<div className="relative w-full h-auto">
 								<Component {...pageProps} />
 							</div>
 						</DynamicLayout>

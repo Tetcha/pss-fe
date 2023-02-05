@@ -5,6 +5,7 @@ import { AdminWrapper } from '../wrappers/adminWrapper';
 import { DoctorWrapper } from '../wrappers/doctorWrapper';
 import DashboardDoctorLayout from './DashboardDoctorLayout';
 import DashboardLayout from './DashboardLayout';
+import { Navigation } from '../Navigation';
 
 interface DynamicLayoutProps extends React.PropsWithChildren {}
 
@@ -12,7 +13,12 @@ export const DynamicLayout: React.FC<DynamicLayoutProps> = ({ children }) => {
 	const router = useRouter();
 
 	if (router.pathname === '/admin/auth/login' || router.pathname === '/doctor/auth/login') {
-		return <>{children}</>;
+		return (
+			<>
+				<Navigation />
+				{children}
+			</>
+		);
 	}
 
 	if (router.pathname.startsWith('/student')) {
@@ -35,5 +41,10 @@ export const DynamicLayout: React.FC<DynamicLayoutProps> = ({ children }) => {
 		);
 	}
 
-	return <>{children}</>;
+	return (
+		<>
+			<Navigation />
+			{children}
+		</>
+	);
 };

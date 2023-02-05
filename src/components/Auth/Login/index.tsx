@@ -9,23 +9,23 @@ import { useLogin } from 'src/hooks/auth';
 
 import { auth } from '../../../config/firebase';
 // import { authLogin } from './action';
-import { LoginPayload } from './interface';
+import { LoginTokenPayload } from './interface';
 
-const defaultValues: LoginPayload = {
+const defaultValues: LoginTokenPayload = {
 	accessToken: '',
 };
 
 interface LoginProps {}
 
 const Login: FunctionComponent<LoginProps> = () => {
-	const methods = useForm<LoginPayload>({
+	const methods = useForm<LoginTokenPayload>({
 		defaultValues,
 	});
 
 	const router = useRouter();
 	const { mutateLogin, isSuccess } = useLogin();
 
-	const handleOnSubmit = async (data: LoginPayload) => {
+	const handleOnSubmit = async (data: LoginTokenPayload) => {
 		mutateLogin(data);
 	};
 
@@ -42,7 +42,7 @@ const Login: FunctionComponent<LoginProps> = () => {
 		console.log('respond', res);
 		res.user.getIdToken().then((token) => {
 			console.log('token', token);
-			const studentData: LoginPayload = {
+			const studentData: LoginTokenPayload = {
 				accessToken: token,
 			};
 			handleOnSubmit(studentData);
@@ -56,7 +56,7 @@ const Login: FunctionComponent<LoginProps> = () => {
 	};
 
 	return (
-		<div className="flex flex-col justify-center w-full min-h-full py-12 intro-y sm:px-6 lg:px-8">
+		<div className="flex flex-col justify-center w-full min-h-screen py-12 intro-y sm:px-6 lg:px-8">
 			<div className="sm:mx-auto sm:w-full sm:max-w-md">
 				<h2 className="text-3xl font-extrabold text-center text-gray-900">Auth Login</h2>
 			</div>
@@ -66,13 +66,13 @@ const Login: FunctionComponent<LoginProps> = () => {
 						<div className="flex flex-col items-center space-y-4">
 							<button
 								onClick={handleGoogleLogin}
-								className="flex justify-center px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full mb-3 bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-600 hover:to-blue-700 cursor-pointer"
+								className="flex justify-center px-6 py-2.5 text-white border-none font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full mb-3 bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-600 hover:to-blue-700 cursor-pointer"
 							>
 								Login With Google
 							</button>
 							<button
 								onClick={handleFacebookLogin}
-								className="flex justify-center px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full mb-3 bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-600 hover:to-blue-700 cursor-pointer"
+								className="flex justify-center px-6 py-2.5 border-none text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full mb-3 bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-600 hover:to-blue-700 cursor-pointer"
 							>
 								Login With Facebook
 							</button>
