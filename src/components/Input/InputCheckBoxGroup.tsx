@@ -33,9 +33,9 @@ export function InputCheckboxGroup<Value, Key = any>({
 		<CommonFieldWrapper {...commonField}>
 			<div
 				className={clsx(
-					'flex flex-wrap gap-2',
+					'flex flex-wrap gap-2 ',
 					{
-						'flex-col': optionsDirection === 'column',
+						'flex-col w-full items-start': optionsDirection === 'column',
 					},
 					className,
 				)}

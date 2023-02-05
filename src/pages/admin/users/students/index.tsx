@@ -2,10 +2,11 @@ import * as React from 'react';
 
 import { AdminWrapper } from 'src/components/wrappers/adminWrapper';
 import Users from 'src/screens/Admin/Users';
+import DoctorList from 'src/screens/Admin/Users/DoctorList';
 
-interface DoctorsPageProps {}
+interface StudentListPageProps {}
 
-const DoctorsPage: React.FC<DoctorsPageProps> = () => {
+const StudentListPage: React.FC<StudentListPageProps> = () => {
 	return (
 		<AdminWrapper>
 			<Users />
@@ -13,4 +14,4 @@ const DoctorsPage: React.FC<DoctorsPageProps> = () => {
 	);
 };
 
-export default DoctorsPage;
+export default StudentListPage;

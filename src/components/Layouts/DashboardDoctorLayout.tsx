@@ -6,6 +6,7 @@ import {
 	LogoutOutlined,
 	MenuFoldOutlined,
 	MenuUnfoldOutlined,
+	TableOutlined,
 	WalletOutlined,
 } from '@ant-design/icons';
 import { Avatar, Card, Layout, Menu } from 'antd';
@@ -26,6 +27,11 @@ const menuLinks = [
 		label: 'Calendar',
 	},
 
+	{
+		key: ROUTES_URL.DOCTOR_BOOKING,
+		icon: <TableOutlined />,
+		label: 'Booking',
+	},
 	{
 		key: ROUTES_URL.DOCTOR_TRANSACTION,
 		icon: <WalletOutlined />,

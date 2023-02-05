@@ -23,6 +23,6 @@ export const ROUTES_URL = Object.freeze({
 	// Doctor
 	DOCTOR: '/doctor',
 	DOCTOR_CALENDAR: '/doctor/calendar',
-	DOCTOR_SLOT: '/doctor/calendar/slot',
+	DOCTOR_BOOKING: '/doctor/booking',
 	DOCTOR_TRANSACTION: '/doctor/transaction',
 });

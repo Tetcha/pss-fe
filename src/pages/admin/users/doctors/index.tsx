@@ -2,15 +2,16 @@ import * as React from 'react';
 
 import { AdminWrapper } from 'src/components/wrappers/adminWrapper';
 import Users from 'src/screens/Admin/Users';
+import DoctorList from 'src/screens/Admin/Users/DoctorList';
 
-interface DoctorsPageProps {}
+interface DoctorListPageProps {}
 
-const DoctorsPage: React.FC<DoctorsPageProps> = () => {
+const DoctorListPage: React.FC<DoctorListPageProps> = () => {
 	return (
 		<AdminWrapper>
-			<Users />
+			<DoctorList />
 		</AdminWrapper>
 	);
 };
 
-export default DoctorsPage;
+export default DoctorListPage;
