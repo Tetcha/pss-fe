@@ -1,14 +1,20 @@
 import { useEffect } from 'react';
 import { Provider } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 import type { AppProps } from 'next/app';
 import { NextSeo } from 'next-seo';
+import 'swiper/css';
+import 'swiper/css/bundle';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { GetCurrentUserWrapper } from 'src/components/wrappers';
+import { DynamicLayout } from 'src/components/Layouts/DynamicLayout';
+import { Contexts } from 'src/contexts';
 import { store } from 'src/store';
 
 import 'antd/dist/antd.css';
 import '../styles/globals.css';
+// import '../styles/output.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 const queryClient = new QueryClient();
 
@@ -41,9 +47,14 @@ export default function App({ Component, pageProps }: AppProps) {
 					}}
 				/>
 				<QueryClientProvider client={queryClient}>
-					<GetCurrentUserWrapper>
-						<Component {...pageProps} />
-					</GetCurrentUserWrapper>
+					<Contexts>
+						<DynamicLayout>
+							<div className="relative w-full h-auto">
+								<Component {...pageProps} />
+							</div>
+						</DynamicLayout>
+						<ToastContainer />
+					</Contexts>
 				</QueryClientProvider>
 			</Provider>
 		</>

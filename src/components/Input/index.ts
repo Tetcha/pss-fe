@@ -4,6 +4,8 @@ export * from './FormSuccessMessage';
 export * from './FormWrapper';
 export * from './InputCheckBox';
 export * from './InputCheckBoxGroup';
+export * from './InputDatePicker';
+export * from './InputDateRangePicker';
 export * from './InputQuill';
 export * from './InputRadio';
 export * from './InputRadioGroup';

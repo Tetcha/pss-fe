@@ -1,11 +1,17 @@
 import { FunctionComponent } from 'react';
 
+import { Banner } from './Banner';
+import Introduce from './Introduce';
+import Schedule from './Schedule';
+
 interface HomeProps {}
 
 const Home: FunctionComponent<HomeProps> = () => {
 	return (
-		<div>
-			<h1 className="text-3xl font-bold text-red-500 underline">Hello worldd!</h1>
+		<div className="flex flex-col justify-center w-full">
+			<Banner />
+			<Introduce />
+			<Schedule />
 		</div>
 	);
 };

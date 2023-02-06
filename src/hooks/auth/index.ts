@@ -1,17 +1,16 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { login, register } from 'src/api/auth';
+import { loginApi } from 'src/api/auth';
 
 export const useLogin = () => {
-	const { mutate: mutateLogin, mutateAsync: mutateLoginAsync, ...rest } = useMutation(login);
-	return { mutateLogin, mutateLoginAsync, ...rest };
-};
-
-export const useRegister = () => {
 	const {
-		mutate: mutateRegister,
-		mutateAsync: mutateRegisterAsync,
+		mutate: mutateLogin,
+		mutateAsync: mutateLoginAsync,
 		...rest
-	} = useMutation(register);
-	return { mutateRegister, mutateRegisterAsync, ...rest };
+	} = useMutation(loginApi, {
+		onSuccess: (data) => {
+			localStorage.setItem('TOKEN_KEY', JSON.stringify(data));
+		},
+	});
+	return { mutateLogin, mutateLoginAsync, ...rest };
 };
