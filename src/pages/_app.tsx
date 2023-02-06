@@ -8,7 +8,6 @@ import 'swiper/css/bundle';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { DynamicLayout } from 'src/components/Layouts/DynamicLayout';
-import { Navigation } from 'src/components/Navigation';
 import { Contexts } from 'src/contexts';
 import { store } from 'src/store';
 

@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
+import { Input, InputProps } from 'antd';
 
 import { CommonFieldProps } from 'src/interface/form';
 
 import CommonFieldWrapper from '../Input/CommonFieldWrapper';
-
-import { Input, InputProps } from 'antd';
 
 interface TextFieldProps extends InputProps {
 	commonField: CommonFieldProps;

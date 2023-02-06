@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import { TimeRangePickerProps, DatePicker } from 'antd';
+import { DatePicker, TimeRangePickerProps } from 'antd';
 const { RangePicker } = DatePicker;
 
 import { CommonFieldProps } from 'src/interface/form';

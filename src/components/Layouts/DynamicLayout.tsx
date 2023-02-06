@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { useRouter } from 'next/router';
 
+import { Navigation } from '../Navigation';
 import { AdminWrapper } from '../wrappers/adminWrapper';
 import { DoctorWrapper } from '../wrappers/doctorWrapper';
 import DashboardDoctorLayout from './DashboardDoctorLayout';
 import DashboardLayout from './DashboardLayout';
-import { Navigation } from '../Navigation';
 
 interface DynamicLayoutProps extends React.PropsWithChildren {}
 

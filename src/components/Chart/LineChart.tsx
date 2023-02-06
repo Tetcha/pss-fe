@@ -18,7 +18,7 @@ interface LineChartProps {
 
 export const LineChart: React.FunctionComponent<LineChartProps> = ({
 	height = 350,
-	width = 700,
+	width = 520,
 	title = '',
 	data,
 	name,
@@ -31,6 +31,11 @@ export const LineChart: React.FunctionComponent<LineChartProps> = ({
 					type: 'line',
 					zoom: {
 						enabled: false,
+					},
+					events: {
+						mounted: (chart) => {
+							chart.windowResizeHandler();
+						},
 					},
 				},
 				stroke: {

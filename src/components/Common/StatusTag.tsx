@@ -1,5 +1,5 @@
-import { Tag } from 'antd';
 import * as React from 'react';
+import { Tag } from 'antd';
 
 interface StatusTagProps {
 	value: string;
@@ -11,8 +11,14 @@ const StatusTag: React.FunctionComponent<StatusTagProps> = ({ value, icon = <></
 		switch (value) {
 			case 'Active':
 				return 'success';
+			case 'Success':
+				return 'success';
 			case 'Inactive':
 				return 'error';
+			case 'Failed':
+				return 'error';
+			case 'Pending':
+				return 'processing';
 			default:
 				return 'default';
 		}
