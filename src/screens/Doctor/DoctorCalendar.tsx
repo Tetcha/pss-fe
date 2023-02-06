@@ -91,10 +91,4 @@ const DoctorCalendar: React.FunctionComponent<DoctorCalendarProps> = () => {
 			<Calendar
 				dateCellRender={dateCellRender}
 				monthCellRender={monthCellRender}
-				className="px-4"
-			/>
-		</DashboardDoctorLayout>
-	);
-};
-
-export default DoctorCalendar;
+				className="px-4
