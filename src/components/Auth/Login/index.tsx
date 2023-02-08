@@ -31,7 +31,7 @@ const Login: FunctionComponent<LoginProps> = () => {
 
 	React.useEffect(() => {
 		if (isSuccess) {
-			router.push('/');
+			router.push('/student/me');
 		}
 	}, [isSuccess]);
 
@@ -39,20 +39,23 @@ const Login: FunctionComponent<LoginProps> = () => {
 
 	const handleGoogleLogin = async () => {
 		const res = await signInWithPopup(auth, googleAuth);
-		console.log('respond', res);
 		res.user.getIdToken().then((token) => {
-			console.log('token', token);
-			const studentData: LoginPayload = {
+			const payload: LoginPayload = {
 				accessToken: token,
 			};
-			handleOnSubmit(studentData);
+			handleOnSubmit(payload);
 		});
 	};
 
 	const facebookAuth = new FacebookAuthProvider();
 	const handleFacebookLogin = async () => {
 		const res = await signInWithPopup(auth, facebookAuth);
-		console.log('respond', res);
+		res.user.getIdToken().then((token) => {
+			const payload: LoginPayload = {
+				accessToken: token,
+			};
+			handleOnSubmit(payload);
+		});
 	};
 
 	return (
