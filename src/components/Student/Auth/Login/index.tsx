@@ -62,6 +62,7 @@ const Login: FunctionComponent<LoginProps> = () => {
 	const handleFacebookLogin = async () => {
 		const res = await signInWithPopup(auth, facebookAuth);
 		res.user.getIdToken().then((token) => {
+			console.log('token', token);
 			const payload: LoginTokenPayload = {
 				accessToken: token,
 			};
