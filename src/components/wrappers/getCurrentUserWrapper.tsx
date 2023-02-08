@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Cookies from 'universal-cookie';
 
 import { constant } from 'src/constants/api/token';
 import { store } from 'src/store';

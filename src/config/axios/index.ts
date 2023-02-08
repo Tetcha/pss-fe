@@ -1,5 +1,4 @@
 import axios, { AxiosError } from 'axios';
-import Cookies from 'universal-cookie';
 
 import { constant } from 'src/constants/api/token';
 import { ENV_VARIABLES } from 'src/constants/env';

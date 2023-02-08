@@ -2,6 +2,8 @@ import { useMutation } from '@tanstack/react-query';
 
 import { loginApi } from 'src/api/auth';
 
+import { constant } from './../../constants/api/token';
+
 export const useLogin = () => {
 	const {
 		mutate: mutateLogin,
@@ -9,7 +11,7 @@ export const useLogin = () => {
 		...rest
 	} = useMutation(loginApi, {
 		onSuccess: (data) => {
-			localStorage.setItem('TOKEN_KEY', JSON.stringify(data));
+			localStorage.setItem(constant.TOKEN_KEY, data.data);
 		},
 	});
 	return { mutateLogin, mutateLoginAsync, ...rest };

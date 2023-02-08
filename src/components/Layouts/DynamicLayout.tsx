@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { useRouter } from 'next/router';
 
+import { Navigation } from '../Navigation';
 import { AdminWrapper } from '../wrappers/adminWrapper';
 import { DoctorWrapper } from '../wrappers/doctorWrapper';
+import { StudentWrapper } from '../wrappers/studentWrapper';
 import DashboardDoctorLayout from './DashboardDoctorLayout';
 import DashboardLayout from './DashboardLayout';
 
@@ -11,12 +13,26 @@ interface DynamicLayoutProps extends React.PropsWithChildren {}
 export const DynamicLayout: React.FC<DynamicLayoutProps> = ({ children }) => {
 	const router = useRouter();
 
-	if (router.pathname === '/admin/auth/login' || router.pathname === '/doctor/auth/login') {
-		return <>{children}</>;
+	if (
+		router.pathname === '/admin/auth/login' ||
+		router.pathname === '/doctor/auth/login' ||
+		router.pathname === '/student/auth/login'
+	) {
+		return (
+			<>
+				<Navigation />
+				{children}
+			</>
+		);
 	}
 
 	if (router.pathname.startsWith('/student')) {
-		return <>{children}</>;
+		return (
+			<StudentWrapper>
+				<Navigation />
+				{children}
+			</StudentWrapper>
+		);
 	}
 
 	if (router.pathname.startsWith('/admin')) {
@@ -35,5 +51,10 @@ export const DynamicLayout: React.FC<DynamicLayoutProps> = ({ children }) => {
 		);
 	}
 
-	return <>{children}</>;
+	return (
+		<>
+			<Navigation />
+			{children}
+		</>
+	);
 };

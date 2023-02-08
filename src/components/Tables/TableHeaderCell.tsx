@@ -1,5 +1,6 @@
-import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid';
 import * as React from 'react';
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid';
+
 import { SortOrder, useTableUtil } from 'src/contexts/TableUtilContext';
 
 interface TableHeaderCellProps extends React.DetailedHTMLProps<React.ThHTMLAttributes<any>, any> {

@@ -1,9 +1,11 @@
-import { Modal } from 'antd';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { Modal } from 'antd';
+
 import { useModalContext } from 'src/contexts/ModalContext';
 import { EditMultiSlotForm, EditSlotDTO } from 'src/interface/slots';
+
 import { FormWrapper, InputCheckboxGroup } from '../Input';
 import InputDateRangePicker from '../Input/InputDateRangePicker';
 

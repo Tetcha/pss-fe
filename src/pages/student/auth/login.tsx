@@ -1,6 +1,6 @@
 import Head from 'next/head';
 
-import Login from 'src/components/Auth/Login';
+import Login from 'src/components/Student/Auth/Login';
 import { GetCurrentUserWrapper, RouterProtectionWrapper } from 'src/components/wrappers';
 
 export default function LoginPage() {

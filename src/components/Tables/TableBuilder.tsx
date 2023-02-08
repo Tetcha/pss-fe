@@ -1,4 +1,5 @@
 import Table, { ColumnsType } from 'antd/lib/table';
+
 import { useTableUtil } from 'src/contexts/TableUtilContext';
 interface TableBuilderProps<T extends object> {
 	data: T[];

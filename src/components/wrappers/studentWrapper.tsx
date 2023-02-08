@@ -3,9 +3,9 @@ import * as React from 'react';
 import { GetCurrentUserWrapper } from './getCurrentUserWrapper';
 import { RouterProtectionWrapper } from './routerProtectionWrapper';
 
-interface AdminWrapperProps extends React.PropsWithChildren {}
+interface StudentWrapperProps extends React.PropsWithChildren {}
 
-export const AdminWrapper: React.FunctionComponent<AdminWrapperProps> = ({ children }) => {
+export const StudentWrapper: React.FunctionComponent<StudentWrapperProps> = ({ children }) => {
 	return (
 		<GetCurrentUserWrapper>
 			<RouterProtectionWrapper>{children}</RouterProtectionWrapper>

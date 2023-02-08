@@ -2,9 +2,10 @@ import * as React from 'react';
 import type { BadgeProps } from 'antd';
 import { Badge, Calendar } from 'antd';
 import { Moment } from 'moment';
-import { useModalContext } from 'src/contexts/ModalContext';
+
 import MultiSlotEditModal from 'src/components/Modals/MultiSlotEditModal';
 import SlotEditModal from 'src/components/Modals/SlotEditModal';
+import { useModalContext } from 'src/contexts/ModalContext';
 
 const getListData = (value: Moment) => {
 	let listData;

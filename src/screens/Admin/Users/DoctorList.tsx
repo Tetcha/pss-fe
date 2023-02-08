@@ -1,13 +1,13 @@
-import Link from 'next/link';
 import * as React from 'react';
+import Link from 'next/link';
+import { useQuery } from '@tanstack/react-query';
+import _get from 'lodash.get';
+
+import StatusTag from 'src/components/Common/StatusTag';
 import { TableBodyCell, TableBuilder, TableHeaderCell } from 'src/components/Tables';
 import { ROUTES_URL } from 'src/constants/routes';
-import _get from 'lodash.get';
-import { User, UserRole, UserStatus } from 'src/models/user';
-import { Doctor } from 'src/models/doctor';
 import { Gender } from 'src/interface/common';
-import { useQuery } from '@tanstack/react-query';
-import StatusTag from 'src/components/Common/StatusTag';
+import { Doctor } from 'src/models/doctor';
 
 interface DoctorListProps {}
 

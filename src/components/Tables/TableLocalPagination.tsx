@@ -1,5 +1,6 @@
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import * as React from 'react';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
+
 import { useLocalPagination } from 'src/contexts/localPaginationContext';
 
 export interface PaginationProperty {
