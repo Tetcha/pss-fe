@@ -2,19 +2,14 @@ import * as React from 'react';
 import { FunctionComponent } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
-import {
-	FacebookAuthProvider,
-	GoogleAuthProvider,
-	signInWithPopup,
-	signInWithRedirect,
-} from 'firebase/auth';
+import { FacebookAuthProvider, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
 import { FormWrapper } from 'src/components/Input';
 import { useLogin } from 'src/hooks/auth';
 
-import { auth } from '../../../../config/firebase';
 // import { authLogin } from './action';
 import { LoginTokenPayload } from './interface';
+import { auth } from 'src/config/firebase';
 
 const defaultValues: LoginTokenPayload = {
 	accessToken: '',
@@ -43,18 +38,14 @@ const Login: FunctionComponent<LoginProps> = () => {
 	const googleAuth = new GoogleAuthProvider();
 
 	const handleGoogleLogin = async () => {
-		try {
-			const res = await signInWithPopup(auth, googleAuth);
-			res.user.getIdToken().then((token) => {
-				console.log('token', token);
-				const payload: LoginTokenPayload = {
-					accessToken: token,
-				};
-				handleOnSubmit(payload);
-			});
-		} catch (error) {
-			signInWithRedirect(auth, new GoogleAuthProvider());
-		}
+		const res = await signInWithPopup(auth, googleAuth);
+		res.user.getIdToken().then((token) => {
+			console.log('token', token);
+			const payload: LoginTokenPayload = {
+				accessToken: token,
+			};
+			handleOnSubmit(payload);
+		});
 	};
 
 	const facebookAuth = new FacebookAuthProvider();
