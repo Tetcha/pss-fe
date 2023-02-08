@@ -1,6 +1,7 @@
+import { Gender } from './../interface/common/index';
 export enum UserStatus {
-	ACTIVE = 'active',
-	INACTIVE = 'inactive',
+	ACTIVE = 'Active',
+	INACTIVE = 'Inactive',
 }
 
 export enum UserRole {
@@ -12,13 +13,12 @@ export const AllRole: UserRole[] = [UserRole.ADMIN, UserRole.USER];
 
 export interface User {
 	id: string;
-	name: string;
-	username: string;
-	password?: string;
-	email: string;
-	googleId: string;
-	createDate: string;
-	updateDate: string;
+	birthday: string;
+	studentCode: string;
+	phone: string;
+	gender: Gender;
+	balance: number;
 	status: UserStatus;
-	role: UserRole;
+	name: string;
+	email: string;
 }
