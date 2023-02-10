@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Col, Layout, Row } from 'antd';
 
-import DashboardLayout from 'src/components/Layouts/DashboardLayout';
 import { AreaChart } from 'src/components/Chart/AreaChart';
 import { ColumnChart } from 'src/components/Chart/ColumnChart';
 import { LineChart } from 'src/components/Chart/LineChart';
@@ -68,23 +67,13 @@ const Admin: React.FunctionComponent<AdminProps> = () => {
 					]}
 				>
 					<Col span={8}>
-						<LineChart
-							name={['Register']}
-							data={[newlyRegistered]}
-							width={520}
-							title="New Register"
-						/>
+						<LineChart name={['Register']} data={[newlyRegistered]} title="New Register" />
 					</Col>
 					<Col span={8}>
-						<LineChart
-							name={['Booking']}
-							data={[newlyRegistered]}
-							width={520}
-							title="New booking"
-						/>
+						<LineChart name={['Booking']} data={[newlyRegistered]} title="New booking" />
 					</Col>
 					<Col span={8}>
-						<LineChart name={['Profits']} data={[newlyRegistered]} width={520} title="Profits" />
+						<LineChart name={['Profits']} data={[newlyRegistered]} title="Profits" />
 					</Col>
 					<Col span={14}>
 						<ColumnChart

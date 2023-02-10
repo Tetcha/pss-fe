@@ -7,9 +7,9 @@ import { FacebookAuthProvider, GoogleAuthProvider, signInWithPopup } from 'fireb
 import { FormWrapper } from 'src/components/Input';
 import { useLogin } from 'src/hooks/auth';
 
-import { auth } from '../../../config/firebase';
 // import { authLogin } from './action';
 import { LoginTokenPayload } from './interface';
+import { auth } from 'src/config/firebase';
 
 const defaultValues: LoginTokenPayload = {
 	accessToken: '',
@@ -31,7 +31,7 @@ const Login: FunctionComponent<LoginProps> = () => {
 
 	React.useEffect(() => {
 		if (isSuccess) {
-			router.push('/');
+			router.push('/student/me');
 		}
 	}, [isSuccess]);
 
@@ -39,20 +39,26 @@ const Login: FunctionComponent<LoginProps> = () => {
 
 	const handleGoogleLogin = async () => {
 		const res = await signInWithPopup(auth, googleAuth);
-		console.log('respond', res);
 		res.user.getIdToken().then((token) => {
 			console.log('token', token);
-			const studentData: LoginTokenPayload = {
+			const payload: LoginTokenPayload = {
 				accessToken: token,
 			};
-			handleOnSubmit(studentData);
+			handleOnSubmit(payload);
 		});
 	};
 
 	const facebookAuth = new FacebookAuthProvider();
+
 	const handleFacebookLogin = async () => {
 		const res = await signInWithPopup(auth, facebookAuth);
-		console.log('respond', res);
+		res.user.getIdToken().then((token) => {
+			console.log('token', token);
+			const payload: LoginTokenPayload = {
+				accessToken: token,
+			};
+			handleOnSubmit(payload);
+		});
 	};
 
 	return (

@@ -1,12 +1,14 @@
 import { DoctorWrapper } from 'src/components/wrappers/doctorWrapper';
-import DoctorCalendar from 'src/screens/Doctor/DoctorCalendar';
+import BookingList from 'src/screens/Doctor/BookingList';
 
 interface DoctorCalendarPageProps {}
 
 const DoctorCalendarPage: React.FunctionComponent<DoctorCalendarPageProps> = () => {
 	return (
 		<>
-			<DoctorWrapper>seomthing</DoctorWrapper>
+			<DoctorWrapper>
+				<BookingList />
+			</DoctorWrapper>
 		</>
 	);
 };

@@ -2,38 +2,62 @@ import * as React from 'react';
 import type { BadgeProps } from 'antd';
 import { Badge, Calendar } from 'antd';
 import { Moment } from 'moment';
-import { useModalContext } from 'src/contexts/ModalContext';
+
 import MultiSlotEditModal from 'src/components/Modals/MultiSlotEditModal';
 import SlotEditModal from 'src/components/Modals/SlotEditModal';
+import { useModalContext } from 'src/contexts/ModalContext';
+import { Slot } from 'src/models/slot';
+
+const slots: Slot[] = [
+	{
+		date: '2023-02-08',
+		time: ['Slot 3: 09:00 - 10:00 ', 'Slot 5: 12:00 - 13:00', 'Slot 8: 15:00 - 16:00'],
+		id: '1',
+		status: 'booked',
+	},
+	{
+		date: '2023-02-09',
+		time: ['Slot 3: 09:00 - 10:00 ', 'Slot 5: 12:00 - 13:00', 'Slot 8: 15:00 - 16:00'],
+		id: '2',
+		status: 'booked',
+	},
+	{
+		date: '2023-02-10',
+		time: [
+			'Slot 1: 07:00 - 08:00',
+			'Slot 3: 09:00 - 10:00 ',
+			'Slot 5: 12:00 - 13:00',
+			'Slot 8: 15:00 - 16:00',
+		],
+		id: '3',
+		status: 'booked',
+	},
+	{
+		date: '2023-02-12',
+		time: ['Slot 3: 09:00 - 10:00 ', 'Slot 5: 12:00 - 13:00', 'Slot 8: 15:00 - 16:00'],
+		id: '4',
+		status: 'booked',
+	},
+	{
+		date: '2023-03-01',
+		time: ['Slot 3: 09:00 - 10:00 ', 'Slot 5: 12:00 - 13:00', 'Slot 8: 15:00 - 16:00'],
+		id: '5',
+		status: 'booked',
+	},
+];
 
 const getListData = (value: Moment) => {
 	let listData;
-	switch (value.date()) {
-		case 8:
-			listData = [
-				{ type: 'warning', content: 'This is warning event.' },
-				{ type: 'success', content: 'This is usual event.' },
-			];
-			break;
-		case 10:
-			listData = [
-				{ type: 'warning', content: 'This is warning event.' },
-				{ type: 'success', content: 'This is usual event.' },
-				{ type: 'error', content: 'This is error event.' },
-			];
-			break;
-		case 15:
-			listData = [
-				{ type: 'warning', content: 'This is warning event' },
-				{ type: 'success', content: 'This is very long usual event。。....' },
-				{ type: 'error', content: 'This is error event 1.' },
-				{ type: 'error', content: 'This is error event 2.' },
-				{ type: 'error', content: 'This is error event 3.' },
-				{ type: 'error', content: 'This is error event 4.' },
-			];
-			break;
-		default:
+
+	const date = value.format('YYYY-MM-DD');
+	const slot = slots.find((mapSlot) => mapSlot.date === date);
+	if (slot) {
+		listData = slot.time.map((time) => ({
+			type: 'success',
+			content: time,
+		}));
 	}
+
 	return listData || [];
 };
 

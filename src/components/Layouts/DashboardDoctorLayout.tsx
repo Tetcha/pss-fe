@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import {
 	CalendarOutlined,
 	EditOutlined,
@@ -15,9 +16,8 @@ import { Header } from 'antd/lib/layout/layout';
 import clsx from 'clsx';
 
 import { logout } from 'src/api/auth';
-import { useStoreDoctor } from 'src/store';
-import { useRouter } from 'next/router';
 import { ROUTES_URL } from 'src/constants/routes';
+import { useStoreDoctor } from 'src/store';
 const { Sider, Content } = Layout;
 
 const menuLinks = [

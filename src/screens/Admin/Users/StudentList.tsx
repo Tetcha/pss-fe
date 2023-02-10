@@ -7,22 +7,24 @@ import StatusTag from 'src/components/Common/StatusTag';
 import { TableBodyCell, TableBuilder, TableHeaderCell } from 'src/components/Tables';
 import { ROUTES_URL } from 'src/constants/routes';
 import { Gender } from 'src/interface/common';
-import { Doctor } from 'src/models/doctor';
+import { User, UserStatus } from 'src/models/user';
 
-interface DoctorListProps {}
+interface StudentListProps {}
 
-const DoctorList: React.FunctionComponent<DoctorListProps> = () => {
+const StudentList: React.FunctionComponent<StudentListProps> = () => {
 	const query = useQuery(
-		['doctors'],
+		['students'],
 		async () => {
 			const res = {
 				data: [
 					{
 						id: '1',
 						name: 'John Doe',
+						studentCode: 'SE150000',
 						email: 'example@gmail.com',
 						balance: 100,
 						birthday: '01/01/1990',
+						status: UserStatus.INACTIVE,
 						gender: Gender.MALE,
 						phone: '0123456789',
 					},
@@ -30,8 +32,10 @@ const DoctorList: React.FunctionComponent<DoctorListProps> = () => {
 						id: '2',
 						name: 'John Doe',
 						email: 'example@gmail.com',
+						studentCode: 'SE150000',
 						balance: 100,
 						birthday: '01/01/1990',
+						status: UserStatus.ACTIVE,
 						gender: Gender.MALE,
 						phone: '0123456789',
 					},
@@ -39,6 +43,8 @@ const DoctorList: React.FunctionComponent<DoctorListProps> = () => {
 						id: '3',
 						name: 'John Doe',
 						email: 'example@gmail.com',
+						studentCode: 'SE150000',
+						status: UserStatus.ACTIVE,
 						balance: 100,
 						birthday: '01/01/1990',
 						gender: Gender.MALE,
@@ -57,23 +63,26 @@ const DoctorList: React.FunctionComponent<DoctorListProps> = () => {
 			<div className="py-4 md:flex md:items-center md:justify-between">
 				<div className="flex-1 min-w-0">
 					<h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
-						Doctors
+						Students
 					</h2>
 				</div>
-				<div className="flex mt-4 md:mt-0 md:ml-4">
-					<Link href={ROUTES_URL.ADD_DOCTOR}>
-						<button
-							type="button"
-							className="inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-						>
-							Add Doctor
-						</button>
-					</Link>
-				</div>
 			</div>
-			<TableBuilder<Doctor>
+			<TableBuilder<User>
 				data={query.data.data}
 				columns={[
+					{
+						title: () => (
+							<TableHeaderCell key="studentCode" sortKey="studentCode" label="Student Code" />
+						),
+						width: 200,
+						key: 'studentCode',
+
+						render: ({ ...props }) => {
+							return (
+								<TableBodyCell key={`${props.id}-${props.studentCode}`} label={props.studentCode} />
+							);
+						},
+					},
 					{
 						title: () => <TableHeaderCell key="name" sortKey="name" label="Name" />,
 						width: 200,
@@ -101,6 +110,13 @@ const DoctorList: React.FunctionComponent<DoctorListProps> = () => {
 						},
 					},
 					{
+						title: () => <TableHeaderCell key="balance" sortKey="balance" label="Balance" />,
+						key: 'phone',
+						render: ({ ...props }) => {
+							return <TableBodyCell key={`${props.id}-${props.balance}`} label={props.balance} />;
+						},
+					},
+					{
 						title: () => <TableHeaderCell key="gender" sortKey="gender" label="Gender" />,
 						key: 'gender',
 
@@ -113,7 +129,7 @@ const DoctorList: React.FunctionComponent<DoctorListProps> = () => {
 						title: () => <TableHeaderCell key="status" sortKey="status" label="Status" />,
 						key: 'status',
 						render: ({ ...props }) => {
-							return <StatusTag value={'Active'} key={`${props.id}-${props.status}`} />;
+							return <StatusTag value={props.status} key={`${props.id}-${props.status}`} />;
 						},
 					},
 					{
@@ -139,4 +155,4 @@ const DoctorList: React.FunctionComponent<DoctorListProps> = () => {
 	);
 };
 
-export default DoctorList;
+export default StudentList;

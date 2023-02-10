@@ -1,4 +1,4 @@
-import { LoginTokenPayload } from 'src/components/Auth/Login/interface';
+import { LoginTokenPayload } from 'src/components/Student/Auth/Login/interface';
 import { http } from 'src/config/axios';
 import { constant } from 'src/constants/api/token';
 import { API_URL } from 'src/constants/api/url';

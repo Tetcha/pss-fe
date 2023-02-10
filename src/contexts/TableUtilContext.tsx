@@ -1,6 +1,6 @@
-import _get from 'lodash.get';
-import { useRouter } from 'next/router';
 import * as React from 'react';
+import { useRouter } from 'next/router';
+import _get from 'lodash.get';
 
 export enum SortOrder {
 	ASC = 'ASC',

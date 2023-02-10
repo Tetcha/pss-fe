@@ -87,7 +87,7 @@ export const ModalProvider: React.FunctionComponent<ModalProviderProps> = ({ chi
 						key={`modeal-${key}-${index}`}
 					>
 						<div className="relative w-full h-full ">
-							<div className={`h-full w-full absolute inset-0 `} key={key}>
+							<div className={'h-full w-full absolute inset-0 '} key={key}>
 								{value}
 							</div>
 						</div>

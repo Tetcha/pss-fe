@@ -8,7 +8,6 @@ import 'swiper/css/bundle';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { DynamicLayout } from 'src/components/Layouts/DynamicLayout';
-import { Navigation } from 'src/components/Navigation';
 import { Contexts } from 'src/contexts';
 import { store } from 'src/store';
 
@@ -28,7 +27,7 @@ export default function App({ Component, pageProps }: AppProps) {
 		<>
 			<Provider store={store}>
 				<NextSeo
-					title={'base-nextjs'}
+					title={'PSYCH'}
 					description={'description go here'}
 					openGraph={{
 						images: [
@@ -36,13 +35,13 @@ export default function App({ Component, pageProps }: AppProps) {
 								url: 'https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg',
 								width: 1000,
 								height: 700,
-								alt: 'Base nextjs',
+								alt: 'PSYCH',
 							},
 							{
 								url: 'https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg',
 								width: 1000,
 								height: 700,
-								alt: 'Base nextjs',
+								alt: 'PSYCH',
 							},
 						],
 					}}
