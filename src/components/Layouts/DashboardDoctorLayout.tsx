@@ -6,9 +6,9 @@ import {
 	LogoutOutlined,
 	MenuFoldOutlined,
 	MenuUnfoldOutlined,
+	TableOutlined,
 	WalletOutlined,
 } from '@ant-design/icons';
-import type { MenuProps } from 'antd';
 import { Avatar, Card, Layout, Menu } from 'antd';
 import Meta from 'antd/lib/card/Meta';
 import { Header } from 'antd/lib/layout/layout';
@@ -16,28 +16,25 @@ import clsx from 'clsx';
 
 import { logout } from 'src/api/auth';
 import { useStoreDoctor } from 'src/store';
+import { useRouter } from 'next/router';
+import { ROUTES_URL } from 'src/constants/routes';
 const { Sider, Content } = Layout;
 
-type MenuItem = Required<MenuProps>['items'][number];
-
-const menuLinks: MenuItem[] = [
+const menuLinks = [
 	{
-		key: '1',
-		icon: (
-			<Link href="/doctor/calendar">
-				<CalendarOutlined />
-			</Link>
-		),
+		key: ROUTES_URL.DOCTOR_CALENDAR,
+		icon: <CalendarOutlined />,
 		label: 'Calendar',
 	},
 
 	{
-		key: '2',
-		icon: (
-			<Link href="/doctor/transaction">
-				<WalletOutlined />
-			</Link>
-		),
+		key: ROUTES_URL.DOCTOR_BOOKING,
+		icon: <TableOutlined />,
+		label: 'Booking',
+	},
+	{
+		key: ROUTES_URL.DOCTOR_TRANSACTION,
+		icon: <WalletOutlined />,
 		label: 'Transaction',
 	},
 ];
@@ -48,17 +45,23 @@ const DashboardDoctorLayout: React.FunctionComponent<DashboardDoctorLayoutProps>
 	children,
 }) => {
 	const [collapsed, setCollapsed] = React.useState(false);
-	const { name } = useStoreDoctor();
+	const { name, balance } = useStoreDoctor();
+	const router = useRouter();
 
 	const signOut = () => {
 		logout();
 		window.location.reload();
 	};
 
+	const formatCurrency = new Intl.NumberFormat('vi-VN', {
+		style: 'currency',
+		currency: 'VND',
+	}).format(balance);
+
 	return (
-		<div className="min-h-screen border-2 border-red-400">
+		<div className="min-h-screen">
 			<Layout className="min-h-screen">
-				<Sider trigger={null} className="bg-gray-50" collapsible collapsed={collapsed}>
+				<Sider trigger={null} className="bg-gray-50" width={240} collapsible collapsed={collapsed}>
 					<div className="flex justify-center w-full">
 						<Link href={'/'}>
 							<div className="w-20 h-20">
@@ -70,7 +73,14 @@ const DashboardDoctorLayout: React.FunctionComponent<DashboardDoctorLayoutProps>
 							</div>
 						</Link>
 					</div>
-					<Menu theme="light" mode="inline" defaultSelectedKeys={['1']} items={menuLinks} />
+					<Menu
+						theme="light"
+						mode="inline"
+						className="max-h-screen"
+						defaultSelectedKeys={[ROUTES_URL.DOCTOR_CALENDAR]}
+						items={menuLinks as any}
+						onClick={(item) => router.push(item.key)}
+					/>
 					<Card
 						actions={[
 							<EditOutlined key="edit" />,
@@ -82,19 +92,20 @@ const DashboardDoctorLayout: React.FunctionComponent<DashboardDoctorLayoutProps>
 								<LogoutOutlined />
 							</button>,
 						]}
-						className={clsx('absolute w-full bottom-0 left-0', {
+						className={clsx('fixed w-[240px] bottom-0 left-0', {
 							hidden: collapsed,
 							block: !collapsed,
 						})}
 					>
 						<Meta
 							avatar={<Avatar src={`https://ui-avatars.com/api/?name=${name}`} />}
+							description={<p className="text-base font-medium text-gray-900">{formatCurrency}</p>}
 							title={name}
 						/>
 					</Card>
 				</Sider>
 				<Layout className="site-layout">
-					<Header className="bg-white px-4">
+					<Header className="px-4 bg-white">
 						{React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
 							className: 'trigger',
 							onClick: () => setCollapsed(!collapsed),

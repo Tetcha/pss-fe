@@ -13,8 +13,10 @@ const http = axios.create({
 
 http.interceptors.request.use(function (req) {
 	store.dispatch(apiActions.initReq());
-	const cookies = new Cookies();
-	const token = cookies.get(constant.TOKEN_COOKIE_KEY) || '';
+	// const cookies = new Cookies();
+	// const token = cookies.get(constant.TOKEN_COOKIE_KEY) || '';
+
+	const token = localStorage.getItem(constant.TOKEN_KEY) || '';
 
 	if (token && req.headers) req.headers[constant.TOKEN_HEADER_KEY] = `Bearer ${token}`;
 	// if (token && req.headers) req.headers[constant.TOKEN_HEADER_KEY] = `${token}`;

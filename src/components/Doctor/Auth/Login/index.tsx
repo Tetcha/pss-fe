@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
 import { FormErrorMessage, FormWrapper, TextField } from 'src/components/Input';
-
 import { useLoginDoctor } from 'src/hooks/doctor';
 import { LoginPayload } from 'src/interface/auth';
 
@@ -34,7 +33,7 @@ const LoginDoctor: FunctionComponent<LoginDoctorProps> = () => {
 	}, [isSuccess]);
 
 	return (
-		<div className="flex flex-col justify-center w-full min-h-full py-12 intro-y sm:px-6 lg:px-8">
+		<div className="flex flex-col justify-center w-full min-h-screen py-12 intro-y sm:px-6 lg:px-8">
 			<div className="sm:mx-auto sm:w-full sm:max-w-md">
 				<h2 className="text-3xl font-semibold text-center text-gray-900">Doctor Login</h2>
 			</div>
@@ -49,9 +48,9 @@ const LoginDoctor: FunctionComponent<LoginDoctorProps> = () => {
 							<div className="flex flex-col items-center space-y-4">
 								<button
 									type="submit"
-									className="flex justify-center px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full mb-3 bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-600 hover:to-blue-700"
+									className="flex justify-center px-6 py-2.5 border-none text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full mb-3 bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-600 hover:to-blue-700 cursor-pointer"
 								>
-									Sign in
+									Login With Facebook
 								</button>
 							</div>
 						</form>

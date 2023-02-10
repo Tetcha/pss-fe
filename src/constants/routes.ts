@@ -10,7 +10,9 @@ export const ROUTES_URL = Object.freeze({
 
 	// Admin
 	ADMIN: '/admin',
-	USERS: '/admin/users',
+	USER_STUDENTS: '/admin/users/students',
+	USER_DOCTORS: '/admin/users/doctors',
+	USER_ADMINS: '/admin/users/admins',
 	ADD_DOCTOR: '/admin/users/doctors/add',
 	DASHBOARD: '/admin/dashboard',
 	EDIT_DOCTOR: (id: string) => `/admin/users/doctors/edit/${id}`,
@@ -21,6 +23,6 @@ export const ROUTES_URL = Object.freeze({
 	// Doctor
 	DOCTOR: '/doctor',
 	DOCTOR_CALENDAR: '/doctor/calendar',
-	DOCTOR_SLOT: '/doctor/calendar/slot',
+	DOCTOR_BOOKING: '/doctor/booking',
 	DOCTOR_TRANSACTION: '/doctor/transaction',
 });

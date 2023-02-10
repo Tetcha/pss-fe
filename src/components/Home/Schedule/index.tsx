@@ -28,7 +28,7 @@ const Schedule: FunctionComponent<ScheduleProps> = () => {
 	};
 	return (
 		<>
-			<div className="w-full h-auto mt-10 flex justify-center">
+			<div className="w-full h-auto mt-10 flex justify-center" id="contact">
 				<div className="w-full h-auto max-w-container flex flex-col justify-center items-center">
 					<h1 className="">ĐẶT LỊCH THĂM KHÁM</h1>
 					<div className="mt-8 sm:mx-auto sm:w-full sm:max-w-2xl">

@@ -1,6 +1,7 @@
 import Head from 'next/head';
 
 import Login from 'src/components/Auth/Login';
+import { GetCurrentUserWrapper, RouterProtectionWrapper } from 'src/components/wrappers';
 
 export default function LoginPage() {
 	return (
@@ -11,7 +12,11 @@ export default function LoginPage() {
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<Login />
+			<GetCurrentUserWrapper>
+				<RouterProtectionWrapper>
+					<Login />
+				</RouterProtectionWrapper>
+			</GetCurrentUserWrapper>
 		</>
 	);
 }
