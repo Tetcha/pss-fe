@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Tag } from 'antd';
+
 import { UserStatus } from 'src/models/user';
 
 interface StatusTagProps {

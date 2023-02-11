@@ -14,7 +14,7 @@ export const TableBuilder = <T extends object>({
 	rowKey,
 	isLoading,
 }: TableBuilderProps<T>) => {
-	const { totalItem, currentPage, handleOnChangePage } = useTableUtil();
+	const { totalItem, page, handleOnChangePage } = useTableUtil();
 
 	return (
 		<Table
@@ -27,7 +27,7 @@ export const TableBuilder = <T extends object>({
 			loading={isLoading}
 			pagination={{
 				total: totalItem,
-				current: Number(currentPage + 1),
+				current: Number(page + 1),
 			}}
 			onChange={(pagination) =>
 				handleOnChangePage((pagination.current || 0) - 1, pagination.pageSize || 10)

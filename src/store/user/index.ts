@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Gender } from 'src/interface/common';
 import Cookies from 'universal-cookie';
 
+import { Gender } from 'src/interface/common';
+
 import { constant } from '../../constants/api/token';
-import { User, UserRole, UserStatus } from '../../models/user';
+import { User, UserStatus } from '../../models/user';
 import { userThunk } from './thunks';
 
 export interface UserState extends User {

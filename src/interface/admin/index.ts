@@ -1,4 +1,5 @@
-import { CommonFilterProps } from '../common';
+import { CommonFilterProps } from 'src/contexts/TableUtilContext';
+import { Admin } from 'src/models/admin';
 
 export interface AdminUpdateForm {
 	name: string;
@@ -13,7 +14,6 @@ export interface AdminPasswordForm {
 
 export interface AdminPasswordDTO extends AdminPasswordForm {}
 
-export interface AdminListFilter extends CommonFilterProps {
-	name?: string;
-	username?: string;
-}
+export interface AdminListFilter
+	extends CommonFilterProps,
+		Partial<Pick<Admin, 'name' | 'username'>> {}

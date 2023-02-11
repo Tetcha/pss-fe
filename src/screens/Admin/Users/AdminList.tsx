@@ -1,57 +1,34 @@
 import * as React from 'react';
-import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
-import _get from 'lodash.get';
 
+import { getAdminList } from 'src/api/admin/list';
 import { TableBodyCell, TableBuilder, TableHeaderCell } from 'src/components/Tables';
-import { ROUTES_URL } from 'src/constants/routes';
-import { Admin } from 'src/models/admin';
-import { Button, Modal } from 'antd';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { useTableUtil } from 'src/contexts/TableUtilContext';
-const { confirm } = Modal;
+import { AdminListFilter } from 'src/interface/admin';
+import { pagingMapper } from 'src/utils/object.helper';
 
-interface AdminListProps {}
+interface AdminListProps {
+	filters: Partial<AdminListFilter>;
+}
 
-const AdminList: React.FunctionComponent<AdminListProps> = () => {
+const AdminList: React.FunctionComponent<AdminListProps> = ({ filters }) => {
 	const { setTotalItem } = useTableUtil();
 
 	const query = useQuery(
-		['admins'],
+		['admins', filters],
 		async () => {
-			setTotalItem(3);
-			const res = {
-				data: [
-					{
-						id: '1',
-						name: 'John Doe',
-						email: 'example@gmail.com',
-					},
-					{
-						id: '2',
-						name: 'John Doe',
-						email: 'example@gmail.com',
-					},
-					{
-						id: '3',
-						name: 'John Doe',
-						email: 'example@gmail.com',
-					},
-				],
-				count: 3,
-			};
-			return res;
-		},
-		{ initialData: { data: [], count: 0 } },
-	);
+			console.log(filters);
+			const { data } = await getAdminList(pagingMapper(filters));
+			// console.log(data);
 
-	const onDelete = (id: string) => {
-		confirm({
-			title: 'Do you want to delete these items?',
-			icon: <ExclamationCircleOutlined />,
-			content: 'When clicked the OK button, this dialog will be closed after 1 second',
-		});
-	};
+			setTotalItem(data.count);
+
+			return data;
+		},
+		{
+			initialData: { data: [], count: 0 },
+		},
+	);
 
 	return (
 		<>
@@ -61,7 +38,7 @@ const AdminList: React.FunctionComponent<AdminListProps> = () => {
 						Admins
 					</h2>
 				</div>
-				<div className="flex mt-4 md:mt-0 md:ml-4">
+				{/* <div className="flex mt-4 md:mt-0 md:ml-4">
 					<Link href={ROUTES_URL.ADD_ADMIN}>
 						<button
 							type="button"
@@ -70,7 +47,7 @@ const AdminList: React.FunctionComponent<AdminListProps> = () => {
 							Add Admin
 						</button>
 					</Link>
-				</div>
+				</div> */}
 			</div>
 			<TableBuilder
 				data={query.data.data}
@@ -84,7 +61,6 @@ const AdminList: React.FunctionComponent<AdminListProps> = () => {
 							return <TableBodyCell key={`id-${props.id}`} label={props.id} />;
 						},
 					},
-
 					{
 						title: () => <TableHeaderCell key="name" sortKey="name" label="Name" />,
 						width: 400,
@@ -94,39 +70,10 @@ const AdminList: React.FunctionComponent<AdminListProps> = () => {
 							return <TableBodyCell key={`${props.id}-${props.name}`} label={props.name} />;
 						},
 					},
-					{
-						title: () => <TableHeaderCell key="email" sortKey="email" label="Email" />,
-						key: 'email',
-
-						render: ({ ...props }) => {
-							const index: number = _get(props, 'row.index', 0);
-
-							return <TableBodyCell key={`${props.id}-${props.email}`} label={props.email} />;
-						},
-					},
-
-					{
-						title: () => <TableHeaderCell key="email" sortKey="email" label="" />,
-						key: 'action',
-
-						render: ({ ...props }) => {
-							return (
-								<div className="flex items-center gap-4">
-									<Link href={'#'}>
-										<p className="my-0 text-blue-600">Edit</p>
-									</Link>
-									<Button danger onClick={() => onDelete(props.id)}>
-										Delete
-									</Button>
-								</div>
-							);
-						},
-					},
 				]}
 				rowKey="id"
 				isLoading={query.isLoading}
 			/>
-			{/* <TablePagination /> */}
 		</>
 	);
 };

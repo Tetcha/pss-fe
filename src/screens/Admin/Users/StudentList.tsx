@@ -5,7 +5,6 @@ import _get from 'lodash.get';
 
 import StatusTag from 'src/components/Common/StatusTag';
 import { TableBodyCell, TableBuilder, TableHeaderCell } from 'src/components/Tables';
-import { ROUTES_URL } from 'src/constants/routes';
 import { Gender } from 'src/interface/common';
 import { User, UserStatus } from 'src/models/user';
 

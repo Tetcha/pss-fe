@@ -1,15 +1,12 @@
-import moment from 'moment';
-import Link from 'next/link';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import Link from 'next/link';
+
 import { FormErrorMessage, FormWrapper, TextField } from 'src/components/Input';
 import { ROUTES_URL } from 'src/constants/routes';
 import { useUpdateAdmin } from 'src/hooks/admin';
-import { useAddDoctor } from 'src/hooks/doctor';
 import { AdminUpdateDTO, AdminUpdateForm } from 'src/interface/admin';
-import { Gender } from 'src/interface/common';
-import { AddDoctorDTO, AddDoctorForm } from 'src/interface/doctor';
 import { useStoreAdmin } from 'src/store';
 
 interface AdminMeProps {}

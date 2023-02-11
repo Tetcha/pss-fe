@@ -3,14 +3,7 @@ export enum Gender {
 	FEMALE = 'FEMALE',
 }
 
-export enum OrderSort {
-	ASC = 'ASC',
-	DESC = 'DESC',
-}
-
-export interface CommonFilterProps {
-	currentPage?: number;
-	pageSize?: number;
-	order?: OrderSort;
-	orderBy?: string;
+export interface ResponseList<T> {
+	data: T[];
+	count: number;
 }

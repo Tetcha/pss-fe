@@ -14,7 +14,7 @@ export const TableHeaderCell: React.FC<TableHeaderCellProps> = ({
 	className,
 	...rest
 }) => {
-	const { orderBy, order, handleOnChangeOrderFiled } = useTableUtil();
+	const { sortField, sortOrder, handleOnChangeOrderFiled } = useTableUtil();
 
 	return (
 		<div
@@ -28,8 +28,8 @@ export const TableHeaderCell: React.FC<TableHeaderCellProps> = ({
 				{label}
 				{Boolean(sortKey && label) && (
 					<div className="absolute top-0 left-full">
-						{orderBy === sortKey &&
-							(order === SortOrder.ASC ? (
+						{sortField === sortKey &&
+							(sortOrder === SortOrder.ASC ? (
 								<ChevronUpIcon className="inline-block w-4 h-4 ml-1" />
 							) : (
 								<ChevronDownIcon className="inline-block w-4 h-4 ml-1" />

@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
-import { update, updatePassword } from 'src/api/admin';
 
+import { update, updatePassword } from 'src/api/admin';
 import { login } from 'src/api/admin/auth';
 import { constant } from 'src/constants/api/token';
 import { store } from 'src/store';
