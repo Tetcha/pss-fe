@@ -1,3 +1,5 @@
+import { CommonFilterProps } from '../common';
+
 export interface AdminUpdateForm {
 	name: string;
 }
@@ -10,3 +12,8 @@ export interface AdminPasswordForm {
 }
 
 export interface AdminPasswordDTO extends AdminPasswordForm {}
+
+export interface AdminListFilter extends CommonFilterProps {
+	name?: string;
+	username?: string;
+}

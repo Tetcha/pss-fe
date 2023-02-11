@@ -9,10 +9,10 @@ export enum SortOrder {
 
 export interface ITableUtilContext {
 	pageSize: number;
-	page: number;
+	currentPage: number;
 	totalItem: number;
-	sortField: string;
-	sortOrder: SortOrder;
+	orderBy: string;
+	order: SortOrder;
 	handleOnChangePage: (page: number, limit: number) => void;
 	setPageSize: React.Dispatch<React.SetStateAction<number>>;
 	handleOnReset: () => void;
@@ -23,15 +23,15 @@ export interface ITableUtilContext {
 
 const TableUtilContext = React.createContext<ITableUtilContext>({
 	pageSize: 10,
-	page: 1,
+	currentPage: 1,
 	totalItem: 0,
 	handleOnChangePage: () => {},
 	setPageSize: () => {},
 	setTotalItem: () => {},
 	handleOnChangeOrderFiled: () => {},
-	sortField: '',
+	orderBy: '',
 	handleOnReset: () => {},
-	sortOrder: SortOrder.ASC,
+	order: SortOrder.ASC,
 	handleChangeFilter: () => {},
 });
 export interface TableProviderProps {
@@ -40,14 +40,14 @@ export interface TableProviderProps {
 
 export const TableUtilProvider: React.FC<TableProviderProps> = ({ children }) => {
 	const [pageSize, setPageSize] = React.useState<number>(10);
-	const [page, setPage] = React.useState<number>(0);
+	const [currentPage, setCurrentPage] = React.useState<number>(0);
 	const [totalItem, setTotalItem] = React.useState<number>(0);
-	const [sortField, setSortField] = React.useState<string>('createdAt');
-	const [sortOrder, setSortOrder] = React.useState<SortOrder>(SortOrder.ASC);
+	const [orderBy, setOrderBy] = React.useState<string>('createdAt');
+	const [order, setOrder] = React.useState<SortOrder>(SortOrder.ASC);
 	const router = useRouter();
 
 	const handleChangeFilter = (filters: Record<string, any>) => {
-		setPage(0);
+		setCurrentPage(0);
 
 		router.push({
 			query: {
@@ -59,7 +59,7 @@ export const TableUtilProvider: React.FC<TableProviderProps> = ({ children }) =>
 	};
 
 	const handleOnReset = () => {
-		setPage(0);
+		setCurrentPage(0);
 		router.push({
 			query: {
 				page: 0,
@@ -69,10 +69,10 @@ export const TableUtilProvider: React.FC<TableProviderProps> = ({ children }) =>
 	};
 
 	const handleOnChangeOrderFiled = (field: string) => {
-		let newField = sortField;
-		let newSortOrder = sortOrder;
-		if (sortField === field) {
-			if (sortOrder === SortOrder.ASC) {
+		let newField = orderBy;
+		let newSortOrder = order;
+		if (orderBy === field) {
+			if (order === SortOrder.ASC) {
 				newSortOrder = SortOrder.DESC;
 			} else {
 				newField = 'createdAt';
@@ -82,8 +82,8 @@ export const TableUtilProvider: React.FC<TableProviderProps> = ({ children }) =>
 			newField = field;
 			newSortOrder = SortOrder.ASC;
 		}
-		setSortField(newField);
-		setSortOrder(newSortOrder);
+		setOrderBy(newField);
+		setOrder(newSortOrder);
 		router.push({
 			query: {
 				...router.query,
@@ -102,12 +102,12 @@ export const TableUtilProvider: React.FC<TableProviderProps> = ({ children }) =>
 		}
 
 		setPageSize(newPageSize);
-		setPage(newPage);
+		setCurrentPage(newPage);
 
 		router.push({
 			query: {
 				...router.query,
-				page,
+				currentPage,
 				pageSize: newPageSize,
 			},
 		});
@@ -118,7 +118,7 @@ export const TableUtilProvider: React.FC<TableProviderProps> = ({ children }) =>
 		const newPageSize = _get(router.query, 'pageSize', 10);
 
 		if (pageNumber === 0) {
-			setPage(Number(pageNumber));
+			setCurrentPage(Number(pageNumber));
 		}
 		if (pageSize === 10) {
 			setPageSize(Number(newPageSize));
@@ -131,13 +131,13 @@ export const TableUtilProvider: React.FC<TableProviderProps> = ({ children }) =>
 				handleOnReset,
 				pageSize,
 				handleChangeFilter,
-				page,
+				currentPage,
 				handleOnChangePage,
 				totalItem,
 				setTotalItem,
 				handleOnChangeOrderFiled,
-				sortField,
-				sortOrder,
+				orderBy,
+				order,
 				setPageSize,
 			}}
 		>

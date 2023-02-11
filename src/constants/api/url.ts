@@ -12,4 +12,5 @@ export const API_URL = Object.freeze({
 	// Admin
 	UPDATE_ADMIN: '/admin',
 	UPDATE_ADMIN_PASSWORD: '/admin/password',
+	GET_ADMIN_LIST: '/admins',
 });

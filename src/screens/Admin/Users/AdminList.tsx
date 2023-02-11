@@ -8,14 +8,18 @@ import { ROUTES_URL } from 'src/constants/routes';
 import { Admin } from 'src/models/admin';
 import { Button, Modal } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { useTableUtil } from 'src/contexts/TableUtilContext';
 const { confirm } = Modal;
 
 interface AdminListProps {}
 
 const AdminList: React.FunctionComponent<AdminListProps> = () => {
+	const { setTotalItem } = useTableUtil();
+
 	const query = useQuery(
 		['admins'],
 		async () => {
+			setTotalItem(3);
 			const res = {
 				data: [
 					{
@@ -68,7 +72,7 @@ const AdminList: React.FunctionComponent<AdminListProps> = () => {
 					</Link>
 				</div>
 			</div>
-			<TableBuilder<Admin>
+			<TableBuilder
 				data={query.data.data}
 				columns={[
 					{

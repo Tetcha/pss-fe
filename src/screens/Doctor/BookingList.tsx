@@ -119,7 +119,7 @@ const BookingList: React.FunctionComponent<BookingListProps> = () => {
 					</Link>
 				</div>
 			</div>
-			<TableBuilder<Admin>
+			<TableBuilder
 				data={query.data.data}
 				columns={[
 					{

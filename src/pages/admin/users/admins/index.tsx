@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { AdminWrapper } from 'src/components/wrappers/adminWrapper';
+import { TableUtilProvider } from 'src/contexts/TableUtilContext';
 import AdminList from 'src/screens/Admin/Users/AdminList';
 
 interface AdminListPageProps {}
@@ -8,7 +9,9 @@ interface AdminListPageProps {}
 const AdminListPage: React.FC<AdminListPageProps> = () => {
 	return (
 		<AdminWrapper>
-			<AdminList />
+			<TableUtilProvider>
+				<AdminList />
+			</TableUtilProvider>
 		</AdminWrapper>
 	);
 };

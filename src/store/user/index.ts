@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { Gender } from 'src/interface/common';
 import Cookies from 'universal-cookie';
 
 import { constant } from '../../constants/api/token';
@@ -11,16 +12,15 @@ export interface UserState extends User {
 
 const initialState: UserState = {
 	email: '',
-	username: '',
 	name: '',
 	id: '',
-	createDate: '',
-	updateDate: '',
-	googleId: '',
-	password: '',
-	role: UserRole.ADMIN,
 	status: UserStatus.ACTIVE,
 	isLogin: false,
+	balance: 0,
+	birthday: '',
+	gender: Gender.MALE,
+	phone: '',
+	studentCode: '',
 };
 
 const reducer = createSlice({
