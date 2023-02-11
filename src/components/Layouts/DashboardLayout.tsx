@@ -88,7 +88,7 @@ const DashboardLayout: React.FunctionComponent<DashboardLayoutProps> = ({ childr
 					/>
 					<Card
 						actions={[
-							<EditOutlined key="edit" />,
+							<EditOutlined key="edit" onClick={() => router.push(ROUTES_URL.ADMIN_ME)} />,
 							<button
 								className="border-none outline-none cursor-pointer bg-inherit"
 								key="sign-out"
