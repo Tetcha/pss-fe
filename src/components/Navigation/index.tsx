@@ -4,9 +4,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
 
-import { ROUTES_URL } from 'src/constants/routes';
-import { constant } from 'src/constants/api/token';
 import { logout } from 'src/api/auth';
+import { constant } from 'src/constants/api/token';
+import { ROUTES_URL } from 'src/constants/routes';
 
 interface NavigationProps {}
 
@@ -82,7 +82,7 @@ export const Navigation: React.FunctionComponent<NavigationProps> = () => {
 					>
 						<ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
 							{NAV_LINK.map((item) => (
-								<a
+								<Link
 									key={item.label}
 									href={item.link}
 									className={`${
@@ -92,7 +92,7 @@ export const Navigation: React.FunctionComponent<NavigationProps> = () => {
 									}`}
 								>
 									{item.label}
-								</a>
+								</Link>
 							))}
 							{login ? (
 								<Link href="/" onClick={logout}>

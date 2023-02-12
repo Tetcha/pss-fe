@@ -7,6 +7,7 @@ import { DoctorWrapper } from '../wrappers/doctorWrapper';
 import { StudentWrapper } from '../wrappers/studentWrapper';
 import DashboardDoctorLayout from './DashboardDoctorLayout';
 import DashboardLayout from './DashboardLayout';
+import { Footer } from '../Footer';
 
 interface DynamicLayoutProps extends React.PropsWithChildren {}
 
@@ -22,6 +23,7 @@ export const DynamicLayout: React.FC<DynamicLayoutProps> = ({ children }) => {
 			<>
 				<Navigation />
 				{children}
+				<Footer />
 			</>
 		);
 	}
@@ -31,6 +33,7 @@ export const DynamicLayout: React.FC<DynamicLayoutProps> = ({ children }) => {
 			<StudentWrapper>
 				<Navigation />
 				{children}
+				<Footer />
 			</StudentWrapper>
 		);
 	}
@@ -55,6 +58,7 @@ export const DynamicLayout: React.FC<DynamicLayoutProps> = ({ children }) => {
 		<>
 			<Navigation />
 			{children}
+			<Footer />
 		</>
 	);
 };

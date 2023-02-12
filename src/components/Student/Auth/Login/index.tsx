@@ -5,11 +5,11 @@ import { useRouter } from 'next/router';
 import { FacebookAuthProvider, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
 import { FormWrapper } from 'src/components/Input';
+import { auth } from 'src/config/firebase';
 import { useLogin } from 'src/hooks/auth';
 
 // import { authLogin } from './action';
 import { LoginTokenPayload } from './interface';
-import { auth } from 'src/config/firebase';
 
 const defaultValues: LoginTokenPayload = {
 	accessToken: '',
@@ -38,18 +38,22 @@ const Login: FunctionComponent<LoginProps> = () => {
 	const googleAuth = new GoogleAuthProvider();
 
 	const handleGoogleLogin = async () => {
-		const res = await signInWithPopup(auth, googleAuth);
-		res.user.getIdToken().then((token) => {
-			console.log('token', token);
-			const payload: LoginTokenPayload = {
-				accessToken: token,
-			};
-			handleOnSubmit(payload);
-		});
+		try {
+			const res = await signInWithPopup(auth, googleAuth);
+			res.user.getIdToken().then((token) => {
+				console.log('token', token);
+				const payload: LoginTokenPayload = {
+					accessToken: token,
+				};
+				handleOnSubmit(payload);
+			});
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	const facebookAuth = new FacebookAuthProvider();
-
+	facebookAuth.addScope('email');
 	const handleFacebookLogin = async () => {
 		const res = await signInWithPopup(auth, facebookAuth);
 		res.user.getIdToken().then((token) => {
