@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { useRouter } from 'next/router';
 import _get from 'lodash.get';
+import { useRouter } from 'next/router';
+import * as React from 'react';
 
 export enum SortOrder {
 	ASC = 'ASC',
@@ -75,7 +75,7 @@ export const TableUtilProvider: React.FC<TableProviderProps> = ({ children }) =>
 			if (sortOrder === SortOrder.ASC) {
 				newSortOrder = SortOrder.DESC;
 			} else {
-				newField = 'createdAt';
+				newField = '';
 				newSortOrder = SortOrder.ASC;
 			}
 		} else {
@@ -93,11 +93,11 @@ export const TableUtilProvider: React.FC<TableProviderProps> = ({ children }) =>
 		});
 	};
 
-	const handleOnChangePage = (paramPage: number, newPageSize: number) => {
-		let newPage = paramPage;
-		if (paramPage < 0 || newPageSize !== pageSize) {
+	const handleOnChangePage = (page: number, newPageSize: number) => {
+		let newPage = page;
+		if (page < 0 || newPageSize !== pageSize) {
 			newPage = 0;
-		} else if (paramPage >= totalItem) {
+		} else if (page >= totalItem) {
 			newPage = totalItem - 1;
 		}
 
@@ -115,13 +115,13 @@ export const TableUtilProvider: React.FC<TableProviderProps> = ({ children }) =>
 
 	React.useEffect(() => {
 		const pageNumber = _get(router.query, 'page', 0);
-		const newPageSize = _get(router.query, 'pageSize', 10);
+		const pageSize = _get(router.query, 'pageSize', 10);
 
 		if (pageNumber === 0) {
 			setPage(Number(pageNumber));
 		}
 		if (pageSize === 10) {
-			setPageSize(Number(newPageSize));
+			setPageSize(Number(pageSize));
 		}
 	}, []);
 

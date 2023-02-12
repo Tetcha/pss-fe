@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 
 import { constant } from 'src/constants/api/token';
 import { ROUTES_URL } from 'src/constants/routes';
-import { useStoreUser } from 'src/store';
 
 interface RouterProtectionWrapperProps extends React.PropsWithChildren {}
 

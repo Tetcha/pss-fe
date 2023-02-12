@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Tag } from 'antd';
 
+import { UserStatus } from 'src/models/user';
+
 interface StatusTagProps {
 	value: string;
 	icon?: React.ReactNode;
@@ -9,6 +11,10 @@ interface StatusTagProps {
 const StatusTag: React.FunctionComponent<StatusTagProps> = ({ value, icon = <></> }) => {
 	const color = () => {
 		switch (value) {
+			case UserStatus.ACTIVE:
+				return 'success';
+			case UserStatus.INACTIVE:
+				return 'error';
 			case 'Active':
 				return 'success';
 			case 'Success':

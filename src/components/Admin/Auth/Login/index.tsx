@@ -8,7 +8,7 @@ import { useLoginAdmin } from 'src/hooks/admin';
 import { LoginPayload } from 'src/interface/auth';
 
 const defaultValues: LoginPayload = {
-	email: '',
+	username: '',
 	password: '',
 };
 
@@ -41,7 +41,7 @@ const LoginAdmin: FunctionComponent<LoginAdminProps> = () => {
 				<div className="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
 					<FormWrapper methods={methods}>
 						<form onSubmit={methods.handleSubmit(handleOnSubmit)} className="space-y-5">
-							<TextField commonField={{ label: 'Email Address', name: 'email' }} type="email" />
+							<TextField commonField={{ label: 'Username', name: 'username' }} />
 							<TextField commonField={{ label: 'Password', name: 'password' }} type="password" />
 							<FormErrorMessage />
 
