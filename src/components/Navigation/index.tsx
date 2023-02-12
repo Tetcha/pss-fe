@@ -20,10 +20,13 @@ const NAV_LINK = [
 export const Navigation: React.FunctionComponent<NavigationProps> = () => {
 	const router = useRouter();
 	// const [popUp, setPopUp] = React.useState<boolean>(false);
-	// const OnLogout = async () => {
-	// 	const res = await logout();
-	// 	if (res) window.location.reload();
-	// };
+	const handleLogout = async () => {
+		const res = await logout();
+		if (res) {
+			setLogin(false);
+			router.push(ROUTES_URL.HOME);
+		}
+	};
 	const [visible, setVisible] = React.useState<boolean>(true);
 	const [login, setLogin] = React.useState<boolean>(false);
 	React.useEffect(() => {
@@ -32,11 +35,6 @@ export const Navigation: React.FunctionComponent<NavigationProps> = () => {
 			setLogin(true);
 		}
 	}, [login]);
-
-	const handleLogout = () => {
-		logout();
-		setLogin(false);
-	};
 
 	return (
 		<header>
