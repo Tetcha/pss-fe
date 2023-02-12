@@ -33,6 +33,11 @@ export const Navigation: React.FunctionComponent<NavigationProps> = () => {
 		}
 	}, [login]);
 
+	const handleLogout = () => {
+		logout();
+		setLogin(false);
+	};
+
 	return (
 		<header>
 			<nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800 fixed z-10 w-full">
@@ -56,7 +61,18 @@ export const Navigation: React.FunctionComponent<NavigationProps> = () => {
 								Log in
 							</Link>
 						) : (
-							<></>
+							<div className="flex justify-center items-center gap-4">
+								<h3 className="block pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">
+									Hello Students
+								</h3>
+								<Link
+									href={ROUTES_URL.HOME}
+									onClick={handleLogout}
+									className="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800 bg-blue-500"
+								>
+									Log out
+								</Link>
+							</div>
 						)}
 						<button
 							onClick={() => setVisible(!visible)}
@@ -94,13 +110,6 @@ export const Navigation: React.FunctionComponent<NavigationProps> = () => {
 									{item.label}
 								</Link>
 							))}
-							{login ? (
-								<Link href="/" onClick={logout}>
-									Log out
-								</Link>
-							) : (
-								<></>
-							)}
 						</ul>
 					</div>
 				</div>
