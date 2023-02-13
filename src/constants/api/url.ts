@@ -13,4 +13,6 @@ export const API_URL = Object.freeze({
 	UPDATE_ADMIN: '/admin',
 	UPDATE_ADMIN_PASSWORD: '/admin/password',
 	GET_ADMIN_LIST: '/admins',
+	GET_DOCTOR_LIST: '/doctors',
+	GET_STUDENT_LIST: '/students',
 });

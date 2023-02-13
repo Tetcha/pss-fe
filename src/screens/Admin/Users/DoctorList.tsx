@@ -8,49 +8,36 @@ import { TableBodyCell, TableBuilder, TableHeaderCell } from 'src/components/Tab
 import { ROUTES_URL } from 'src/constants/routes';
 import { Gender } from 'src/interface/common';
 import { Doctor } from 'src/models/doctor';
+import { getDoctorList } from 'src/api/admin/list';
+import { DoctorListFilter } from 'src/interface/doctor';
+import { pagingMapper } from 'src/utils/object.helper';
+import { useTableUtil } from 'src/contexts/TableUtilContext';
+import { Button, Col, Row } from 'antd';
+import FormFilterWrapper from 'src/components/Input/FormFilterWrapper';
+import { TextField } from 'src/components/Input';
 
-interface DoctorListProps {}
+interface DoctorListProps {
+	filters: Partial<DoctorListFilter>;
+}
 
-const DoctorList: React.FunctionComponent<DoctorListProps> = () => {
+const DoctorList: React.FunctionComponent<DoctorListProps> = ({ filters }) => {
+	const { setTotalItem } = useTableUtil();
+
 	const query = useQuery(
-		['doctors'],
+		['doctors', filters],
 		async () => {
-			const res = {
-				data: [
-					{
-						id: '1',
-						name: 'John Doe',
-						email: 'example@gmail.com',
-						balance: 100,
-						birthday: '01/01/1990',
-						gender: Gender.MALE,
-						phone: '0123456789',
-					},
-					{
-						id: '2',
-						name: 'John Doe',
-						email: 'example@gmail.com',
-						balance: 100,
-						birthday: '01/01/1990',
-						gender: Gender.MALE,
-						phone: '0123456789',
-					},
-					{
-						id: '3',
-						name: 'John Doe',
-						email: 'example@gmail.com',
-						balance: 100,
-						birthday: '01/01/1990',
-						gender: Gender.MALE,
-						phone: '0123456789',
-					},
-				],
-				count: 3,
-			};
-			return res;
+			const { data } = await getDoctorList(pagingMapper(filters));
+
+			setTotalItem(data.count);
+
+			return data;
 		},
 		{ initialData: { data: [], count: 0 } },
 	);
+
+	const handleIsActive = (id: string) => {
+		console.log('handleIsActive', id);
+	};
 
 	return (
 		<>
@@ -71,12 +58,26 @@ const DoctorList: React.FunctionComponent<DoctorListProps> = () => {
 					</Link>
 				</div>
 			</div>
-			<TableBuilder<Doctor>
+			<Row className="flex justify-end pb-4">
+				<FormFilterWrapper<DoctorListFilter> defaultValues={{ name: '', phone: '', username: '' }}>
+					<Row className="gap-2">
+						<Col>
+							<TextField commonField={{ name: 'phone', label: 'Phone' }} />
+						</Col>
+						<Col>
+							<TextField commonField={{ name: 'username', label: 'Username' }} />
+						</Col>
+						<Col>
+							<TextField commonField={{ name: 'name', label: 'Name' }} />
+						</Col>
+					</Row>
+				</FormFilterWrapper>
+			</Row>
+			<TableBuilder
 				data={query.data.data}
 				columns={[
 					{
 						title: () => <TableHeaderCell key="name" sortKey="name" label="Name" />,
-						width: 200,
 						key: 'name',
 
 						render: ({ ...props }) => {
@@ -84,13 +85,10 @@ const DoctorList: React.FunctionComponent<DoctorListProps> = () => {
 						},
 					},
 					{
-						title: () => <TableHeaderCell key="email" sortKey="email" label="Email" />,
-						key: 'email',
+						title: () => <TableHeaderCell key="username" sortKey="username" label="Username" />,
+						key: 'username',
 						render: ({ ...props }) => {
-							const index: number = _get(props, 'row.index', 0);
-							const data = _get(props, `data[${index}].email`, 'unknown');
-
-							return <TableBodyCell key={`${props.id}-${props.email}`} label={props.email} />;
+							return <TableBodyCell key={`${props.id}-${props.username}`} label={props.username} />;
 						},
 					},
 					{
@@ -110,22 +108,28 @@ const DoctorList: React.FunctionComponent<DoctorListProps> = () => {
 					},
 
 					{
-						title: () => <TableHeaderCell key="status" sortKey="status" label="Status" />,
+						title: () => <TableHeaderCell key="active" sortKey="isActive" label="Active" />,
 						key: 'status',
 						render: ({ ...props }) => {
-							return <StatusTag value={'Active'} key={`${props.id}-${props.status}`} />;
+							return <StatusTag value={props.isActive} key={`${props.id}-${props.status}`} />;
 						},
 					},
 					{
-						title: () => <TableHeaderCell key="email" sortKey="email" label="" />,
+						title: () => <TableHeaderCell key="" sortKey="" label="" />,
 						key: 'action',
 
 						render: ({ ...props }) => {
 							return (
-								<div className="flex gap-2">
-									<Link href={'#'}>
-										<p className="text-blue-600">Edit</p>
-									</Link>
+								<div className="flex justify-end gap-2">
+									{props.isActive ? (
+										<Button danger onClick={() => handleIsActive(props.id)}>
+											Deactve
+										</Button>
+									) : (
+										<Button type="primary" onClick={() => handleIsActive(props.id)}>
+											Active
+										</Button>
+									)}
 								</div>
 							);
 						},

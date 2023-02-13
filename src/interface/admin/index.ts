@@ -1,5 +1,5 @@
-import { CommonFilterProps } from 'src/contexts/TableUtilContext';
 import { Admin } from 'src/models/admin';
+import { CommonFilterProps } from '../common';
 
 export interface AdminUpdateForm {
 	name: string;

@@ -14,7 +14,12 @@ export interface DoctorState extends Doctor {
 const initialState: DoctorState = {
 	id: '',
 	name: '',
-	email: '',
+	username: '',
+	avatar: '',
+	briefInfo: '',
+	createAt: '',
+	updateAt: '',
+	isActive: false,
 	balance: 0,
 	birthday: '',
 	phone: '',

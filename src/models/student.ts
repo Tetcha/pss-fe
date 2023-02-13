@@ -1,16 +1,15 @@
 import { Gender } from 'src/interface/common';
 
-export interface Doctor {
+export interface Student {
 	id: string;
 	birthday: string;
+	studentCode: string;
 	phone: string;
-	username: string;
-	avatar: string;
-	briefInfo: string;
 	gender: Gender;
 	balance: number;
 	name: string;
+	email: string;
 	isActive: boolean;
-	createAt: string;
 	updateAt: string;
+	createAt: string;
 }
