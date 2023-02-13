@@ -1,6 +1,6 @@
 export interface Slot {
-	id: string;
-	time: string[];
-	date: string;
-	status: string;
+	id: number;
+	name: string;
+	startTime: string;
+	endTime: string;
 }

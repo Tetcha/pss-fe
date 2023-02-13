@@ -1,3 +1,4 @@
+import { API_URL } from './../../constants/api/url';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { Doctor } from 'src/models/doctor';
@@ -9,7 +10,7 @@ export const doctorThunk = {
 		'getCurrentDoctor',
 		async (_, { rejectWithValue }) => {
 			try {
-				const res = await http.get<Doctor>('/doctor/me');
+				const res = await http.get<Doctor>(API_URL.DOCTOR_ME);
 				return res.data;
 			} catch (error) {
 				return rejectWithValue(null);
