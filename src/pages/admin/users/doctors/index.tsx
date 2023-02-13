@@ -16,9 +16,7 @@ const DoctorListPage: NextPage<DoctorListPageProps> = ({ filters }) => {
 	return (
 		<AdminWrapper>
 			<TableUtilProvider>
-				<TableUtilProvider>
-					<DoctorList filters={filters} />
-				</TableUtilProvider>
+				<DoctorList filters={filters} />
 			</TableUtilProvider>
 		</AdminWrapper>
 	);

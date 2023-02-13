@@ -5,14 +5,12 @@ import _get from 'lodash.get';
 
 import StatusTag from 'src/components/Common/StatusTag';
 import { TableBodyCell, TableBuilder, TableHeaderCell } from 'src/components/Tables';
-import { Gender } from 'src/interface/common';
-import { User, UserStatus } from 'src/models/user';
 import { StudentListFilter } from 'src/interface/student';
 import { getStudentList } from 'src/api/admin/list';
 import { pagingMapper } from 'src/utils/object.helper';
 import { useTableUtil } from 'src/contexts/TableUtilContext';
 import FormFilterWrapper from 'src/components/Input/FormFilterWrapper';
-import { Col, Row } from 'antd';
+import { Button, Col, Row } from 'antd';
 import { TextField } from 'src/components/Input';
 
 interface StudentListProps {
@@ -34,6 +32,10 @@ const StudentList: React.FunctionComponent<StudentListProps> = ({ filters }) => 
 		{ initialData: { data: [], count: 0 } },
 	);
 
+	const handleIsActive = (id: string) => {
+		console.log('handleIsActive', id);
+	};
+
 	return (
 		<>
 			<div className="py-4 ">
@@ -46,7 +48,7 @@ const StudentList: React.FunctionComponent<StudentListProps> = ({ filters }) => 
 				</Row>
 				<Row className="flex justify-end">
 					<FormFilterWrapper<StudentListFilter>
-						defaultValues={{ name: '', phone: '', username: '' }}
+						defaultValues={{ name: '', phone: '', email: '', studentCode: '' }}
 					>
 						<Row className="gap-2">
 							<Col>
@@ -124,10 +126,10 @@ const StudentList: React.FunctionComponent<StudentListProps> = ({ filters }) => 
 					},
 
 					{
-						title: () => <TableHeaderCell key="status" sortKey="status" label="Status" />,
+						title: () => <TableHeaderCell key="isActive" sortKey="isActive" label="Active" />,
 						key: 'status',
 						render: ({ ...props }) => {
-							return <StatusTag value={props.status} key={`${props.id}-${props.status}`} />;
+							return <StatusTag value={props.isActive} key={`${props.id}-${props.isActive}`} />;
 						},
 					},
 					{
@@ -136,10 +138,16 @@ const StudentList: React.FunctionComponent<StudentListProps> = ({ filters }) => 
 
 						render: ({ ...props }) => {
 							return (
-								<div className="flex gap-2">
-									<Link href={'#'}>
-										<p className="text-blue-600">Edit</p>
-									</Link>
+								<div className="flex justify-end gap-2">
+									{props.isActive ? (
+										<Button danger onClick={() => handleIsActive(props.id)}>
+											Deactve
+										</Button>
+									) : (
+										<Button type="primary" onClick={() => handleIsActive(props.id)}>
+											Active
+										</Button>
+									)}
 								</div>
 							);
 						},

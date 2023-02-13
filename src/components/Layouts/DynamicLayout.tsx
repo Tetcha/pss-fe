@@ -2,9 +2,6 @@ import * as React from 'react';
 import { useRouter } from 'next/router';
 
 import { Navigation } from '../Navigation';
-import { AdminWrapper } from '../wrappers/adminWrapper';
-import { DoctorWrapper } from '../wrappers/doctorWrapper';
-import { StudentWrapper } from '../wrappers/studentWrapper';
 import DashboardDoctorLayout from './DashboardDoctorLayout';
 import DashboardLayout from './DashboardLayout';
 import { Footer } from '../Footer';
@@ -30,28 +27,20 @@ export const DynamicLayout: React.FC<DynamicLayoutProps> = ({ children }) => {
 
 	if (router.pathname.startsWith('/student')) {
 		return (
-			<StudentWrapper>
+			<>
 				<Navigation />
 				{children}
 				<Footer />
-			</StudentWrapper>
+			</>
 		);
 	}
 
 	if (router.pathname.startsWith('/admin')) {
-		return (
-			<AdminWrapper>
-				<DashboardLayout>{children}</DashboardLayout>
-			</AdminWrapper>
-		);
+		return <DashboardLayout>{children}</DashboardLayout>;
 	}
 
 	if (router.pathname.startsWith('/doctor')) {
-		return (
-			<DoctorWrapper>
-				<DashboardDoctorLayout>{children}</DashboardDoctorLayout>
-			</DoctorWrapper>
-		);
+		return <DashboardDoctorLayout>{children}</DashboardDoctorLayout>;
 	}
 
 	return (

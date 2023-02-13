@@ -2,6 +2,7 @@ import { NextPage } from 'next';
 import * as React from 'react';
 
 import { AdminWrapper } from 'src/components/wrappers/adminWrapper';
+import { TableUtilProvider } from 'src/contexts/TableUtilContext';
 import { StudentListFilter } from 'src/interface/student';
 import { defaultPagingProps } from 'src/models/interface';
 import StudentList from 'src/screens/Admin/Users/StudentList';
@@ -14,7 +15,9 @@ interface StudentListPageProps {
 const StudentListPage: NextPage<StudentListPageProps> = ({ filters }) => {
 	return (
 		<AdminWrapper>
-			<StudentList filters={filters} />
+			<TableUtilProvider>
+				<StudentList filters={filters} />
+			</TableUtilProvider>
 		</AdminWrapper>
 	);
 };

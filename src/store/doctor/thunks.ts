@@ -9,7 +9,7 @@ export const doctorThunk = {
 		'getCurrentDoctor',
 		async (_, { rejectWithValue }) => {
 			try {
-				const res = await http.get<Doctor>('/doctor');
+				const res = await http.get<Doctor>('/doctor/me');
 				return res.data;
 			} catch (error) {
 				return rejectWithValue(null);
