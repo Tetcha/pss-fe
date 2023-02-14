@@ -11,6 +11,7 @@ export const useLogin = () => {
 		...rest
 	} = useMutation(loginApi, {
 		onSuccess: (data) => {
+			console.log('data.token', data.data);
 			localStorage.setItem(constant.TOKEN_KEY, data.data);
 		},
 	});

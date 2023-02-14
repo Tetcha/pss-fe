@@ -7,6 +7,8 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
 import { logout } from 'src/api/auth';
 import { constant } from 'src/constants/api/token';
 import { ROUTES_URL } from 'src/constants/routes';
+import { store } from 'src/store';
+import { useStoreUser } from 'src/store';
 
 interface NavigationProps {}
 
@@ -19,22 +21,13 @@ const NAV_LINK = [
 
 export const Navigation: React.FunctionComponent<NavigationProps> = () => {
 	const router = useRouter();
-	// const [popUp, setPopUp] = React.useState<boolean>(false);
-	const handleLogout = async () => {
-		const res = await logout();
-		if (res) {
-			setLogin(false);
-			router.push(ROUTES_URL.HOME);
-		}
-	};
 	const [visible, setVisible] = React.useState<boolean>(true);
-	const [login, setLogin] = React.useState<boolean>(false);
-	React.useEffect(() => {
-		const token = localStorage.getItem(constant.TOKEN_KEY);
-		if (token) {
-			setLogin(true);
-		}
-	}, [login]);
+	const user = useStoreUser();
+	React.useEffect(() => {});
+	const handleLogout = async () => {
+		logout();
+		window.location.reload();
+	};
 
 	return (
 		<header>
@@ -51,7 +44,7 @@ export const Navigation: React.FunctionComponent<NavigationProps> = () => {
 						</span>
 					</Link>
 					<div className="flex items-center lg:order-2">
-						{!login ? (
+						{!user.id ? (
 							<Link
 								href={ROUTES_URL.STUDENT_LOGIN}
 								className="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800 bg-blue-500"
@@ -61,7 +54,7 @@ export const Navigation: React.FunctionComponent<NavigationProps> = () => {
 						) : (
 							<div className="flex justify-center items-center gap-4">
 								<h3 className="block pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">
-									Hello Students
+									Hello {user.name}
 								</h3>
 								<Link
 									href={ROUTES_URL.HOME}

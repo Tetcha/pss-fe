@@ -10,6 +10,8 @@ import { useLogin } from 'src/hooks/auth';
 
 // import { authLogin } from './action';
 import { LoginTokenPayload } from './interface';
+import { toast } from 'react-toastify';
+import { ROUTES_URL } from 'src/constants/routes';
 
 const defaultValues: LoginTokenPayload = {
 	accessToken: '',
@@ -31,9 +33,9 @@ const Login: FunctionComponent<LoginProps> = () => {
 
 	React.useEffect(() => {
 		if (isSuccess) {
-			router.push('/student/me');
+			router.push(ROUTES_URL.STUDENT_ME);
 		}
-	}, [isSuccess]);
+	}, [isSuccess, router]);
 
 	const googleAuth = new GoogleAuthProvider();
 
@@ -47,20 +49,25 @@ const Login: FunctionComponent<LoginProps> = () => {
 				handleOnSubmit(payload);
 			});
 		} catch (error) {
-			console.log(error);
+			toast.error('Try Again!!!');
 		}
 	};
 
 	const facebookAuth = new FacebookAuthProvider();
-	facebookAuth.addScope('email');
 	const handleFacebookLogin = async () => {
-		const res = await signInWithPopup(auth, facebookAuth);
-		res.user.getIdToken().then((token) => {
-			const payload: LoginTokenPayload = {
-				accessToken: token,
-			};
-			handleOnSubmit(payload);
-		});
+		try {
+			const res = await signInWithPopup(auth, facebookAuth);
+			res.user.getIdToken().then((token) => {
+				const payload: LoginTokenPayload = {
+					accessToken: token,
+				};
+				facebookAuth.addScope('email');
+				console.log(res.user);
+				handleOnSubmit(payload);
+			});
+		} catch (error) {
+			toast.error('Try Again!!!');
+		}
 	};
 
 	return (

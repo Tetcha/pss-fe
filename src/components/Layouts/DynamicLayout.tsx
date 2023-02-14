@@ -13,8 +13,8 @@ export const DynamicLayout: React.FC<DynamicLayoutProps> = ({ children }) => {
 
 	if (
 		router.pathname === '/admin/auth/login' ||
-		router.pathname === '/doctor/auth/login' ||
-		router.pathname === '/student/auth/login'
+		router.pathname === '/doctor/auth/login'
+		// ||router.pathname === '/student/auth/login'
 	) {
 		return (
 			<>
