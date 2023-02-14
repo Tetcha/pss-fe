@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Tag } from 'antd';
 
 import { UserStatus } from 'src/models/user';
-import { isBoolean } from 'lodash';
 
 interface StatusTagProps {
 	value: string | boolean | UserStatus;
