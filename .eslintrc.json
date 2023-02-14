@@ -5,7 +5,7 @@
 		"node": true
 	},
 	"ignorePatterns": ["**/env.js", "**/*.config.js"],
-	"extends": ["airbnb-typescript", "next/core-web-vitals", "prettier"],
+	"extends": ["next/core-web-vitals", "prettier"],
 	"parser": "@typescript-eslint/parser",
 	"parserOptions": {
 		"ecmaFeatures": {
@@ -15,69 +15,6 @@
 		"sourceType": "module",
 		"project": "./tsconfig.json"
 	},
-	"plugins": ["import", "prettier", "unused-imports", "simple-import-sort"],
-	"rules": {
-		// default rules
-		"semi": ["warn", "always"],
-		"quotes": ["warn", "single"],
-		"comma-dangle": ["warn", "always-multiline"],
-		"no-tabs": ["warn", { "allowIndentationTabs": true }],
-		"no-multi-spaces": ["warn", { "ignoreEOLComments": false }],
-		"space-before-blocks": ["warn"],
-		"no-irregular-whitespace": ["warn"],
-		"no-multiple-empty-lines": ["warn", { "max": 1, "maxEOF": 0 }],
-		"no-unused-vars": ["warn", { "vars": "all", "args": "none", "ignoreRestSiblings": true }],
-		// "max-len": ["warn", { "code": 100, "tabWidth": 2, "ignoreComments": true, "ignoreUrls": true }],
-
-		// react rules
-		"react/jsx-key": ["warn"],
-		"react/jsx-indent": ["warn", "tab"],
-		"react/jsx-indent-props": ["warn", "tab"],
-		"react-hooks/exhaustive-deps": ["off"],
-
-		// typescript eslint rules
-		"@typescript-eslint/default-param-last": ["off"],
-
-		// import rules
-		"import/extensions": ["off"],
-
-		// prettier rules
-		"prettier/prettier": ["warn", { "endOfLine": "auto" }],
-
-		// unused imports rules
-		"unused-imports/no-unused-imports": ["warn"],
-
-		// simple import rules
-		"simple-import-sort/exports": ["warn"],
-		"simple-import-sort/imports": [
-			"warn",
-			{
-				"groups": [
-					["^react.*", "^next.*", "^(?!src|.?./|.+\\.(s?css|less)$).*"],
-					["^src"],
-					["^\\.\\.(?!/?$)", "^\\.\\./?$", "^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
-					["^.+\\.(s?css|less)$"]
-				]
-			}
-		],
-		"@typescript-eslint/no-unused-vars": [
-			"warn",
-			{ "vars": "all", "args": "none", "ignoreRestSiblings": true }
-		]
-	},
-	"settings": {
-		"import/resolver": {
-			"node": {
-				"extensions": [".android.js", ".ios.js", ".js", ".jsx", ".ts", ".tsx"],
-				"paths": ["./"]
-			}
-		}
-	},
-	"globals": {
-		"chrome": true,
-		"fetch": true,
-		"FormData": true,
-		"document": true,
-		"window": true
-	}
+	"plugins": [],
+	"rules": {}
 }

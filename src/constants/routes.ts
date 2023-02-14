@@ -14,6 +14,8 @@ export const ROUTES_URL = Object.freeze({
 
 	// Admin
 	ADMIN: '/admin',
+	ADMIN_ME: '/admin/me',
+	ADMIN_PASSWORD: '/admin/password',
 	USER_STUDENTS: '/admin/users/students',
 	USER_DOCTORS: '/admin/users/doctors',
 	USER_ADMINS: '/admin/users/admins',

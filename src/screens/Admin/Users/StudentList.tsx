@@ -5,69 +5,69 @@ import _get from 'lodash.get';
 
 import StatusTag from 'src/components/Common/StatusTag';
 import { TableBodyCell, TableBuilder, TableHeaderCell } from 'src/components/Tables';
-import { ROUTES_URL } from 'src/constants/routes';
-import { Gender } from 'src/interface/common';
-import { User, UserStatus } from 'src/models/user';
+import { StudentListFilter } from 'src/interface/student';
+import { getStudentList } from 'src/api/admin/list';
+import { pagingMapper } from 'src/utils/object.helper';
+import { useTableUtil } from 'src/contexts/TableUtilContext';
+import FormFilterWrapper from 'src/components/Input/FormFilterWrapper';
+import { Button, Col, Row } from 'antd';
+import { TextField } from 'src/components/Input';
 
-interface StudentListProps {}
+interface StudentListProps {
+	filters: Partial<StudentListFilter>;
+}
 
-const StudentList: React.FunctionComponent<StudentListProps> = () => {
+const StudentList: React.FunctionComponent<StudentListProps> = ({ filters }) => {
+	const { setTotalItem } = useTableUtil();
+
 	const query = useQuery(
-		['students'],
+		['students', filters],
 		async () => {
-			const res = {
-				data: [
-					{
-						id: '1',
-						name: 'John Doe',
-						studentCode: 'SE150000',
-						email: 'example@gmail.com',
-						balance: 100,
-						birthday: '01/01/1990',
-						status: UserStatus.INACTIVE,
-						gender: Gender.MALE,
-						phone: '0123456789',
-					},
-					{
-						id: '2',
-						name: 'John Doe',
-						email: 'example@gmail.com',
-						studentCode: 'SE150000',
-						balance: 100,
-						birthday: '01/01/1990',
-						status: UserStatus.ACTIVE,
-						gender: Gender.MALE,
-						phone: '0123456789',
-					},
-					{
-						id: '3',
-						name: 'John Doe',
-						email: 'example@gmail.com',
-						studentCode: 'SE150000',
-						status: UserStatus.ACTIVE,
-						balance: 100,
-						birthday: '01/01/1990',
-						gender: Gender.MALE,
-						phone: '0123456789',
-					},
-				],
-				count: 3,
-			};
-			return res;
+			const { data } = await getStudentList(pagingMapper(filters));
+
+			setTotalItem(data.count);
+
+			return data;
 		},
 		{ initialData: { data: [], count: 0 } },
 	);
 
+	const handleIsActive = (id: string) => {
+		console.log('handleIsActive', id);
+	};
+
 	return (
 		<>
-			<div className="py-4 md:flex md:items-center md:justify-between">
-				<div className="flex-1 min-w-0">
-					<h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
-						Students
-					</h2>
-				</div>
+			<div className="py-4 ">
+				<Row>
+					<div className="flex-1 min-w-0">
+						<h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+							Students
+						</h2>
+					</div>
+				</Row>
+				<Row className="flex justify-end">
+					<FormFilterWrapper<StudentListFilter>
+						defaultValues={{ name: '', phone: '', email: '', studentCode: '' }}
+					>
+						<Row className="gap-2">
+							<Col>
+								<TextField commonField={{ name: 'phone', label: 'Phone' }} />
+							</Col>
+							<Col>
+								<TextField commonField={{ name: 'email', label: 'Email' }} />
+							</Col>
+							<Col>
+								<TextField commonField={{ name: 'name', label: 'Name' }} />
+							</Col>
+							<Col>
+								<TextField commonField={{ name: 'studentCode', label: 'Student Code' }} />
+							</Col>
+						</Row>
+					</FormFilterWrapper>
+				</Row>
 			</div>
-			<TableBuilder<User>
+			<TableBuilder
 				data={query.data.data}
 				columns={[
 					{
@@ -126,10 +126,10 @@ const StudentList: React.FunctionComponent<StudentListProps> = () => {
 					},
 
 					{
-						title: () => <TableHeaderCell key="status" sortKey="status" label="Status" />,
+						title: () => <TableHeaderCell key="isActive" sortKey="isActive" label="Active" />,
 						key: 'status',
 						render: ({ ...props }) => {
-							return <StatusTag value={props.status} key={`${props.id}-${props.status}`} />;
+							return <StatusTag value={props.isActive} key={`${props.id}-${props.isActive}`} />;
 						},
 					},
 					{
@@ -138,10 +138,16 @@ const StudentList: React.FunctionComponent<StudentListProps> = () => {
 
 						render: ({ ...props }) => {
 							return (
-								<div className="flex gap-2">
-									<Link href={'#'}>
-										<p className="text-blue-600">Edit</p>
-									</Link>
+								<div className="flex justify-end gap-2">
+									{props.isActive ? (
+										<Button danger onClick={() => handleIsActive(props.id)}>
+											Deactve
+										</Button>
+									) : (
+										<Button type="primary" onClick={() => handleIsActive(props.id)}>
+											Active
+										</Button>
+									)}
 								</div>
 							);
 						},

@@ -4,23 +4,23 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
 import { FormErrorMessage, FormWrapper, TextField } from 'src/components/Input';
-import { useLoginAdmin } from 'src/hooks/admin';
+import { useLoginDoctor } from 'src/hooks/doctor';
 import { LoginPayload } from 'src/interface/auth';
 
 const defaultValues: LoginPayload = {
-	email: '',
 	password: '',
+	username: '',
 };
 
-interface LoginAdminProps {}
+interface LoginDoctorProps {}
 
-const LoginAdmin: FunctionComponent<LoginAdminProps> = () => {
+const LoginDoctor: FunctionComponent<LoginDoctorProps> = () => {
 	const methods = useForm<LoginPayload>({
 		defaultValues,
 	});
 
 	const router = useRouter();
-	const { mutateLogin, isSuccess } = useLoginAdmin();
+	const { mutateLogin, isSuccess } = useLoginDoctor();
 
 	const handleOnSubmit = async (data: LoginPayload) => {
 		mutateLogin(data);
@@ -28,20 +28,20 @@ const LoginAdmin: FunctionComponent<LoginAdminProps> = () => {
 
 	React.useEffect(() => {
 		if (isSuccess) {
-			router.push('/admin');
+			router.push('/doctor');
 		}
 	}, [isSuccess]);
 
 	return (
 		<div className="flex flex-col justify-center w-full min-h-screen py-12 intro-y sm:px-6 lg:px-8">
 			<div className="sm:mx-auto sm:w-full sm:max-w-md">
-				<h2 className="text-3xl font-semibold text-center text-gray-900">Admin Login</h2>
+				<h2 className="text-3xl font-semibold text-center text-gray-900">Doctor Login</h2>
 			</div>
 			<div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
 				<div className="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
 					<FormWrapper methods={methods}>
 						<form onSubmit={methods.handleSubmit(handleOnSubmit)} className="space-y-5">
-							<TextField commonField={{ label: 'Email Address', name: 'email' }} type="email" />
+							<TextField commonField={{ label: 'Username', name: 'username' }} />
 							<TextField commonField={{ label: 'Password', name: 'password' }} type="password" />
 							<FormErrorMessage />
 
@@ -61,4 +61,4 @@ const LoginAdmin: FunctionComponent<LoginAdminProps> = () => {
 	);
 };
 
-export default LoginAdmin;
+export default LoginDoctor;

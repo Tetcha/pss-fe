@@ -1,8 +1,8 @@
 import Head from 'next/head';
 
-import LoginDoctor from 'src/components/Doctor/Auth/Login';
 import { GetCurrentAdminWrapper } from 'src/components/wrappers';
 import { RouterUnAuthAdminProtectionWrapper } from 'src/components/wrappers/routerUnAuthAdminProtectionWrapper';
+import LoginDoctor from 'src/screens/Doctor/LoginDoctor';
 
 export default function LoginAdminPage() {
 	return (

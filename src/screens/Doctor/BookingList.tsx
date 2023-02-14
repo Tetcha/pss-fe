@@ -1,18 +1,15 @@
 import * as React from 'react';
 import Link from 'next/link';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { useQuery } from '@tanstack/react-query';
-import _get from 'lodash.get';
+import { Button, Modal } from 'antd';
 
+import StatusTag from 'src/components/Common/StatusTag';
+import ViewQuestionModal from 'src/components/Modals/ViewQuestionModal';
 import { TableBodyCell, TableBuilder, TableHeaderCell } from 'src/components/Tables';
 import { ROUTES_URL } from 'src/constants/routes';
-import { Admin } from 'src/models/admin';
-import { Button, Modal } from 'antd';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
-import { Gender } from 'src/interface/common';
-import StatusTag from 'src/components/Common/StatusTag';
-import MultiSlotEditModal from 'src/components/Modals/MultiSlotEditModal';
 import { useModalContext } from 'src/contexts/ModalContext';
-import ViewQuestionModal from 'src/components/Modals/ViewQuestionModal';
+import { Gender } from 'src/interface/common';
 import { QuestionPreview } from 'src/models/question';
 const { confirm } = Modal;
 
@@ -119,7 +116,7 @@ const BookingList: React.FunctionComponent<BookingListProps> = () => {
 					</Link>
 				</div>
 			</div>
-			<TableBuilder<Admin>
+			<TableBuilder
 				data={query.data.data}
 				columns={[
 					{

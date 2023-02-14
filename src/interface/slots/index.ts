@@ -1,15 +1,15 @@
 import { Moment } from 'moment';
 
 export interface EditMultiSlotForm {
-	date: Moment[];
-	slots: string[];
+	dates: Moment[];
+	slots: number[];
 }
 
 export interface EditSlotForm {
-	date: Moment;
-	slots: string[];
+	dates: Moment;
+	slots: number[];
 }
 
-export interface EditSlotDTO extends Omit<EditMultiSlotForm | EditSlotForm, 'date'> {
-	date: string[];
+export interface EditSlotDTO extends Omit<EditMultiSlotForm | EditSlotForm, 'dates'> {
+	dates: string[];
 }

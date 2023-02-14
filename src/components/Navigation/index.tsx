@@ -4,9 +4,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
 
-import { ROUTES_URL } from 'src/constants/routes';
-import { constant } from 'src/constants/api/token';
 import { logout } from 'src/api/auth';
+import { constant } from 'src/constants/api/token';
+import { ROUTES_URL } from 'src/constants/routes';
 
 interface NavigationProps {}
 
@@ -20,10 +20,13 @@ const NAV_LINK = [
 export const Navigation: React.FunctionComponent<NavigationProps> = () => {
 	const router = useRouter();
 	// const [popUp, setPopUp] = React.useState<boolean>(false);
-	// const OnLogout = async () => {
-	// 	const res = await logout();
-	// 	if (res) window.location.reload();
-	// };
+	const handleLogout = async () => {
+		const res = await logout();
+		if (res) {
+			setLogin(false);
+			router.push(ROUTES_URL.HOME);
+		}
+	};
 	const [visible, setVisible] = React.useState<boolean>(true);
 	const [login, setLogin] = React.useState<boolean>(false);
 	React.useEffect(() => {
@@ -57,7 +60,18 @@ export const Navigation: React.FunctionComponent<NavigationProps> = () => {
 								Log in
 							</Link>
 						) : (
-							<></>
+							<div className="flex justify-center items-center gap-4">
+								<h3 className="block pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">
+									Hello Students
+								</h3>
+								<Link
+									href={ROUTES_URL.HOME}
+									onClick={handleLogout}
+									className="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800 bg-blue-500"
+								>
+									Log out
+								</Link>
+							</div>
 						)}
 						<button
 							onClick={() => setVisible(!visible)}
@@ -83,7 +97,7 @@ export const Navigation: React.FunctionComponent<NavigationProps> = () => {
 					>
 						<ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
 							{NAV_LINK.map((item) => (
-								<a
+								<Link
 									key={item.label}
 									href={item.link}
 									className={`${
@@ -93,15 +107,8 @@ export const Navigation: React.FunctionComponent<NavigationProps> = () => {
 									}`}
 								>
 									{item.label}
-								</a>
-							))}
-							{login ? (
-								<Link href="/" onClick={logout}>
-									Log out
 								</Link>
-							) : (
-								<></>
-							)}
+							))}
 						</ul>
 					</div>
 				</div>

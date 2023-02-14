@@ -6,6 +6,7 @@ import { CommonFieldProps, Direction, Option } from 'src/interface/form';
 
 import CommonFieldWrapper from './CommonFieldWrapper';
 import { InputCheckBox } from './InputCheckBox';
+import { Col, Row } from 'antd';
 
 interface InputCheckboxGroupProps<Label, Value, Key> {
 	commonField: CommonFieldProps<Key>;
@@ -31,7 +32,7 @@ export function InputCheckboxGroup<Value, Key = any>({
 	}, [name]);
 	return (
 		<CommonFieldWrapper {...commonField}>
-			<div
+			{/* <div
 				className={clsx(
 					'flex flex-wrap gap-2 ',
 					{
@@ -39,22 +40,25 @@ export function InputCheckboxGroup<Value, Key = any>({
 					},
 					className,
 				)}
-			>
+			> */}
+			<Row gutter={[16, 16]} justify="start">
 				{options ? (
 					options.map((option) => (
-						<InputCheckBox
-							id={`${name}-option-${option.value}`}
-							key={`${name}-option-${option.value}`}
-							label={option.label}
-							value={option.value}
-							defaultChecked={option.value === defaultChecked}
-							{...register(name)}
-						/>
+						<Col span={8} className={'flex justify-start'} key={`${name}-option-${option.value}`}>
+							<InputCheckBox
+								id={`${name}-option-${option.value}`}
+								label={option.label}
+								value={option.value}
+								defaultChecked={option.value === defaultChecked}
+								{...register(name)}
+							/>
+						</Col>
 					))
 				) : (
 					<></>
 				)}
-			</div>
+			</Row>
+			{/* </div> */}
 		</CommonFieldWrapper>
 	);
 }
