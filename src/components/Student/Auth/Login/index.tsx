@@ -5,9 +5,9 @@ import { useRouter } from 'next/router';
 import { FacebookAuthProvider, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
 import { FormWrapper } from 'src/components/Input';
+import { auth } from 'src/config/firebase';
 import { useLogin } from 'src/hooks/auth';
 
-import { auth } from '../../../config/firebase';
 // import { authLogin } from './action';
 import { LoginTokenPayload } from './interface';
 
@@ -31,28 +31,36 @@ const Login: FunctionComponent<LoginProps> = () => {
 
 	React.useEffect(() => {
 		if (isSuccess) {
-			router.push('/');
+			router.push('/student/me');
 		}
 	}, [isSuccess]);
 
 	const googleAuth = new GoogleAuthProvider();
 
 	const handleGoogleLogin = async () => {
-		const res = await signInWithPopup(auth, googleAuth);
-		console.log('respond', res);
-		res.user.getIdToken().then((token) => {
-			console.log('token', token);
-			const studentData: LoginTokenPayload = {
-				accessToken: token,
-			};
-			handleOnSubmit(studentData);
-		});
+		try {
+			const res = await signInWithPopup(auth, googleAuth);
+			res.user.getIdToken().then((token) => {
+				const payload: LoginTokenPayload = {
+					accessToken: token,
+				};
+				handleOnSubmit(payload);
+			});
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	const facebookAuth = new FacebookAuthProvider();
+	facebookAuth.addScope('email');
 	const handleFacebookLogin = async () => {
 		const res = await signInWithPopup(auth, facebookAuth);
-		console.log('respond', res);
+		res.user.getIdToken().then((token) => {
+			const payload: LoginTokenPayload = {
+				accessToken: token,
+			};
+			handleOnSubmit(payload);
+		});
 	};
 
 	return (

@@ -1,6 +1,7 @@
 import { Moment } from 'moment';
+import { Doctor } from 'src/models/doctor';
 
-import { Gender } from './../common';
+import { CommonFilterProps, Gender } from './../common';
 
 export interface AddDoctorForm {
 	name: string;
@@ -15,3 +16,7 @@ export interface AddDoctorForm {
 export interface AddDoctorDTO extends Omit<AddDoctorForm, 'birthday'> {
 	birthday: string;
 }
+
+export interface DoctorListFilter
+	extends CommonFilterProps,
+		Partial<Pick<Doctor, 'phone' | 'username' | 'name'>> {}

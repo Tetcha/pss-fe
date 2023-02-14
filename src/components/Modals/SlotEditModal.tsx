@@ -8,61 +8,59 @@ import { EditSlotDTO, EditSlotForm } from 'src/interface/slots';
 
 import { FormWrapper, InputCheckboxGroup } from '../Input';
 import InputDatePicker from '../Input/InputDatePicker';
+import { useQuery } from '@tanstack/react-query';
+import { Slot } from 'src/models/slot';
+import { getSlots } from 'src/api/slot';
+import { usePostSlots } from 'src/hooks/slot';
 
 interface SlotEditModalProps {
 	defaultValues?: EditSlotForm;
 }
 
-const dataExample = {
-	date: ['2021-08-01', '2021-08-02'],
-	slots: [
-		{ label: 'Slot 1: 07:00 - 08:00', value: '1' },
-		{ label: 'Slot 2: 08:00 - 09:00', value: '2' },
-		{
-			label: 'Slot 3: 09:00 - 10:00',
-			value: '3',
-		},
-		{
-			label: 'Slot 4: 10:00 - 11:00',
-			value: '4',
-		},
-		{
-			label: 'Slot 5: 11:00 - 12:00',
-			value: '5',
-		},
-		{
-			label: 'Slot 6: 12:00 - 13:00',
-			value: '6',
-		},
-		{
-			label: 'Slot 7: 13:00 - 14:00',
-			value: '7',
-		},
-	],
-};
-
 const SlotEditModal: React.FunctionComponent<SlotEditModalProps> = ({ defaultValues }) => {
 	const { handleCloseModal, modal } = useModalContext();
 	const { slotEdit } = modal;
 	const [isVisible, setIsVisible] = React.useState(slotEdit.isOpen);
+
 	const methods = useForm<EditSlotForm>({
 		defaultValues,
 	});
 
+	const { isSuccess, mutatePostSlots } = usePostSlots();
+
 	const handleOnSubmit = (data: EditSlotForm) => {
-		const date = data.date.format('YYYY-MM-DD');
+		const dates = data.dates.format('YYYY-MM-DD');
 		const dataPost: EditSlotDTO = {
-			date: [date],
+			dates: [dates],
 			slots: data.slots,
 		};
-		console.log(dataPost);
-		toast.success('Edit slot successfully');
+		mutatePostSlots(dataPost);
 	};
+
+	React.useEffect(() => {
+		if (isSuccess) {
+			toast.success('Edit slot successfully');
+			setIsVisible(false);
+		}
+	}, [isSuccess]);
+
+	const querySlots = useQuery<Slot[]>(
+		['slots'],
+		async () => {
+			const { data } = await getSlots();
+
+			return data;
+		},
+		{
+			initialData: [],
+		},
+	);
 
 	return (
 		<Modal
 			title="Edit slots"
 			open={isVisible}
+			width={920}
 			onCancel={() => setIsVisible(false)}
 			onOk={() => {
 				methods.handleSubmit(handleOnSubmit)();
@@ -74,10 +72,10 @@ const SlotEditModal: React.FunctionComponent<SlotEditModalProps> = ({ defaultVal
 				<form onSubmit={methods.handleSubmit(handleOnSubmit)} className="space-y-5">
 					<InputDatePicker
 						commonField={{
-							name: 'date',
+							name: 'dates',
 							label: 'Select Date',
 						}}
-						options={{ className: 'w-full' }}
+						options={{ className: 'w-full max-w-sm' }}
 					/>
 					<InputCheckboxGroup
 						commonField={{
@@ -85,7 +83,10 @@ const SlotEditModal: React.FunctionComponent<SlotEditModalProps> = ({ defaultVal
 							label: 'Select Available Slots',
 						}}
 						optionsDirection="column"
-						options={dataExample.slots}
+						options={querySlots.data.map((item) => ({
+							label: `${item.name}: ${item.startTime} - ${item.endTime}`,
+							value: item.id,
+						}))}
 					/>
 				</form>
 			</FormWrapper>

@@ -13,7 +13,7 @@ export interface AdminState extends Admin {
 const initialState: AdminState = {
 	id: '',
 	name: '',
-	email: '',
+	username: '',
 	isLogin: false,
 };
 

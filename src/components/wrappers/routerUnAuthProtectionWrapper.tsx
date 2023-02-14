@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useRouter } from 'next/router';
 
-import { routes } from 'src/components/routes';
+import { ROUTES_URL } from 'src/constants/routes';
 import { useStoreUser } from 'src/store';
 
 interface RouterUnAuthProtectionWrapperProps extends React.PropsWithChildren {}
@@ -14,7 +14,7 @@ export const RouterUnAuthProtectionWrapper: React.FC<RouterUnAuthProtectionWrapp
 
 	React.useEffect(() => {
 		if (user.isLogin && user.id) {
-			router.push(routes.homeUrl);
+			router.push(ROUTES_URL.STUDENT_ME);
 		}
 	}, [user, router]);
 

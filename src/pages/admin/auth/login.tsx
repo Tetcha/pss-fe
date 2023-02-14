@@ -1,4 +1,4 @@
-import LoginAdmin from 'src/components/Admin/Auth/Login';
+import LoginAdmin from 'src/screens/Admin/LoginAdmin';
 import { GetCurrentAdminWrapper } from 'src/components/wrappers';
 import { RouterUnAuthAdminProtectionWrapper } from 'src/components/wrappers/routerUnAuthAdminProtectionWrapper';
 

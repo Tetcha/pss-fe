@@ -6,35 +6,22 @@ import { Moment } from 'moment';
 import MultiSlotEditModal from 'src/components/Modals/MultiSlotEditModal';
 import SlotEditModal from 'src/components/Modals/SlotEditModal';
 import { useModalContext } from 'src/contexts/ModalContext';
+import { Slot } from 'src/models/slot';
+
+const slots: Slot[] = [];
 
 const getListData = (value: Moment) => {
 	let listData;
-	switch (value.date()) {
-		case 8:
-			listData = [
-				{ type: 'warning', content: 'This is warning event.' },
-				{ type: 'success', content: 'This is usual event.' },
-			];
-			break;
-		case 10:
-			listData = [
-				{ type: 'warning', content: 'This is warning event.' },
-				{ type: 'success', content: 'This is usual event.' },
-				{ type: 'error', content: 'This is error event.' },
-			];
-			break;
-		case 15:
-			listData = [
-				{ type: 'warning', content: 'This is warning event' },
-				{ type: 'success', content: 'This is very long usual event。。....' },
-				{ type: 'error', content: 'This is error event 1.' },
-				{ type: 'error', content: 'This is error event 2.' },
-				{ type: 'error', content: 'This is error event 3.' },
-				{ type: 'error', content: 'This is error event 4.' },
-			];
-			break;
-		default:
-	}
+
+	const dates = value.format('YYYY-MM-DD');
+	// const slot = slots.find((mapSlot) => mapSlot.dates === dates);
+	// if (slot) {
+	// 	listData = slot.time.map((time) => ({
+	// 		type: 'success',
+	// 		content: time,
+	// 	}));
+	// }
+
 	return listData || [];
 };
 
@@ -62,11 +49,11 @@ const DoctorCalendar: React.FunctionComponent<DoctorCalendarProps> = () => {
 		const listData = getListData(value);
 		return (
 			<ul className="events">
-				{listData.map((item) => (
+				{/* {listData.map((item) => (
 					<li key={item.content}>
 						<Badge status={item.type as BadgeProps['status']} text={item.content} />
 					</li>
-				))}
+				))} */}
 			</ul>
 		);
 	};
@@ -76,11 +63,8 @@ const DoctorCalendar: React.FunctionComponent<DoctorCalendarProps> = () => {
 		handleOpenModal('multiSlotEdit');
 	};
 
-	const openSlotEditModal = (date: Moment) => {
-		handleModal(
-			'slotEdit',
-			<SlotEditModal defaultValues={{ date: date, slots: ['1', '4', '3'] }} />,
-		);
+	const openSlotEditModal = (dates: Moment) => {
+		handleModal('slotEdit', <SlotEditModal defaultValues={{ dates: dates, slots: [1, 4, 3] }} />);
 		handleOpenModal('slotEdit');
 	};
 

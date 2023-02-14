@@ -8,11 +8,15 @@ import { EditMultiSlotForm, EditSlotDTO } from 'src/interface/slots';
 
 import { FormWrapper, InputCheckboxGroup } from '../Input';
 import InputDateRangePicker from '../Input/InputDateRangePicker';
+import { usePostSlots } from 'src/hooks/slot';
+import { useQuery } from '@tanstack/react-query';
+import { getSlots } from 'src/api/slot';
+import { Slot } from 'src/models/slot';
 
 interface MultiSlotEditModalProps {}
 
 const defaultValues: EditMultiSlotForm = {
-	date: [],
+	dates: [],
 	slots: [],
 };
 
@@ -48,25 +52,47 @@ const MultiSlotEditModal: React.FunctionComponent<MultiSlotEditModalProps> = () 
 	const { handleCloseModal, modal } = useModalContext();
 	const { multiSlotEdit } = modal;
 	const [isVisible, setIsVisible] = React.useState(multiSlotEdit.isOpen);
+
+	const { isSuccess, mutatePostSlots } = usePostSlots();
+
 	const methods = useForm<EditMultiSlotForm>({
 		defaultValues,
 	});
 
+	const querySlots = useQuery<Slot[]>(
+		['slots'],
+		async () => {
+			const { data } = await getSlots();
+
+			return data;
+		},
+		{
+			initialData: [],
+		},
+	);
+
 	const handleOnSubmit = (data: EditMultiSlotForm) => {
-		const date = data.date.map((item) => item.format('YYYY-MM-DD'));
+		const dates = data.dates.map((item) => item.format('YYYY-MM-DD'));
 		const dataPost: EditSlotDTO = {
-			date,
+			dates,
 			slots: data.slots,
 		};
-		console.log(dataPost);
-		toast.success('Edit multiple slots successfully');
+		mutatePostSlots(dataPost);
 	};
+
+	React.useEffect(() => {
+		if (isSuccess) {
+			toast.success('Edit slots successfully');
+			setIsVisible(false);
+		}
+	}, [isSuccess]);
 
 	return (
 		<Modal
 			title="Edit multiple slots"
 			open={isVisible}
 			onCancel={() => setIsVisible(false)}
+			width={920}
 			onOk={() => {
 				methods.handleSubmit(handleOnSubmit)();
 				setIsVisible(false);
@@ -76,16 +102,19 @@ const MultiSlotEditModal: React.FunctionComponent<MultiSlotEditModalProps> = () 
 			<FormWrapper methods={methods}>
 				<form onSubmit={methods.handleSubmit(handleOnSubmit)} className="space-y-5">
 					<InputDateRangePicker
-						commonField={{ name: 'date', label: 'Select date' }}
-						options={{ className: 'w-full' }}
+						commonField={{ name: 'dates', label: 'Select date' }}
+						options={{ className: 'w-full max-w-lg' }}
 					/>
 					<InputCheckboxGroup
 						commonField={{
 							name: 'slots',
 							label: 'Select Available Slots',
 						}}
-						optionsDirection="column"
-						options={dataExample.slots}
+						optionsDirection="row"
+						options={querySlots.data.map((item) => ({
+							label: `${item.name}: ${item.startTime} - ${item.endTime}`,
+							value: item.id,
+						}))}
 					/>
 				</form>
 			</FormWrapper>

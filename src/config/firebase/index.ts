@@ -1,6 +1,6 @@
-import { initializeApp } from 'firebase/app';
+import { FirebaseOptions, initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-const firebaseConfig = {
+const firebaseConfig: FirebaseOptions = {
 	apiKey: 'AIzaSyDsgqxFTAzpWi5jO6SqtAvFnuNpNZGk6Vo',
 	authDomain: 'psych-support-system-37213.firebaseapp.com',
 	projectId: 'psych-support-system-37213',
