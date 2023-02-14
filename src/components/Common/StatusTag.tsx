@@ -37,7 +37,7 @@ const StatusTag: React.FunctionComponent<StatusTagProps> = ({ value, icon = <></
 
 	return (
 		<Tag icon={icon} color={color()}>
-			{isBoolean(value) ? (value ? 'Active' : 'Inactive') : value}
+			{typeof value == 'boolean' ? (value ? 'Active' : 'Inactive') : value}
 		</Tag>
 	);
 };
