@@ -1,14 +1,13 @@
 import * as React from 'react';
 import { StudentWrapper } from 'src/components/wrappers/studentWrapper';
+import StudentProfile from 'src/screens/Student/Profile';
 
 interface StudentProps {}
 
 const Student: React.FunctionComponent<StudentProps> = () => {
 	return (
 		<StudentWrapper>
-			<div className="flex w-full h-screen justify-center items-center">
-				<h1>Student</h1>
-			</div>
+			<StudentProfile />
 		</StudentWrapper>
 	);
 };

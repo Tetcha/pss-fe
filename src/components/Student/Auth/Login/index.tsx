@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { FacebookAuthProvider, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
 import { FormWrapper } from 'src/components/Input';
-import { auth } from 'src/config/firebase';
+import { auth } from '../../../../config/firebase';
 import { useLogin } from 'src/hooks/auth';
 
 // import { authLogin } from './action';
@@ -42,6 +42,7 @@ const Login: FunctionComponent<LoginProps> = () => {
 	const handleGoogleLogin = async () => {
 		try {
 			const res = await signInWithPopup(auth, googleAuth);
+			console.log(res.user);
 			res.user.getIdToken().then((token) => {
 				const payload: LoginTokenPayload = {
 					accessToken: token,

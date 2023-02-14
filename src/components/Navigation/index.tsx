@@ -5,9 +5,7 @@ import { useRouter } from 'next/router';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
 
 import { logout } from 'src/api/auth';
-import { constant } from 'src/constants/api/token';
 import { ROUTES_URL } from 'src/constants/routes';
-import { store } from 'src/store';
 import { useStoreUser } from 'src/store';
 
 interface NavigationProps {}
@@ -23,9 +21,10 @@ export const Navigation: React.FunctionComponent<NavigationProps> = () => {
 	const router = useRouter();
 	const [visible, setVisible] = React.useState<boolean>(true);
 	const user = useStoreUser();
-	React.useEffect(() => {});
-	const handleLogout = async () => {
+	React.useEffect(() => {}, [router]);
+	const handleLogout = () => {
 		logout();
+		// router.push(ROUTES_URL.HOME);
 		window.location.reload();
 	};
 
@@ -53,9 +52,9 @@ export const Navigation: React.FunctionComponent<NavigationProps> = () => {
 							</Link>
 						) : (
 							<div className="flex justify-center items-center gap-4">
-								<h3 className="block pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">
+								{/* <h3 className="block pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">
 									Hello {user.name}
-								</h3>
+								</h3> */}
 								<Link
 									href={ROUTES_URL.HOME}
 									onClick={handleLogout}
