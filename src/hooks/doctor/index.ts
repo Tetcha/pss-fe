@@ -1,4 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
+import { updateDoctorActive } from 'src/api/admin/status';
 
 import { constant } from 'src/constants/api/token';
 
@@ -20,4 +21,13 @@ export const useLoginDoctor = () => {
 		},
 	});
 	return { mutateLogin, mutateLoginAsync, ...rest };
+};
+
+export const useUpdateDoctorActive = () => {
+	const {
+		mutate: mutateUpdateDoctorActive,
+		mutateAsync: mutateUpdateDoctorActiveAsync,
+		...rest
+	} = useMutation(updateDoctorActive);
+	return { mutateUpdateDoctorActive, mutateUpdateDoctorActiveAsync, ...rest };
 };

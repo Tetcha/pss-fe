@@ -15,3 +15,8 @@ export interface CommonFilterProps {
 	order: SortOrder;
 	orderBy: string;
 }
+
+export interface UpdateStatusDTO {
+	id: string;
+	isActive: boolean;
+}
