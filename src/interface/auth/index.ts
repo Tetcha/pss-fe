@@ -3,8 +3,13 @@ export interface LoginPayload {
 	password: string;
 }
 
-export interface RegisterPayload {
+export interface StudentUpdateForm {
+	name: string;
+	studentCode: string;
 	email: string;
-	password: string;
-	confirmPassword: string;
+	gender: string;
+	birthday: string;
+	phone: string;
 }
+
+export interface StudentUpdatetDTO extends StudentUpdateForm {}

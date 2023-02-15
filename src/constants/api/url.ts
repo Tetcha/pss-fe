@@ -6,6 +6,10 @@ export const API_URL = Object.freeze({
 	LOGIN_ADMIN: '/admin/login',
 	LOGIN_DOCTOR: '/doctor/login',
 
+	// Student
+	STUDENT_ME: '/student/me',
+	UPDATE_STUDENT: '/student',
+
 	// Doctor
 	DOCTOR: '/doctor',
 	DOCTOR_ME: '/doctor/me',
