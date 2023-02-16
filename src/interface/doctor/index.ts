@@ -3,6 +3,15 @@ import { Doctor } from 'src/models/doctor';
 
 import { CommonFilterProps, Gender } from './../common';
 
+export interface DoctorUpdateForm extends Pick<Doctor, 'name' | 'briefInfo' | 'phone' | 'gender'> {
+	image?: File | null;
+	birthday: Moment;
+}
+
+export interface DoctorUpdateDTO extends Omit<DoctorUpdateForm, 'birthday'> {
+	birthday: string;
+}
+
 export interface AddDoctorForm {
 	name: string;
 	email: string;

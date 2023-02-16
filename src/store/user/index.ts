@@ -22,6 +22,7 @@ const initialState: UserState = {
 	gender: Gender.MALE,
 	phone: '',
 	studentCode: '',
+	avatar: '',
 };
 
 const reducer = createSlice({

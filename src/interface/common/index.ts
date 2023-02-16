@@ -2,6 +2,7 @@ import { SortOrder } from 'src/contexts/TableUtilContext';
 export enum Gender {
 	MALE = 'MALE',
 	FEMALE = 'FEMALE',
+	OTHERS = 'OTHERS',
 }
 
 export interface ResponseList<T> {
@@ -14,4 +15,9 @@ export interface CommonFilterProps {
 	pageSize: number;
 	order: SortOrder;
 	orderBy: string;
+}
+
+export interface UpdateStatusDTO {
+	id: string;
+	isActive: boolean;
 }

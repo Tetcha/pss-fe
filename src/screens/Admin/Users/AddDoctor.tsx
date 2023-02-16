@@ -77,6 +77,10 @@ const AddDoctor: React.FunctionComponent<AddDoctorProps> = () => {
 									options={[
 										{ label: 'Male', value: Gender.MALE },
 										{ label: 'Female', value: Gender.FEMALE },
+										{
+											label: 'Others',
+											value: Gender.OTHERS,
+										},
 									]}
 								/>
 

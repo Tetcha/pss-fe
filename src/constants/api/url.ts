@@ -6,9 +6,14 @@ export const API_URL = Object.freeze({
 	LOGIN_ADMIN: '/admin/login',
 	LOGIN_DOCTOR: '/doctor/login',
 
+	// Student
+	STUDENT_ME: '/student/me',
+	UPDATE_STUDENT: '/student',
+
 	// Doctor
 	DOCTOR: '/doctor',
 	DOCTOR_ME: '/doctor/me',
+	UPDATE_DOCTOR: '/doctor',
 
 	// Admin
 	ADMIN_ME: '/admin/me',
@@ -17,6 +22,8 @@ export const API_URL = Object.freeze({
 	GET_ADMIN_LIST: '/admins',
 	GET_DOCTOR_LIST: '/doctors',
 	GET_STUDENT_LIST: '/students',
+	UPDATE_DOCTOR_ACTIVE: (id: string, status: boolean) => `/doctor/${id}/status/${status}`,
+	UPDATE_STUDENT_ACTIVE: (id: string, status: boolean) => `/student/${id}/status/${status}`,
 
 	// Slot
 	SLOTS: '/slots',

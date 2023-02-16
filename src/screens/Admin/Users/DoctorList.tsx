@@ -6,8 +6,6 @@ import _get from 'lodash.get';
 import StatusTag from 'src/components/Common/StatusTag';
 import { TableBodyCell, TableBuilder, TableHeaderCell } from 'src/components/Tables';
 import { ROUTES_URL } from 'src/constants/routes';
-import { Gender } from 'src/interface/common';
-import { Doctor } from 'src/models/doctor';
 import { getDoctorList } from 'src/api/admin/list';
 import { DoctorListFilter } from 'src/interface/doctor';
 import { pagingMapper } from 'src/utils/object.helper';
@@ -15,6 +13,8 @@ import { useTableUtil } from 'src/contexts/TableUtilContext';
 import { Button, Col, Row } from 'antd';
 import FormFilterWrapper from 'src/components/Input/FormFilterWrapper';
 import { TextField } from 'src/components/Input';
+import { useUpdateDoctorActive } from 'src/hooks/doctor';
+import { toast } from 'react-toastify';
 
 interface DoctorListProps {
 	filters: Partial<DoctorListFilter>;
@@ -35,9 +35,18 @@ const DoctorList: React.FunctionComponent<DoctorListProps> = ({ filters }) => {
 		{ initialData: { data: [], count: 0 } },
 	);
 
-	const handleIsActive = (id: string) => {
-		console.log('handleIsActive', id);
+	const { mutateUpdateDoctorActive, isSuccess } = useUpdateDoctorActive();
+
+	const handleIsActive = (id: string, status: boolean) => {
+		mutateUpdateDoctorActive({ id, isActive: status });
 	};
+
+	React.useEffect(() => {
+		if (isSuccess) {
+			query.refetch();
+			toast.success('Update status success');
+		}
+	}, [isSuccess]);
 
 	return (
 		<>
@@ -122,11 +131,11 @@ const DoctorList: React.FunctionComponent<DoctorListProps> = ({ filters }) => {
 							return (
 								<div className="flex justify-end gap-2">
 									{props.isActive ? (
-										<Button danger onClick={() => handleIsActive(props.id)}>
+										<Button danger onClick={() => handleIsActive(props.id, false)}>
 											Deactve
 										</Button>
 									) : (
-										<Button type="primary" onClick={() => handleIsActive(props.id)}>
+										<Button type="primary" onClick={() => handleIsActive(props.id, true)}>
 											Active
 										</Button>
 									)}

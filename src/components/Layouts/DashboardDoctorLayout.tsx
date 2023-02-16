@@ -15,7 +15,7 @@ import Meta from 'antd/lib/card/Meta';
 import { Header } from 'antd/lib/layout/layout';
 import clsx from 'clsx';
 
-import { logout } from 'src/api/auth';
+import { logout } from 'src/api/student/auth';
 import { ROUTES_URL } from 'src/constants/routes';
 import { useStoreDoctor } from 'src/store';
 const { Sider, Content } = Layout;
@@ -83,7 +83,7 @@ const DashboardDoctorLayout: React.FunctionComponent<DashboardDoctorLayoutProps>
 					/>
 					<Card
 						actions={[
-							<EditOutlined key="edit" />,
+							<EditOutlined key="edit" onClick={() => router.push(ROUTES_URL.DOCTOR_ME)} />,
 							<button
 								className="border-none outline-none cursor-pointer bg-inherit"
 								key="sign-out"
