@@ -6,13 +6,25 @@ export interface LoginPayload {
 	password: string;
 }
 
-export interface StudentUpdateForm
-	extends Pick<Student, 'name' | 'studentCode' | 'email' | 'gender' | 'phone'> {
+// export interface StudentUpdateForm
+// 	extends Pick<Student, 'name' | 'studentCode' | 'email' | 'gender' | 'phone'> {
+// 	image?: File | null;
+// 	birthday: Moment;
+// }
+
+export interface StudentUpdateForm {
+	name: string;
+	studentCode: string;
+	email: string;
+	gender: Gender;
+	phone: string;
 	image?: File | null;
 	birthday: Moment;
 }
 
-export interface StudentUpdatetDTO extends StudentUpdateForm {}
+export interface StudentUpdateDTO extends Omit<StudentUpdateForm, 'birthday'> {
+	birthday: string;
+}
 // export interface StudentUpdatetDTO extends Omit<StudentUpdateForm, 'birthday'> {
 // 	birthday: string;
 // }
