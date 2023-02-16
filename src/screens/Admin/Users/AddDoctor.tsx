@@ -64,7 +64,7 @@ const AddDoctor: React.FunctionComponent<AddDoctorProps> = () => {
 									{/* <img className="h-36 w-36" src={'https://fuquiz.s3.ap-southeast-1.amazonaws.com/avatar-among-us-3.png'} /> */}
 								</div>
 								<TextField commonField={{ name: 'name', label: 'Fullname' }} />
-								<TextField commonField={{ name: 'email', label: 'Email' }} />
+								<TextField commonField={{ name: 'username', label: 'Username' }} />
 								<TextField commonField={{ name: 'password', label: 'Password' }} type="password" />
 								<TextField
 									commonField={{ name: 'confirmPassword', label: 'Confirm password' }}

@@ -14,7 +14,7 @@ export const FormParser = (input: any): FormData => {
 export const SendFormRequestConfig = () => {
 	return {
 		headers: {
-			'Content-Type': 'application/x-www-form-urlencoded',
+			'Content-Type': 'multipart/form-data',
 		},
 	};
 };
