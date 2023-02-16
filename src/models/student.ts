@@ -12,4 +12,5 @@ export interface Student {
 	isActive: boolean;
 	updateAt: string;
 	createAt: string;
+	avatar: string;
 }

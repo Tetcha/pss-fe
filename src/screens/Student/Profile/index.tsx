@@ -23,12 +23,11 @@ const defaultValues: StudentUpdateForm = {
 };
 
 const StudentProfile: React.FunctionComponent<StudentProfileProps> = () => {
-	const { name, studentCode, email, gender, birthday, phone, avatar, balance } = useStoreUser();
-
-	const methods = useForm({
+	const methods = useForm<StudentUpdateForm>({
 		defaultValues,
 	});
 
+	const { name, studentCode, email, gender, birthday, phone, avatar, balance } = useStoreUser();
 	const { mutateUpdate, isSuccess } = useUpdateStudent();
 
 	const handleOnSubmit = async (data: StudentUpdateForm) => {
@@ -53,17 +52,15 @@ const StudentProfile: React.FunctionComponent<StudentProfileProps> = () => {
 	// }, [methods, birthday, email, gender, name, phone, studentCode]);
 
 	React.useEffect(() => {
-		if (isSuccess) {
-			methods.reset({
-				name: name,
-				studentCode: studentCode,
-				email: email,
-				gender: gender,
-				birthday: moment(birthday),
-				phone: phone,
-			});
-		}
-	}, [isSuccess, methods, birthday, email, gender, name, phone, studentCode, methods]);
+		methods.reset({
+			name,
+			studentCode,
+			email,
+			gender,
+			birthday: moment(birthday),
+			phone,
+		});
+	}, [isSuccess, methods, birthday, email, gender, name, phone, studentCode]);
 
 	React.useEffect(() => {
 		if (isSuccess) {
