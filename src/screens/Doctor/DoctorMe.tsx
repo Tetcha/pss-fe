@@ -1,6 +1,3 @@
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import { Upload } from 'antd';
-import { RcFile, UploadChangeParam, UploadFile, UploadProps } from 'antd/lib/upload';
 import moment from 'moment';
 import Link from 'next/link';
 import * as React from 'react';
