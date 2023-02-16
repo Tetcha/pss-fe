@@ -12,6 +12,8 @@ import { useTableUtil } from 'src/contexts/TableUtilContext';
 import FormFilterWrapper from 'src/components/Input/FormFilterWrapper';
 import { Button, Col, Row } from 'antd';
 import { TextField } from 'src/components/Input';
+import { useUpdateStudentActive } from 'src/hooks/student';
+import { toast } from 'react-toastify';
 
 interface StudentListProps {
 	filters: Partial<StudentListFilter>;
@@ -32,9 +34,18 @@ const StudentList: React.FunctionComponent<StudentListProps> = ({ filters }) => 
 		{ initialData: { data: [], count: 0 } },
 	);
 
-	const handleIsActive = (id: string) => {
-		console.log('handleIsActive', id);
+	const { mutateUpdateDoctorActive, isSuccess } = useUpdateStudentActive();
+
+	const handleIsActive = (id: string, status: boolean) => {
+		mutateUpdateDoctorActive({ id, isActive: status });
 	};
+
+	React.useEffect(() => {
+		if (isSuccess) {
+			query.refetch();
+			toast.success('Update status success');
+		}
+	}, [isSuccess]);
 
 	return (
 		<>
@@ -140,11 +151,11 @@ const StudentList: React.FunctionComponent<StudentListProps> = ({ filters }) => 
 							return (
 								<div className="flex justify-end gap-2">
 									{props.isActive ? (
-										<Button danger onClick={() => handleIsActive(props.id)}>
+										<Button danger onClick={() => handleIsActive(props.id, false)}>
 											Deactve
 										</Button>
 									) : (
-										<Button type="primary" onClick={() => handleIsActive(props.id)}>
+										<Button type="primary" onClick={() => handleIsActive(props.id, true)}>
 											Active
 										</Button>
 									)}
