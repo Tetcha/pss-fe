@@ -3,9 +3,9 @@ import { useRouter } from 'next/router';
 
 import { DoctorWrapper } from 'src/components/wrappers/doctorWrapper';
 
-interface AdminPageProps {}
+interface DoctorPageProps {}
 
-const AdminPage: React.FunctionComponent<AdminPageProps> = () => {
+const DoctorPage: React.FunctionComponent<DoctorPageProps> = () => {
 	const router = useRouter();
 	React.useEffect(() => {
 		router.push('/doctor/calendar');
@@ -17,4 +17,4 @@ const AdminPage: React.FunctionComponent<AdminPageProps> = () => {
 	);
 };
 
-export default AdminPage;
+export default DoctorPage;

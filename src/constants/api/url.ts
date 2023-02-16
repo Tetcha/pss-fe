@@ -9,6 +9,7 @@ export const API_URL = Object.freeze({
 	// Doctor
 	DOCTOR: '/doctor',
 	DOCTOR_ME: '/doctor/me',
+	UPDATE_DOCTOR: '/doctor',
 
 	// Admin
 	ADMIN_ME: '/admin/me',
