@@ -12,7 +12,8 @@ import { ROUTES_URL } from 'src/constants/routes';
 import { useUpdateDoctor } from 'src/hooks/doctor';
 import { Gender } from 'src/interface/common';
 import { DoctorUpdateDTO, DoctorUpdateForm } from 'src/interface/doctor';
-import { useStoreDoctor } from 'src/store';
+import { store, useStoreDoctor } from 'src/store';
+import { doctorThunk } from 'src/store/doctor/thunks';
 import { fileHelper } from 'src/utils';
 
 interface DoctorMeProps {}
@@ -39,11 +40,12 @@ const DoctorMe: React.FunctionComponent<DoctorMeProps> = () => {
 			name,
 			birthday: moment(birthday),
 			briefInfo,
-			gender,
 			phone,
+			gender,
+			image: null,
 		});
 		setPreviewAvatarUrl(avatar);
-	}, []);
+	}, [avatar, birthday, briefInfo, gender, name, phone, methods]);
 
 	React.useEffect(() => {
 		if (avatarFile) setPreviewAvatarUrl(URL.createObjectURL(avatarFile));
@@ -77,6 +79,7 @@ const DoctorMe: React.FunctionComponent<DoctorMeProps> = () => {
 	React.useEffect(() => {
 		if (isSuccess) {
 			toast.success('Update profile successfully');
+			store.dispatch(doctorThunk.getCurrentDoctor());
 		}
 	}, [isSuccess]);
 
