@@ -18,14 +18,14 @@ const defaultValues: StudentUpdateForm = {
 	studentCode: '',
 	email: '',
 	gender: Gender.MALE,
-	birthday: moment('2000-01-01'),
+	birthday: moment(),
 	phone: '',
 };
 
 const StudentProfile: React.FunctionComponent<StudentProfileProps> = () => {
-	const user = useStoreUser();
+	const { name, studentCode, email, gender, birthday, phone, avatar, balance } = useStoreUser();
 
-	const methods = useForm<StudentUpdateForm>({
+	const methods = useForm({
 		defaultValues,
 	});
 
@@ -43,27 +43,27 @@ const StudentProfile: React.FunctionComponent<StudentProfileProps> = () => {
 		mutateUpdate(payload);
 	};
 
-	React.useEffect(() => {
-		methods.setValue('name', user.name);
-		methods.setValue('studentCode', user.studentCode);
-		methods.setValue('email', user.email);
-		methods.setValue('gender', user.gender);
-		methods.setValue('birthday', moment(user.birthday));
-		methods.setValue('phone', user.phone);
-	}, [methods, user.birthday, user.email, user.gender, user.name, user.phone, user.studentCode]);
-
 	// React.useEffect(() => {
-	// 	if (isSuccess) {
-	// 		methods.reset({
-	// 			name: user.name,
-	// 			studentCode: user.studentCode,
-	// 			email: user.email,
-	// 			gender: user.gender,
-	// 			birthday: moment(user.birthday),
-	// 			phone: user.phone,
-	// 		});
-	// 	}
-	// }, [isSuccess, methods, user.birthday, user.email, user.gender, user.name, user.phone, user.studentCode]);
+	// 	methods.setValue('name', name);
+	// 	methods.setValue('studentCode', studentCode);
+	// 	methods.setValue('email', email);
+	// 	methods.setValue('gender', gender);
+	// 	methods.setValue('birthday', moment(birthday));
+	// 	methods.setValue('phone', phone);
+	// }, [methods, birthday, email, gender, name, phone, studentCode]);
+
+	React.useEffect(() => {
+		if (isSuccess) {
+			methods.reset({
+				name: name,
+				studentCode: studentCode,
+				email: email,
+				gender: gender,
+				birthday: moment(birthday),
+				phone: phone,
+			});
+		}
+	}, [isSuccess, methods, birthday, email, gender, name, phone, studentCode, methods]);
 
 	React.useEffect(() => {
 		if (isSuccess) {
@@ -83,11 +83,15 @@ const StudentProfile: React.FunctionComponent<StudentProfileProps> = () => {
 				<div className="bg-white rounded-lg shadow-xl pb-8 w-full max-w-container">
 					<div className="flex flex-col items-center -mt-20">
 						<LazyLoadImage
-							src="https://lh3.googleusercontent.com/a/AEdFTp6Rea4rno67N9QY36Nm-PKJVbnvdnagjEqbfm4k=s96-c"
+							src={
+								avatar
+									? avatar
+									: 'https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png'
+							}
 							className="w-40 border-4 border-white rounded-full"
 						/>
 						<div className="flex items-center justify-center space-x-2 mt-2">
-							<div className="text-2xl">{user.name}</div>
+							<div className="text-2xl">{name}</div>
 							<CheckCircleFilled
 								type="icon"
 								style={{
@@ -114,22 +118,21 @@ const StudentProfile: React.FunctionComponent<StudentProfileProps> = () => {
 											<TextField
 												commonField={{ label: 'Full Name:', name: 'name' }}
 												type="text"
-												value={user.name}
-												readOnly
+												defaultValue={name}
 											/>
 										</li>
 										<li className="flex border-y py-2">
 											<TextField
 												commonField={{ label: 'Student Code:', name: 'studentCode' }}
 												type="text"
-												defaultValue={user.studentCode}
+												defaultValue={studentCode}
 											/>
 										</li>
 										<li className="flex border-y py-2">
 											<TextField
 												commonField={{ label: 'Email:', name: 'email' }}
 												type="text"
-												defaultValue={user.email}
+												defaultValue={email}
 											/>
 										</li>
 										<InputRadioGroup<string>
@@ -160,14 +163,14 @@ const StudentProfile: React.FunctionComponent<StudentProfileProps> = () => {
 											<TextField
 												commonField={{ label: 'Phone Number:', name: 'phone' }}
 												type="phone"
-												placeholder={user.phone}
+												placeholder={phone}
 											/>
 										</li>
 										<li className="flex border-y py-2">
 											<TextField
 												commonField={{ label: 'Balance:', name: 'balance' }}
 												type="phone"
-												value={user.balance + ' VND'}
+												value={balance + ' VND'}
 											/>
 										</li>
 										<div className="flex items-center justify-end space-x-4 mt-2">

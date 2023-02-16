@@ -21,4 +21,5 @@ export interface User {
 	status: UserStatus;
 	name: string;
 	email: string;
+	avatar: string;
 }

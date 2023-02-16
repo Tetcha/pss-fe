@@ -42,9 +42,10 @@ const Login: FunctionComponent<LoginProps> = () => {
 	const handleGoogleLogin = async () => {
 		try {
 			const res = await signInWithPopup(auth, googleAuth);
-			// console.log(res.user);
+			console.log(res.user);
 			// console.log(res.user.email);
 			res.user.getIdToken().then((token) => {
+				console.log('token', token);
 				const payload: LoginTokenPayload = {
 					accessToken: token,
 				};
