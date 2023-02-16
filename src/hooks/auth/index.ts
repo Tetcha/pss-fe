@@ -21,14 +21,6 @@ export const useLogin = () => {
 };
 
 export const useUpdateStudent = () => {
-	const {
-		mutate: mutateUpdate,
-		mutateAsync: mutateUpdateAsync,
-		...rest
-	} = useMutation(update, {
-		onSuccess: () => {
-			store.dispatch(userThunk.getCurrentUser());
-		},
-	});
+	const { mutate: mutateUpdate, mutateAsync: mutateUpdateAsync, ...rest } = useMutation(update);
 	return { mutateUpdate, mutateUpdateAsync, ...rest };
 };
