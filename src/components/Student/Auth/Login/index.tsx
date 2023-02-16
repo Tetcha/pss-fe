@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { FacebookAuthProvider, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
 import { FormWrapper } from 'src/components/Input';
-import { auth } from '../../../../config/firebase';
+import { auth } from 'src/config/firebase';
 import { useLogin } from 'src/hooks/auth';
 
 // import { authLogin } from './action';
@@ -42,7 +42,8 @@ const Login: FunctionComponent<LoginProps> = () => {
 	const handleGoogleLogin = async () => {
 		try {
 			const res = await signInWithPopup(auth, googleAuth);
-			console.log(res.user);
+			// console.log(res.user);
+			// console.log(res.user.email);
 			res.user.getIdToken().then((token) => {
 				const payload: LoginTokenPayload = {
 					accessToken: token,
@@ -78,22 +79,20 @@ const Login: FunctionComponent<LoginProps> = () => {
 			</div>
 			<div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
 				<div className="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
-					<FormWrapper methods={methods}>
-						<div className="flex flex-col items-center space-y-4">
-							<button
-								onClick={handleGoogleLogin}
-								className="flex justify-center px-6 py-2.5 text-white border-none font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full mb-3 bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-600 hover:to-blue-700 cursor-pointer"
-							>
-								Login With Google
-							</button>
-							<button
-								onClick={handleFacebookLogin}
-								className="flex justify-center px-6 py-2.5 border-none text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full mb-3 bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-600 hover:to-blue-700 cursor-pointer"
-							>
-								Login With Facebook
-							</button>
-						</div>
-					</FormWrapper>
+					<div className="flex flex-col items-center space-y-4">
+						<button
+							onClick={handleGoogleLogin}
+							className="flex justify-center px-6 py-2.5 text-white border-none font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full mb-3 bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-600 hover:to-blue-700 cursor-pointer"
+						>
+							Login With Google
+						</button>
+						<button
+							onClick={handleFacebookLogin}
+							className="flex justify-center px-6 py-2.5 border-none text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full mb-3 bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-600 hover:to-blue-700 cursor-pointer"
+						>
+							Login With Facebook
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>

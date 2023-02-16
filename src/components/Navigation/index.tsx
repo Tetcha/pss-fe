@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
 
-import { logout } from 'src/api/auth';
+import { logout } from 'src/api/student/auth';
 import { ROUTES_URL } from 'src/constants/routes';
 import { useStoreUser } from 'src/store';
 
