@@ -1,12 +1,14 @@
-import { CheckCircleFilled, EditFilled } from '@ant-design/icons';
-import { Button } from 'antd';
+import { CheckCircleFilled, CheckOutlined, EditFilled } from '@ant-design/icons';
+import moment from 'moment';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { toast } from 'react-toastify';
-import { FormWrapper, TextField } from 'src/components/Input';
+import { FormWrapper, InputRadioGroup, TextField } from 'src/components/Input';
+import InputDatePicker from 'src/components/Input/InputDatePicker';
 import { useUpdateStudent } from 'src/hooks/auth';
 import { StudentUpdatetDTO, StudentUpdateForm } from 'src/interface/auth';
+import { Gender } from 'src/interface/common';
 import { useStoreUser } from 'src/store';
 
 interface StudentProfileProps {}
@@ -15,8 +17,8 @@ const defaultValues: StudentUpdateForm = {
 	name: '',
 	studentCode: '',
 	email: '',
-	gender: '',
-	birthday: '',
+	gender: Gender.MALE,
+	birthday: moment('2000-01-01'),
 	phone: '',
 };
 
@@ -46,46 +48,28 @@ const StudentProfile: React.FunctionComponent<StudentProfileProps> = () => {
 		methods.setValue('studentCode', user.studentCode);
 		methods.setValue('email', user.email);
 		methods.setValue('gender', user.gender);
-		methods.setValue('birthday', user.birthday);
+		methods.setValue('birthday', moment(user.birthday));
 		methods.setValue('phone', user.phone);
 	}, [methods, user.birthday, user.email, user.gender, user.name, user.phone, user.studentCode]);
+
+	// React.useEffect(() => {
+	// 	if (isSuccess) {
+	// 		methods.reset({
+	// 			name: user.name,
+	// 			studentCode: user.studentCode,
+	// 			email: user.email,
+	// 			gender: user.gender,
+	// 			birthday: moment(user.birthday),
+	// 			phone: user.phone,
+	// 		});
+	// 	}
+	// }, [isSuccess, methods, user.birthday, user.email, user.gender, user.name, user.phone, user.studentCode]);
 
 	React.useEffect(() => {
 		if (isSuccess) {
 			toast.success('Update profile successfully');
 		}
 	}, [isSuccess]);
-
-	// const inforUser = [
-	// 	{
-	// 		title: 'Full name',
-	// 		value: user.name,
-	// 	},
-	// 	{
-	// 		title: 'Student Code',
-	// 		value: user.studentCode,
-	// 	},
-	// 	{
-	// 		title: 'Email',
-	// 		value: user.email,
-	// 	},
-	// 	{
-	// 		title: 'Gender',
-	// 		value: user.gender,
-	// 	},
-	// 	{
-	// 		title: 'Birthday',
-	// 		value: user.birthday,
-	// 	},
-	// 	{
-	// 		title: 'Phone Number',
-	// 		value: user.phone,
-	// 	},
-	// 	{
-	// 		title: 'Balance',
-	// 		value: user.balance + ' VND',
-	// 	},
-	// ];
 
 	return (
 		<>
@@ -127,13 +111,11 @@ const StudentProfile: React.FunctionComponent<StudentProfileProps> = () => {
 										className="mt-2 text-gray-700"
 									>
 										<li className="flex border-y py-2">
-											{/* <span className="font-bold w-28">{item.title}:</span>
-													<span className="text-gray-700">{item.value}</span> */}
 											<TextField
 												commonField={{ label: 'Full Name:', name: 'name' }}
 												type="text"
 												value={user.name}
-												// readOnly
+												readOnly
 											/>
 										</li>
 										<li className="flex border-y py-2">
@@ -141,7 +123,6 @@ const StudentProfile: React.FunctionComponent<StudentProfileProps> = () => {
 												commonField={{ label: 'Student Code:', name: 'studentCode' }}
 												type="text"
 												defaultValue={user.studentCode}
-												// placeholder={user.studentCode}
 											/>
 										</li>
 										<li className="flex border-y py-2">
@@ -151,19 +132,29 @@ const StudentProfile: React.FunctionComponent<StudentProfileProps> = () => {
 												defaultValue={user.email}
 											/>
 										</li>
+										<InputRadioGroup<string>
+											commonField={{
+												name: 'gender',
+												label: 'GENDER',
+											}}
+											options={[
+												{
+													label: 'Male',
+													value: Gender.MALE,
+												},
+												{
+													label: 'Female',
+													value: Gender.FEMALE,
+												},
+												{
+													label: 'Others',
+													value: Gender.OTHERS,
+												},
+											]}
+										/>
+
 										<li className="flex border-y py-2">
-											<TextField
-												commonField={{ label: 'Gender:', name: 'gender' }}
-												type="text"
-												defaultValue="MALE"
-											/>
-										</li>
-										<li className="flex border-y py-2">
-											<TextField
-												commonField={{ label: 'Birthday:', name: 'birthday' }}
-												type="date"
-												defaultValue={user.birthday}
-											/>
+											<InputDatePicker commonField={{ name: 'birthday', label: 'Birthday' }} />
 										</li>
 										<li className="flex border-y py-2">
 											<TextField
@@ -184,7 +175,7 @@ const StudentProfile: React.FunctionComponent<StudentProfileProps> = () => {
 												className="flex items-center bg-blue-600 hover:bg-blue-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100 cursor-pointer border-none"
 												type="submit"
 											>
-												<EditFilled type="icon" style={{ fontSize: '16px', color: '#fff' }} />
+												<CheckOutlined type="icon" style={{ fontSize: '16px', color: '#fff' }} />
 												<span>Save</span>
 											</button>
 										</div>

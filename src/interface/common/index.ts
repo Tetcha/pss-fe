@@ -2,6 +2,7 @@ import { SortOrder } from 'src/contexts/TableUtilContext';
 export enum Gender {
 	MALE = 'MALE',
 	FEMALE = 'FEMALE',
+	OTHERS = 'OTHERS',
 }
 
 export interface ResponseList<T> {
