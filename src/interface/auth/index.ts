@@ -1,5 +1,4 @@
 import { Moment } from 'moment';
-import { Gender } from '../common';
 import { Student } from 'src/models/student';
 export interface LoginPayload {
 	username: string;
@@ -12,12 +11,8 @@ export interface LoginPayload {
 // 	birthday: Moment;
 // }
 
-export interface StudentUpdateForm {
-	name: string;
-	studentCode: string;
-	email: string;
-	gender: Gender;
-	phone: string;
+export interface StudentUpdateForm
+	extends Pick<Student, 'name' | 'studentCode' | 'email' | 'gender' | 'phone'> {
 	image?: File | null;
 	birthday: Moment;
 }
