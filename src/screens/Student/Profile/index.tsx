@@ -29,6 +29,7 @@ const StudentProfile: React.FunctionComponent<StudentProfileProps> = () => {
 
 	const { name, studentCode, email, gender, birthday, phone, avatar, balance } = useStoreUser();
 
+	console.log('birthday', birthday);
 	//check value first
 	React.useEffect(() => {
 		methods.reset({
