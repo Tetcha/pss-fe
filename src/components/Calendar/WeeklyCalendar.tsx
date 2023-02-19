@@ -181,8 +181,10 @@ const WeeklyCalendar = <T,>({
 
 	const renderHeadRow = React.useCallback(
 		(columns: ColumnsType<TableType>) => {
-			console.log('week', week);
-			return columns.map((column) => {
+			const currentWeekday = moment().format('ddd: DD/MM');
+			console.log('currentWeekday', currentWeekday);
+
+			const columnsFormatWeekday = columns.map((column) => {
 				switch (column.title) {
 					case 'Mon':
 						return {
@@ -223,6 +225,18 @@ const WeeklyCalendar = <T,>({
 						return column;
 				}
 			});
+
+			const finaleColumns = columnsFormatWeekday.map((column) => {
+				if (column.title === currentWeekday) {
+					return {
+						...column,
+						className: 'bg-blue-50',
+					};
+				}
+				return column;
+			});
+
+			return finaleColumns;
 		},
 		[week],
 	);
@@ -230,7 +244,7 @@ const WeeklyCalendar = <T,>({
 	return (
 		<Table
 			sticky={true}
-			className="h-[1000px] overflow-y-auto relative"
+			className="relative overflow-y-auto h-[702px]"
 			bordered={true}
 			onHeaderRow={() => ({ className: 'bg-red-400' })}
 			pagination={false}

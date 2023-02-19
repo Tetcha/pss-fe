@@ -49,7 +49,7 @@ const DashboardDoctorLayout: React.FunctionComponent<DashboardDoctorLayoutProps>
 	children,
 }) => {
 	const [collapsed, setCollapsed] = React.useState(false);
-	const { name, balance } = useStoreDoctor();
+	const { name, balance, avatar } = useStoreDoctor();
 	const router = useRouter();
 
 	const signOut = () => {
@@ -102,7 +102,7 @@ const DashboardDoctorLayout: React.FunctionComponent<DashboardDoctorLayoutProps>
 						})}
 					>
 						<Meta
-							avatar={<Avatar src={`https://ui-avatars.com/api/?name=${name}`} />}
+							avatar={<Avatar src={avatar || `https://ui-avatars.com/api/?name=${name}`} />}
 							description={<p className="text-base font-medium text-gray-900">{formatCurrency}</p>}
 							title={name}
 						/>
