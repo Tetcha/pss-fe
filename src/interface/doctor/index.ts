@@ -29,3 +29,7 @@ export interface AddDoctorDTO extends Omit<AddDoctorForm, 'birthday'> {
 export interface DoctorListFilter
 	extends CommonFilterProps,
 		Partial<Pick<Doctor, 'phone' | 'username' | 'name'>> {}
+
+export interface DoctorListFilterForStudent extends DoctorListFilter {
+	gender: Gender;
+}
