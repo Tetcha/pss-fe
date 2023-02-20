@@ -1,3 +1,4 @@
+import { SearchOutlined } from '@ant-design/icons';
 import { Button, Col, Row } from 'antd';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
@@ -24,6 +25,7 @@ const FormFilterWrapper = <T,>({ defaultValues, children }: FormFilterWrapperPro
 					{children}
 					<Col style={{ textAlign: 'right' }}>
 						<Button type="primary" htmlType="submit" size="large">
+							<SearchOutlined type="icon" style={{ fontSize: '16px', color: '#fff' }} />
 							Search
 						</Button>
 					</Col>
