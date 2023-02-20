@@ -26,7 +26,11 @@ const menuLinks = [
 		icon: <CalendarOutlined />,
 		label: 'Calendar',
 	},
-
+	{
+		key: ROUTES_URL.DOCTOR_WEEK_CALENDAR,
+		icon: <TableOutlined />,
+		label: 'Week Calendar',
+	},
 	{
 		key: ROUTES_URL.DOCTOR_BOOKING,
 		icon: <TableOutlined />,
