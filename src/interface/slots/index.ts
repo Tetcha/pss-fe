@@ -10,6 +10,17 @@ export interface EditSlotForm {
 	slots: number[];
 }
 
+export interface FilterSlotForm {
+	id: string;
+	from: Moment;
+	to: Moment;
+}
+
+export interface FilterSlotDTO extends Omit<FilterSlotForm, 'from' | 'to'> {
+	from: string;
+	to: string;
+}
+
 export interface EditSlotDTO extends Omit<EditMultiSlotForm | EditSlotForm, 'dates'> {
 	dates: string[];
 }

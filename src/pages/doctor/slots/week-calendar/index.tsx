@@ -1,5 +1,5 @@
 import { DoctorWrapper } from 'src/components/wrappers/doctorWrapper';
-import DoctorWeekCalendar from 'src/screens/Doctor/DoctorWeekCalendar';
+import DoctorSlotsWeekCalendar from 'src/screens/Doctor/DoctorSlotsWeekCalendar';
 
 interface DoctorWeekCalendarPageProps {}
 
@@ -7,7 +7,7 @@ const DoctorWeekCalendarPage: React.FunctionComponent<DoctorWeekCalendarPageProp
 	return (
 		<>
 			<DoctorWrapper>
-				<DoctorWeekCalendar />
+				<DoctorSlotsWeekCalendar />
 			</DoctorWrapper>
 		</>
 	);

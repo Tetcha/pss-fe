@@ -22,15 +22,20 @@ const { Sider, Content } = Layout;
 
 const menuLinks = [
 	{
-		key: ROUTES_URL.DOCTOR_CALENDAR,
+		label: 'Slots',
 		icon: <CalendarOutlined />,
-		label: 'Calendar',
+		children: [
+			{
+				key: ROUTES_URL.DOCTOR_SLOTS_CALENDAR,
+				label: 'Calendar',
+			},
+			{
+				key: ROUTES_URL.DOCTOR_SLOTS_WEEK_CALENDAR,
+				label: 'Week Calendar',
+			},
+		],
 	},
-	{
-		key: ROUTES_URL.DOCTOR_WEEK_CALENDAR,
-		icon: <TableOutlined />,
-		label: 'Week Calendar',
-	},
+
 	{
 		key: ROUTES_URL.DOCTOR_BOOKING,
 		icon: <TableOutlined />,
@@ -81,7 +86,7 @@ const DashboardDoctorLayout: React.FunctionComponent<DashboardDoctorLayoutProps>
 						theme="light"
 						mode="inline"
 						className="max-h-screen"
-						defaultSelectedKeys={[ROUTES_URL.DOCTOR_CALENDAR]}
+						defaultSelectedKeys={[ROUTES_URL.DOCTOR_BOOKING]}
 						items={menuLinks as any}
 						onClick={(item) => router.push(item.key)}
 					/>

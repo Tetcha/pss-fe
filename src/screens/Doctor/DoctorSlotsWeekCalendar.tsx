@@ -65,6 +65,7 @@ const DoctorWeekCalendar: React.FunctionComponent<DoctorWeekCalendarProps> = () 
 						<WeeklyCalendar<RandomData>
 							events={events}
 							slots={slots}
+							onCompare={(event, slot) => event.slotId === slot.id}
 							currentWeek={currentWeek.week()}
 							onDisplayEvent={(event) => (
 								<>

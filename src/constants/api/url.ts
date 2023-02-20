@@ -14,6 +14,7 @@ export const API_URL = Object.freeze({
 	DOCTOR: '/doctor',
 	DOCTOR_ME: '/doctor/me',
 	UPDATE_DOCTOR: '/doctor',
+	SLOTS_DOCTOR: (id: string) => `/doctor/${id}/slots`,
 
 	// Admin
 	ADMIN_ME: '/admin/me',

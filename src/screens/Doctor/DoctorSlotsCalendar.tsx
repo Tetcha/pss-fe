@@ -31,9 +31,9 @@ const getMonthData = (value: Moment) => {
 	}
 };
 
-interface DoctorCalendarProps {}
+interface DoctorSlotCalendarProps {}
 
-const DoctorCalendar: React.FunctionComponent<DoctorCalendarProps> = () => {
+const DoctorSlotCalendar: React.FunctionComponent<DoctorSlotCalendarProps> = () => {
 	const { handleModal, handleOpenModal } = useModalContext();
 	const monthCellRender = (value: Moment) => {
 		const num = getMonthData(value);
@@ -96,4 +96,4 @@ const DoctorCalendar: React.FunctionComponent<DoctorCalendarProps> = () => {
 	);
 };
 
-export default DoctorCalendar;
+export default DoctorSlotCalendar;
