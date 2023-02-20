@@ -32,4 +32,5 @@ export interface DoctorListFilter
 
 export interface DoctorListFilterForStudent extends DoctorListFilter {
 	gender: Gender;
+	isActive: Boolean;
 }

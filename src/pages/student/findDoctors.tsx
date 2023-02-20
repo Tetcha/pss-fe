@@ -31,6 +31,7 @@ FindDoctorsPage.getInitialProps = async (ctx): Promise<FindDoctorsPageProps> => 
 			username: '',
 			phone: '',
 			gender: '',
+			isActive: true,
 		}),
 	};
 };

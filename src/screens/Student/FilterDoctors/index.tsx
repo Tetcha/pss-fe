@@ -7,13 +7,12 @@ import StatusTag from 'src/components/Common/StatusTag';
 import { TableBodyCell, TableBuilder, TableHeaderCell } from 'src/components/Tables';
 import { ROUTES_URL } from 'src/constants/routes';
 import { getDoctorList } from 'src/api/admin/list';
-import { DoctorListFilter, DoctorListFilterForStudent } from 'src/interface/doctor';
+import { DoctorListFilterForStudent } from 'src/interface/doctor';
 import { pagingMapper } from 'src/utils/object.helper';
 import { useTableUtil } from 'src/contexts/TableUtilContext';
 import { Button, Col, Row } from 'antd';
 import FormFilterWrapper from 'src/components/Input/FormFilterWrapper';
 import { InputSelect, TextField } from 'src/components/Input';
-import { toast } from 'react-toastify';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Gender } from 'src/interface/common';
 
@@ -69,6 +68,19 @@ const FilterDoctors: React.FunctionComponent<FilterDoctorsProps> = ({ filters })
 										{ value: Gender.OTHERS, label: Gender.OTHERS },
 									]}
 									className="min-w-[100px]"
+								/>
+							</Col>
+							<Col>
+								<InputSelect
+									commonField={{
+										label: 'Activity',
+										name: 'isActive',
+									}}
+									options={[
+										{ value: 'true', label: 'ACTIVE' },
+										{ value: 'false', label: 'INACTIVE' },
+									]}
+									className="min-w-[110px]"
 								/>
 							</Col>
 						</Row>

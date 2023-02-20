@@ -32,16 +32,16 @@ const StudentProfile: React.FunctionComponent<StudentProfileProps> = () => {
 
 	console.log('birthday', birthday);
 	//check value first
-	// React.useEffect(() => {
-	// 	methods.reset({
-	// 		name,
-	// 		studentCode,
-	// 		email,
-	// 		gender: gender ? gender : Gender.MALE,
-	// 		birthday: birthday ? moment(birthday) : moment('2000-01-01'),
-	// 		phone,
-	// 	});
-	// }, [methods, birthday, email, gender, name, phone, studentCode]);
+	React.useEffect(() => {
+		methods.reset({
+			name,
+			studentCode,
+			email,
+			gender: gender ? gender : Gender.MALE,
+			birthday: birthday ? moment(birthday) : moment('2000-01-01'),
+			phone,
+		});
+	}, [methods, birthday, email, gender, name, phone, studentCode]);
 
 	const handleOnSubmit = async (data: StudentUpdateForm) => {
 		const { birthday, ...other } = data;
@@ -53,14 +53,14 @@ const StudentProfile: React.FunctionComponent<StudentProfileProps> = () => {
 		mutateUpdate(payload);
 	};
 
-	React.useEffect(() => {
-		methods.setValue('name', name);
-		methods.setValue('studentCode', studentCode);
-		methods.setValue('email', email);
-		methods.setValue('gender', gender);
-		methods.setValue('birthday', moment(birthday));
-		methods.setValue('phone', phone);
-	}, [methods, birthday, email, gender, name, phone, studentCode]);
+	// React.useEffect(() => {
+	// 	methods.setValue('name', name);
+	// 	methods.setValue('studentCode', studentCode);
+	// 	methods.setValue('email', email);
+	// 	methods.setValue('gender', gender);
+	// 	methods.setValue('birthday', moment(birthday));
+	// 	methods.setValue('phone', phone);
+	// }, [methods, birthday, email, gender, name, phone, studentCode]);
 
 	React.useEffect(() => {
 		if (isSuccess) {
