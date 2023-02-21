@@ -3,6 +3,7 @@ import { Tag } from 'antd';
 
 import { UserStatus } from 'src/models/user';
 import { stringHelper } from 'src/utils';
+import { BookingSlotStatus } from 'src/models/booking';
 
 interface StatusTagProps {
 	value: string | boolean | UserStatus;
@@ -20,6 +21,12 @@ const StatusTag: React.FunctionComponent<StatusTagProps> = ({ value, icon = <></
 				return 'success';
 			case UserStatus.INACTIVE:
 				return 'error';
+			case BookingSlotStatus.REJECTED:
+				return 'error';
+			case BookingSlotStatus.ACCEPTED:
+				return 'success';
+			case BookingSlotStatus.PENDING:
+				return 'processing';
 			case 'ACTIVE':
 				return 'success';
 			case 'SUCCESS':

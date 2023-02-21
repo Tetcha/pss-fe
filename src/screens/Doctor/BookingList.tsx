@@ -8,19 +8,20 @@ import ViewQuestionModal from 'src/components/Modals/ViewQuestionModal';
 import { TableBodyCell, TableBuilder, TableHeaderCell } from 'src/components/Tables';
 import { useModalContext } from 'src/contexts/ModalContext';
 import { QuestionPreview } from 'src/models/question';
-import { getBookingSlots } from 'src/api/slot';
-import { BookingSlotListFilter } from 'src/interface/slots';
+import { getBooking } from 'src/api/booking';
+import { BookingListFilter } from 'src/interface/booking';
 import { pagingMapper } from 'src/utils/object.helper';
 import { useStoreDoctor } from 'src/store';
 import { capitalizeFirstLetter, currencyFormat } from 'src/utils/string.helper';
 import FormFilterWrapper from 'src/components/Input/FormFilterWrapper';
 import { InputSelect } from 'src/components/Input';
-import { BookingSlotStatus } from 'src/models/slot';
 import moment from 'moment';
+import { BookingSlotStatus } from 'src/models/booking';
+import { useUpdateBookingStatus } from 'src/hooks/booking';
 const { confirm } = Modal;
 
 interface BookingListProps {
-	filters: BookingSlotListFilter;
+	filters: BookingListFilter;
 }
 
 const BookingList: React.FunctionComponent<BookingListProps> = ({ filters }) => {
@@ -30,13 +31,13 @@ const BookingList: React.FunctionComponent<BookingListProps> = ({ filters }) => 
 		['booking-slots', filters, id],
 		async () => {
 			const newFilters = { ...filters, id };
-			const res = await getBookingSlots(pagingMapper(newFilters));
+			const res = await getBooking(pagingMapper(newFilters));
 			return res.data;
 		},
 		{ initialData: { data: [], count: 0 } },
 	);
 
-	const { handleOpenModal, handleModal } = useModalContext();
+	const { mutateUpdateBookingStatus } = useUpdateBookingStatus();
 
 	const onAccept = (id: string) => {
 		confirm({
@@ -44,6 +45,16 @@ const BookingList: React.FunctionComponent<BookingListProps> = ({ filters }) => 
 			icon: <ExclamationCircleOutlined />,
 			content:
 				'When clicked the OK button, this booking will be accepted but those slots same as this booking will be deny',
+			onOk() {
+				mutateUpdateBookingStatus(
+					{ id, status: BookingSlotStatus.ACCEPTED },
+					{
+						onSuccess: () => {
+							query.refetch();
+						},
+					},
+				);
+			},
 		});
 	};
 
@@ -52,9 +63,20 @@ const BookingList: React.FunctionComponent<BookingListProps> = ({ filters }) => 
 			title: 'Do you want to deny this booking?',
 			icon: <ExclamationCircleOutlined />,
 			content: 'When clicked the OK button, this booking will be denied',
+			onOk() {
+				mutateUpdateBookingStatus(
+					{ id, status: BookingSlotStatus.REJECTED },
+					{
+						onSuccess: () => {
+							query.refetch();
+						},
+					},
+				);
+			},
 		});
 	};
 
+	const { handleOpenModal, handleModal } = useModalContext();
 	const onViewQuestions = (questions: QuestionPreview[]) => {
 		handleModal('viewQuestions', <ViewQuestionModal questions={questions} />);
 		handleOpenModal('viewQuestions');
@@ -68,7 +90,7 @@ const BookingList: React.FunctionComponent<BookingListProps> = ({ filters }) => 
 						Booking
 					</h2>
 				</div>
-				<FormFilterWrapper<BookingSlotListFilter> defaultValues={{ name: '', username: '' }}>
+				<FormFilterWrapper<BookingListFilter> defaultValues={{ name: '', username: '' }}>
 					<Row className="gap-2">
 						<Col>
 							<InputSelect
@@ -144,9 +166,8 @@ const BookingList: React.FunctionComponent<BookingListProps> = ({ filters }) => 
 						},
 					},
 					{
-						title: () => <TableHeaderCell key="email" sortKey="email" label="" />,
-						key: 'action',
-
+						title: () => <TableHeaderCell key="questions" sortKey="questions" label="Questions" />,
+						key: '',
 						render: ({ ...props }) => {
 							return (
 								<div className="flex items-center justify-end gap-4">
@@ -157,12 +178,29 @@ const BookingList: React.FunctionComponent<BookingListProps> = ({ filters }) => 
 									) : (
 										<></>
 									)}
-									<Button type="primary" onClick={() => onAccept(props.id)}>
-										Accept
-									</Button>
-									<Button danger onClick={() => onDeny(props.id)}>
-										Deny
-									</Button>
+								</div>
+							);
+						},
+					},
+					{
+						title: () => <TableHeaderCell key="email" sortKey="email" label="" />,
+						key: 'action',
+
+						render: ({ ...props }) => {
+							return (
+								<div className="flex items-center justify-end gap-4">
+									{props.status === BookingSlotStatus.PENDING ? (
+										<>
+											<Button type="primary" onClick={() => onAccept(props.id)}>
+												Accept
+											</Button>
+											<Button danger onClick={() => onDeny(props.id)}>
+												Deny
+											</Button>
+										</>
+									) : (
+										<></>
+									)}
 								</div>
 							);
 						},

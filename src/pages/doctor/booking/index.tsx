@@ -1,14 +1,13 @@
 import { NextPage } from 'next';
 import { DoctorWrapper } from 'src/components/wrappers/doctorWrapper';
 import { TableUtilProvider } from 'src/contexts/TableUtilContext';
-import { BookingSlotListFilter } from 'src/interface/slots';
+import { BookingListFilter } from 'src/interface/booking';
 import { defaultPagingProps } from 'src/models/interface';
 import BookingList from 'src/screens/Doctor/BookingList';
-import { useStoreDoctor } from 'src/store';
 import { objectHelper } from 'src/utils';
 
 interface DoctorBookingPageProps {
-	filters: BookingSlotListFilter;
+	filters: BookingListFilter;
 }
 
 const DoctorBookingPage: NextPage<DoctorBookingPageProps> = ({ filters }) => {
@@ -25,7 +24,7 @@ const DoctorBookingPage: NextPage<DoctorBookingPageProps> = ({ filters }) => {
 
 DoctorBookingPage.getInitialProps = async (ctx): Promise<DoctorBookingPageProps> => {
 	return {
-		filters: objectHelper.getObjectWithDefault<Partial<BookingSlotListFilter>>(ctx.query, {
+		filters: objectHelper.getObjectWithDefault<Partial<BookingListFilter>>(ctx.query, {
 			...defaultPagingProps,
 			id: '',
 			status: '',

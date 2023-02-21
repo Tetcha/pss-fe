@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { Modal } from 'antd';
 
 import { useModalContext } from 'src/contexts/ModalContext';
-import { EditSlotDTO, EditSlotForm } from 'src/interface/slots';
+import { EditSlotDTO, EditSlotForm } from 'src/interface/slot';
 
 import { FormWrapper, InputCheckboxGroup } from '../Input';
 import InputDatePicker from '../Input/InputDatePicker';
