@@ -14,7 +14,7 @@ export interface DoctorUpdateDTO extends Omit<DoctorUpdateForm, 'birthday'> {
 
 export interface AddDoctorForm {
 	name: string;
-	email: string;
+	username: string;
 	phone: string;
 	birthday: Moment;
 	password: string;
@@ -29,3 +29,7 @@ export interface AddDoctorDTO extends Omit<AddDoctorForm, 'birthday'> {
 export interface DoctorListFilter
 	extends CommonFilterProps,
 		Partial<Pick<Doctor, 'phone' | 'username' | 'name'>> {}
+
+export interface DoctorListFilterForStudent extends DoctorListFilter {
+	gender: Gender;
+}

@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { FacebookAuthProvider, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
-import { FormWrapper } from 'src/components/Input';
 import { auth } from 'src/config/firebase';
 import { useLogin } from 'src/hooks/auth';
 
@@ -12,6 +11,7 @@ import { useLogin } from 'src/hooks/auth';
 import { LoginTokenPayload } from './interface';
 import { toast } from 'react-toastify';
 import { ROUTES_URL } from 'src/constants/routes';
+import Image from 'next/image';
 
 const defaultValues: LoginTokenPayload = {
 	accessToken: '',
@@ -83,14 +83,16 @@ const Login: FunctionComponent<LoginProps> = () => {
 					<div className="flex flex-col items-center space-y-4">
 						<button
 							onClick={handleGoogleLogin}
-							className="flex justify-center px-6 py-2.5 text-white border-none font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full mb-3 bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-600 hover:to-blue-700 cursor-pointer"
+							className="flex justify-center items-center px-6 py-2.5 text-black border-none font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-800 hover:text-white hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full mb-3 bg-gradient-to-r cursor-pointer gap-2"
 						>
+							<Image src="/assets/images/login/gg.webp" alt="image banner" width="20" height="20" />
 							Login With Google
 						</button>
 						<button
 							onClick={handleFacebookLogin}
-							className="flex justify-center px-6 py-2.5 border-none text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full mb-3 bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-600 hover:to-blue-700 cursor-pointer"
+							className="flex justify-center items-center px-6 py-2.5 text-black border-none font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-500 hover:text-white hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full mb-3 bg-gradient-to-r cursor-pointer gap-2"
 						>
+							<Image src="/assets/images/login/fb.webp" alt="image banner" width="20" height="20" />
 							Login With Facebook
 						</button>
 					</div>

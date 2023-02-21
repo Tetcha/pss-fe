@@ -18,13 +18,23 @@ import clsx from 'clsx';
 import { logout } from 'src/api/student/auth';
 import { ROUTES_URL } from 'src/constants/routes';
 import { useStoreDoctor } from 'src/store';
+import { currencyFormat } from 'src/utils/string.helper';
 const { Sider, Content } = Layout;
 
 const menuLinks = [
 	{
-		key: ROUTES_URL.DOCTOR_CALENDAR,
+		label: 'Slots',
 		icon: <CalendarOutlined />,
-		label: 'Calendar',
+		children: [
+			{
+				key: ROUTES_URL.DOCTOR_SLOTS_CALENDAR,
+				label: 'Calendar',
+			},
+			{
+				key: ROUTES_URL.DOCTOR_SLOTS_WEEK_CALENDAR,
+				label: 'Week Calendar',
+			},
+		],
 	},
 
 	{
@@ -45,18 +55,13 @@ const DashboardDoctorLayout: React.FunctionComponent<DashboardDoctorLayoutProps>
 	children,
 }) => {
 	const [collapsed, setCollapsed] = React.useState(false);
-	const { name, balance } = useStoreDoctor();
+	const { name, balance, avatar } = useStoreDoctor();
 	const router = useRouter();
 
 	const signOut = () => {
 		logout();
 		window.location.reload();
 	};
-
-	const formatCurrency = new Intl.NumberFormat('vi-VN', {
-		style: 'currency',
-		currency: 'VND',
-	}).format(balance);
 
 	return (
 		<div className="min-h-screen">
@@ -77,7 +82,7 @@ const DashboardDoctorLayout: React.FunctionComponent<DashboardDoctorLayoutProps>
 						theme="light"
 						mode="inline"
 						className="max-h-screen"
-						defaultSelectedKeys={[ROUTES_URL.DOCTOR_CALENDAR]}
+						defaultSelectedKeys={[ROUTES_URL.DOCTOR_BOOKING]}
 						items={menuLinks as any}
 						onClick={(item) => router.push(item.key)}
 					/>
@@ -98,8 +103,10 @@ const DashboardDoctorLayout: React.FunctionComponent<DashboardDoctorLayoutProps>
 						})}
 					>
 						<Meta
-							avatar={<Avatar src={`https://ui-avatars.com/api/?name=${name}`} />}
-							description={<p className="text-base font-medium text-gray-900">{formatCurrency}</p>}
+							avatar={<Avatar src={avatar || `https://ui-avatars.com/api/?name=${name}`} />}
+							description={
+								<p className="text-base font-medium text-gray-900">{currencyFormat(balance)}</p>
+							}
 							title={name}
 						/>
 					</Card>

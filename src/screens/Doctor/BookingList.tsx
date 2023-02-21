@@ -1,74 +1,37 @@
 import * as React from 'react';
-import Link from 'next/link';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { useQuery } from '@tanstack/react-query';
-import { Button, Modal } from 'antd';
+import { Button, Col, Modal, Row } from 'antd';
 
 import StatusTag from 'src/components/Common/StatusTag';
 import ViewQuestionModal from 'src/components/Modals/ViewQuestionModal';
 import { TableBodyCell, TableBuilder, TableHeaderCell } from 'src/components/Tables';
-import { ROUTES_URL } from 'src/constants/routes';
 import { useModalContext } from 'src/contexts/ModalContext';
-import { Gender } from 'src/interface/common';
 import { QuestionPreview } from 'src/models/question';
+import { getBookingSlots } from 'src/api/slot';
+import { BookingSlotListFilter } from 'src/interface/slots';
+import { pagingMapper } from 'src/utils/object.helper';
+import { useStoreDoctor } from 'src/store';
+import { capitalizeFirstLetter, currencyFormat } from 'src/utils/string.helper';
+import FormFilterWrapper from 'src/components/Input/FormFilterWrapper';
+import { InputSelect } from 'src/components/Input';
+import { BookingSlotStatus } from 'src/models/slot';
+import moment from 'moment';
 const { confirm } = Modal;
 
-interface BookingListProps {}
+interface BookingListProps {
+	filters: BookingSlotListFilter;
+}
 
-const BookingList: React.FunctionComponent<BookingListProps> = () => {
+const BookingList: React.FunctionComponent<BookingListProps> = ({ filters }) => {
+	const { id } = useStoreDoctor();
+
 	const query = useQuery(
-		['admins'],
+		['booking-slots', filters, id],
 		async () => {
-			const res = {
-				data: [
-					{
-						id: '1',
-						date: '19-09-2023',
-						slot: 'Slot 4: 10:00 - 11:00',
-						name: 'John Doe',
-						gender: Gender.MALE,
-						birthday: '19-09-2000',
-						status: 'Pending',
-						email: 'example@gmail.com',
-						questions: [
-							{
-								id: 'q-1',
-								content: 'Question 1',
-							},
-							{
-								id: 'q-2',
-								content: 'Question 2',
-							},
-							{
-								id: 'q-3',
-								content: 'Question 3',
-							},
-						],
-					},
-					{
-						id: '2',
-						date: '19-09-2023',
-						slot: 'Slot 4: 10:00 - 11:00',
-						name: 'John Doe',
-						birthday: '19-09-2000',
-						gender: Gender.MALE,
-						status: 'Pending',
-						email: 'example@gmail.com',
-					},
-					{
-						id: '3',
-						date: '19-09-2023',
-						slot: 'Slot 4: 10:00 - 11:00',
-						name: 'John Doe',
-						birthday: '19-09-2000',
-						gender: Gender.MALE,
-						status: 'Pending',
-						email: 'example@gmail.com',
-					},
-				],
-				count: 3,
-			};
-			return res;
+			const newFilters = { ...filters, id };
+			const res = await getBookingSlots(pagingMapper(newFilters));
+			return res.data;
 		},
 		{ initialData: { data: [], count: 0 } },
 	);
@@ -105,16 +68,29 @@ const BookingList: React.FunctionComponent<BookingListProps> = () => {
 						Booking
 					</h2>
 				</div>
-				<div className="flex mt-4 md:mt-0 md:ml-4">
-					<Link href={ROUTES_URL.ADD_ADMIN}>
-						<button
-							type="button"
-							className="inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-						>
-							Add Admin
-						</button>
-					</Link>
-				</div>
+				<FormFilterWrapper<BookingSlotListFilter> defaultValues={{ name: '', username: '' }}>
+					<Row className="gap-2">
+						<Col>
+							<InputSelect
+								commonField={{
+									name: 'status',
+									label: 'Status',
+								}}
+								options={[
+									{
+										label: 'All',
+										value: '',
+									},
+									...Object.keys(BookingSlotStatus).map((key) => ({
+										label: capitalizeFirstLetter(key),
+										value: key,
+									})),
+								]}
+								className="w-64"
+							/>
+						</Col>
+					</Row>
+				</FormFilterWrapper>
 			</div>
 			<TableBuilder
 				data={query.data.data}
@@ -130,39 +106,34 @@ const BookingList: React.FunctionComponent<BookingListProps> = () => {
 									key={`${props.id}-${props.slot}-${props.date}`}
 									label={
 										<div className="flex flex-col">
-											<div className="text-sm font-medium text-gray-900">{props.date}</div>
-											<div className="text-sm font-medium text-gray-900">{props.slot}</div>
+											<div className="text-sm font-medium text-gray-900">
+												{moment(props.slot.date).format('YYYY-MM-DD')}
+											</div>
+											<div className="text-sm font-medium text-gray-900">
+												{`${props.slot.endTime} - ${props.slot.startTime}`.toUpperCase()}
+											</div>
 										</div>
 									}
 								/>
 							);
 						},
 					},
-
 					{
-						title: () => <TableHeaderCell key="gender" sortKey="gender" label="Student Info" />,
-						width: 300,
-						key: 'gender',
-
+						title: () => <TableHeaderCell key="cost" sortKey="cost" label="Cost" />,
+						key: '',
 						render: ({ ...props }) => {
 							return (
 								<TableBodyCell
-									key={`${props.id}-${props.name}-${props.gender}-${props.birthday}`}
+									key={`${props.id}-${props.cost}`}
 									label={
 										<div className="flex flex-col">
-											<div className="text-sm font-medium text-gray-900">{props.gender}</div>
-											<div className="text-sm font-medium text-gray-900">{props.birthday}</div>
+											<div className="text-sm font-medium text-gray-900">
+												{currencyFormat(props.cost)}
+											</div>
 										</div>
 									}
 								/>
 							);
-						},
-					},
-					{
-						title: () => <TableHeaderCell key="email" sortKey="email" label="Email" />,
-						key: '',
-						render: ({ ...props }) => {
-							return <TableBodyCell key={`${props.id}-${props.email}`} label={props.email} />;
 						},
 					},
 					{
@@ -172,7 +143,6 @@ const BookingList: React.FunctionComponent<BookingListProps> = () => {
 							return <StatusTag value={props.status} key={`${props.id}-${props.status}`} />;
 						},
 					},
-
 					{
 						title: () => <TableHeaderCell key="email" sortKey="email" label="" />,
 						key: 'action',

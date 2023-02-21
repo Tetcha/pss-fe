@@ -24,6 +24,7 @@ export function InputSelect({ commonField, ...props }: InputSelectProps) {
 						{...props}
 						defaultValue={value}
 						onChange={(selectValues) => onChange(selectValues)}
+						size="large"
 					/>
 				)}
 			/>

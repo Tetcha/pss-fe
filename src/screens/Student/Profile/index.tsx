@@ -1,5 +1,6 @@
-import { CheckCircleFilled, CheckOutlined, EditFilled } from '@ant-design/icons';
+import { CheckCircleFilled, CheckOutlined, EditFilled, SearchOutlined } from '@ant-design/icons';
 import moment from 'moment';
+import Link from 'next/link';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
@@ -29,6 +30,7 @@ const StudentProfile: React.FunctionComponent<StudentProfileProps> = () => {
 
 	const { name, studentCode, email, gender, birthday, phone, avatar, balance } = useStoreUser();
 
+	console.log('birthday', birthday);
 	//check value first
 	React.useEffect(() => {
 		methods.reset({
@@ -98,6 +100,18 @@ const StudentProfile: React.FunctionComponent<StudentProfileProps> = () => {
 						</div>
 						<p className="text-gray-700">Student At FPT University</p>
 						<p className="text-sm text-gray-500">Thu Duc, HCM City</p>
+					</div>
+					<div className="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2">
+						<div className="flex items-center space-x-4 mt-2">
+							<Link
+								href={'/student/findDoctors'}
+								className="flex items-center bg-blue-600 hover:bg-blue-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100 cursor-pointer border-none"
+								type="submit"
+							>
+								<SearchOutlined type="icon" style={{ fontSize: '16px', color: '#fff' }} />
+								<span>Doctors</span>
+							</Link>
+						</div>
 					</div>
 					<div className="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2"></div>
 					<div className="my-4 flex flex-col 2xl:flex-row space-y-4 2xl:space-y-0 2xl:space-x-4">
