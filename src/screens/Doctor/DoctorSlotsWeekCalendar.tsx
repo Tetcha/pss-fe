@@ -1,28 +1,38 @@
 import * as React from 'react';
-import { Button, Col, DatePicker, Grid, Row } from 'antd';
-import type { ColumnsType } from 'antd/es/table';
-import { Slot } from 'src/models/slot';
+import { Button, DatePicker, Row } from 'antd';
+import { AvailableSlot, Slot } from 'src/models/slot';
 import { useQuery } from '@tanstack/react-query';
 import { getSlots } from 'src/api/slot';
 import moment, { Moment } from 'moment';
 import WeeklyCalendar, { DataType, SlotType } from 'src/components/Calendar/WeeklyCalendar';
-
-interface RandomData {
-	id: number;
-	name: string;
-	date: string;
-	slot: number;
-}
+import { getDoctorSlots } from 'src/api/doctor';
+import { useStoreDoctor } from 'src/store';
 
 interface DoctorWeekCalendarProps {}
 
 const DoctorWeekCalendar: React.FunctionComponent<DoctorWeekCalendarProps> = () => {
-	const randomData: RandomData[] = [
-		{ id: 1, name: 'Slot tư vấn bệnh nhân A', date: '2022-02-14', slot: 10 },
-		{ id: 2, name: 'Slot tư vấn bệnh nhân B', date: '2022-02-16', slot: 15 },
-		{ id: 3, name: 'Slot tư vấn bệnh nhân X', date: '2022-02-17', slot: 8 },
-		{ id: 4, name: 'Slot tư vấn bệnh nhân Y', date: '2022-02-18', slot: 14 },
-	];
+	const [currentWeek, setCurrentWeek] = React.useState<Moment>(moment());
+
+	const { id } = useStoreDoctor();
+
+	const queryAvailableSlots = useQuery<AvailableSlot[]>(
+		['availableSlots', id, currentWeek],
+		async () => {
+			const firstDayOfWeek = currentWeek.startOf('week').format('YYYY-MM-DD');
+			const lastDayOfWeek = currentWeek.endOf('week').format('YYYY-MM-DD');
+
+			const { data } = await getDoctorSlots({
+				id,
+				from: firstDayOfWeek,
+				to: lastDayOfWeek,
+			});
+
+			return data;
+		},
+		{
+			initialData: [],
+		},
+	);
 
 	const querySlots = useQuery<Slot[]>(
 		['slots'],
@@ -42,14 +52,12 @@ const DoctorWeekCalendar: React.FunctionComponent<DoctorWeekCalendarProps> = () 
 		hour: slot.startTime,
 	}));
 
-	const events: DataType<RandomData>[] = randomData.map((item) => ({
+	const events: DataType<AvailableSlot>[] = queryAvailableSlots.data.map((item) => ({
 		date: moment(item.date),
-		slotId: item.slot,
+		slotId: item.slotEnumId,
 		event: item,
 		data: item,
 	}));
-
-	const [currentWeek, setCurrentWeek] = React.useState<Moment>(moment());
 
 	return (
 		<>
@@ -62,15 +70,15 @@ const DoctorWeekCalendar: React.FunctionComponent<DoctorWeekCalendarProps> = () 
 						<DatePicker onChange={(value) => setCurrentWeek(value || moment())} picker="week" />
 					</Row>
 					<Row>
-						<WeeklyCalendar<RandomData>
+						<WeeklyCalendar<AvailableSlot>
 							events={events}
 							slots={slots}
 							onCompare={(event, slot) => event.slotId === slot.id}
 							currentWeek={currentWeek.week()}
 							onDisplayEvent={(event) => (
 								<>
-									<Button className="w-full font-medium text-gray-700 bg-blue-300 border-none rounded-md h-fit hover:bg-blue-500 hover:text-white">
-										{event.name}
+									<Button className="w-full h-auto font-medium text-gray-700 whitespace-normal bg-blue-300 border-none rounded-md hover:bg-blue-500 hover:text-white">
+										Available booking slot
 									</Button>
 								</>
 							)}

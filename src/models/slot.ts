@@ -12,4 +12,5 @@ export interface AvailableSlot extends Omit<Slot, 'id' | 'name'> {
 	status: boolean;
 	date: string;
 	doctor: Doctor;
+	slotEnumId: number;
 }
