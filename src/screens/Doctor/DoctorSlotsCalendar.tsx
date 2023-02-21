@@ -1,34 +1,24 @@
 import * as React from 'react';
 import type { BadgeProps } from 'antd';
 import { Badge, Calendar } from 'antd';
-import { Moment } from 'moment';
+import moment, { Moment } from 'moment';
 
 import MultiSlotEditModal from 'src/components/Modals/MultiSlotEditModal';
 import SlotEditModal from 'src/components/Modals/SlotEditModal';
 import { useModalContext } from 'src/contexts/ModalContext';
-import { Slot } from 'src/models/slot';
-
-const slots: Slot[] = [];
-
-const getListData = (value: Moment) => {
-	let listData;
-
-	const dates = value.format('YYYY-MM-DD');
-	// const slot = slots.find((mapSlot) => mapSlot.dates === dates);
-	// if (slot) {
-	// 	listData = slot.time.map((time) => ({
-	// 		type: 'success',
-	// 		content: time,
-	// 	}));
-	// }
-
-	return listData || [];
-};
+import { AvailableSlot, Slot } from 'src/models/slot';
+import { useQuery } from '@tanstack/react-query';
+import { useStoreDoctor } from 'src/store';
+import { getDoctorSlots } from 'src/api/doctor';
 
 const getMonthData = (value: Moment) => {
 	if (value.month() === 8) {
 		return 1394;
 	}
+};
+
+const getSlotsOfDay = (slots: AvailableSlot[], date: Moment) => {
+	return slots.filter((slot) => moment(slot.date).isSame(date, 'day'));
 };
 
 interface DoctorSlotCalendarProps {}
@@ -45,19 +35,6 @@ const DoctorSlotCalendar: React.FunctionComponent<DoctorSlotCalendarProps> = () 
 		) : null;
 	};
 
-	const dateCellRender = (value: Moment) => {
-		const listData = getListData(value);
-		return (
-			<ul className="events">
-				{/* {listData.map((item) => (
-					<li key={item.content}>
-						<Badge status={item.type as BadgeProps['status']} text={item.content} />
-					</li>
-				))} */}
-			</ul>
-		);
-	};
-
 	const openMultiSlotEditModal = () => {
 		handleModal('multiSlotEdit', <MultiSlotEditModal />);
 		handleOpenModal('multiSlotEdit');
@@ -66,6 +43,45 @@ const DoctorSlotCalendar: React.FunctionComponent<DoctorSlotCalendarProps> = () 
 	const openSlotEditModal = (dates: Moment) => {
 		handleModal('slotEdit', <SlotEditModal defaultValues={{ dates: dates, slots: [1, 4, 3] }} />);
 		handleOpenModal('slotEdit');
+	};
+	const [currentMonth, setCurrentMonth] = React.useState<Moment>(moment());
+
+	const { id } = useStoreDoctor();
+
+	const queryAvailableSlots = useQuery<AvailableSlot[]>(
+		['availableSlots', id, currentMonth],
+		async () => {
+			const firstDayOfMonth = currentMonth.startOf('month').format('YYYY-MM-DD');
+			const lastDayOfMonth = currentMonth.endOf('month').format('YYYY-MM-DD');
+
+			const { data } = await getDoctorSlots({
+				id,
+				from: firstDayOfMonth,
+				to: lastDayOfMonth,
+			});
+
+			return data;
+		},
+		{
+			initialData: [],
+		},
+	);
+
+	const dateCellRender = (value: Moment) => {
+		const listData = getSlotsOfDay(queryAvailableSlots.data, value);
+
+		return (
+			<ul className="events">
+				{listData.map((item) => (
+					<li key={item.id}>
+						<Badge
+							status={'processing'}
+							text={`${item.startTime.toUpperCase()}: ${item.status ? 'Booked' : 'Ready'}`}
+						/>
+					</li>
+				))}
+			</ul>
+		);
 	};
 
 	return (
@@ -90,6 +106,7 @@ const DoctorSlotCalendar: React.FunctionComponent<DoctorSlotCalendarProps> = () 
 				dateCellRender={dateCellRender}
 				monthCellRender={monthCellRender}
 				onSelect={(date) => openSlotEditModal(date)}
+				onChange={(date) => setCurrentMonth(date)}
 				className="px-4"
 			/>
 		</>

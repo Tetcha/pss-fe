@@ -75,7 +75,7 @@ const DoctorWeekCalendar: React.FunctionComponent<DoctorWeekCalendarProps> = () 
 							slots={slots}
 							onCompare={(event, slot) => event.slotId === slot.id}
 							currentWeek={currentWeek.week()}
-							onDisplayEvent={(event) => (
+							onDisplayEvent={() => (
 								<>
 									<Button className="w-full h-auto font-medium text-gray-700 whitespace-normal bg-blue-300 border-none rounded-md hover:bg-blue-500 hover:text-white">
 										Available booking slot
