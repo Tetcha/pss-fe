@@ -7,20 +7,24 @@ import StatusTag from 'src/components/Common/StatusTag';
 import { TableBodyCell, TableBuilder, TableHeaderCell } from 'src/components/Tables';
 import { ROUTES_URL } from 'src/constants/routes';
 import { getDoctorList } from 'src/api/admin/list';
-import { DoctorListFilterForStudent } from 'src/interface/doctor';
+import { DoctorInfo, DoctorListFilterForStudent } from 'src/interface/doctor';
 import { pagingMapper } from 'src/utils/object.helper';
 import { useTableUtil } from 'src/contexts/TableUtilContext';
-import { Button, Col, Row } from 'antd';
+import { Button, Card, Col, Row } from 'antd';
 import FormFilterWrapper from 'src/components/Input/FormFilterWrapper';
 import { InputSelect, TextField } from 'src/components/Input';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Gender } from 'src/interface/common';
+import { useModalContext } from 'src/contexts/ModalContext';
+import BookingDoctor from '../BookingDoctor';
+import { Doctor } from 'src/models/doctor';
 
 interface FilterDoctorsProps {
 	filters: Partial<DoctorListFilterForStudent>;
 }
 
 const FilterDoctors: React.FunctionComponent<FilterDoctorsProps> = ({ filters }) => {
+	const { handleModal, handleOpenModal } = useModalContext();
 	const { setTotalItem } = useTableUtil();
 	const query = useQuery(
 		['doctors', filters],
@@ -34,8 +38,13 @@ const FilterDoctors: React.FunctionComponent<FilterDoctorsProps> = ({ filters })
 		{ initialData: { data: [], count: 0 } },
 	);
 
+	const openBookingDoctorModal = (props: Doctor) => {
+		handleModal('BookingDoctor', <BookingDoctor doctor={props} />);
+		handleOpenModal('BookingDoctor');
+	};
+
 	return (
-		<div className="flex justify-center">
+		<div className="flex justify-center flex-col items-center">
 			<div className="w-full max-w-container px-2 sm:px-0">
 				<div className="flex-1 min-w-0">
 					<h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
@@ -50,7 +59,9 @@ const FilterDoctors: React.FunctionComponent<FilterDoctorsProps> = ({ filters })
 					</div>
 				</div>
 				<Row className="flex justify-end pb-4">
-					<FormFilterWrapper<DoctorListFilterForStudent> defaultValues={{ name: '', gender: '' }}>
+					<FormFilterWrapper<DoctorListFilterForStudent>
+						defaultValues={{ name: '', gender: '', isActive: '' }}
+					>
 						<Row className="gap-2">
 							<Col>
 								<TextField commonField={{ name: 'name', label: 'Name' }} />
@@ -79,6 +90,7 @@ const FilterDoctors: React.FunctionComponent<FilterDoctorsProps> = ({ filters })
 									options={[
 										{ value: 'true', label: 'ACTIVE' },
 										{ value: 'false', label: 'INACTIVE' },
+										{ value: '', label: '--' },
 									]}
 									className="min-w-[110px]"
 								/>
@@ -146,7 +158,10 @@ const FilterDoctors: React.FunctionComponent<FilterDoctorsProps> = ({ filters })
 								return (
 									<div className="flex items-center space-x-4 mt-2">
 										{props.isActive ? (
-											<Button className="flex items-center bg-blue-600 hover:bg-blue-500 text-white hover:text-white px-4 py-2 rounded text-sm space-x-2 transition duration-100 cursor-pointer border-none">
+											<Button
+												className="flex items-center bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded text-sm space-x-2 transition duration-100 cursor-pointer border-none"
+												onClick={() => openBookingDoctorModal(props)}
+											>
 												<span>Book</span>
 											</Button>
 										) : (
