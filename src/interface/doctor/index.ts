@@ -14,7 +14,7 @@ export interface DoctorUpdateDTO extends Omit<DoctorUpdateForm, 'birthday'> {
 
 export interface AddDoctorForm {
 	name: string;
-	email: string;
+	username: string;
 	phone: string;
 	birthday: Moment;
 	password: string;

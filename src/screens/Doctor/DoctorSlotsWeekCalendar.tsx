@@ -2,10 +2,9 @@ import * as React from 'react';
 import { Button, DatePicker, Row } from 'antd';
 import { AvailableSlot, Slot } from 'src/models/slot';
 import { useQuery } from '@tanstack/react-query';
-import { getSlots } from 'src/api/slot';
+import { getDoctorSlots, getSlots } from 'src/api/slot';
 import moment, { Moment } from 'moment';
 import WeeklyCalendar, { DataType, SlotType } from 'src/components/Calendar/WeeklyCalendar';
-import { getDoctorSlots } from 'src/api/doctor';
 import { useStoreDoctor } from 'src/store';
 
 interface DoctorWeekCalendarProps {}
@@ -18,8 +17,8 @@ const DoctorWeekCalendar: React.FunctionComponent<DoctorWeekCalendarProps> = () 
 	const queryAvailableSlots = useQuery<AvailableSlot[]>(
 		['availableSlots', id, currentWeek],
 		async () => {
-			const firstDayOfWeek = currentWeek.startOf('week').format('YYYY-MM-DD');
-			const lastDayOfWeek = currentWeek.endOf('week').format('YYYY-MM-DD');
+			const firstDayOfWeek = currentWeek.clone().startOf('week').add(1, 'day').format('YYYY-MM-DD');
+			const lastDayOfWeek = currentWeek.clone().endOf('week').add(1, 'day').format('YYYY-MM-DD');
 
 			const { data } = await getDoctorSlots({
 				id,

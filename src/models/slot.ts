@@ -14,3 +14,15 @@ export interface AvailableSlot extends Omit<Slot, 'id' | 'name'> {
 	doctor: Doctor;
 	slotEnumId: number;
 }
+
+export enum BookingSlotStatus {
+	PENDING = 'PENDING',
+	ACCEPTED = 'ACCEPTED',
+	REJECTED = 'REJECTED',
+	CANCELLED = 'CANCELLED',
+}
+
+export interface BookingSlot {
+	slot: Slot;
+	status: BookingSlotStatus;
+}

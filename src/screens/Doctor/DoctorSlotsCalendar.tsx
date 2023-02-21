@@ -6,10 +6,10 @@ import moment, { Moment } from 'moment';
 import MultiSlotEditModal from 'src/components/Modals/MultiSlotEditModal';
 import SlotEditModal from 'src/components/Modals/SlotEditModal';
 import { useModalContext } from 'src/contexts/ModalContext';
-import { AvailableSlot, Slot } from 'src/models/slot';
+import { AvailableSlot } from 'src/models/slot';
 import { useQuery } from '@tanstack/react-query';
 import { useStoreDoctor } from 'src/store';
-import { getDoctorSlots } from 'src/api/doctor';
+import { getDoctorSlots } from 'src/api/slot';
 
 const getMonthData = (value: Moment) => {
 	if (value.month() === 8) {

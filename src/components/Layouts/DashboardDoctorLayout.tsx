@@ -18,6 +18,7 @@ import clsx from 'clsx';
 import { logout } from 'src/api/student/auth';
 import { ROUTES_URL } from 'src/constants/routes';
 import { useStoreDoctor } from 'src/store';
+import { currencyFormat } from 'src/utils/string.helper';
 const { Sider, Content } = Layout;
 
 const menuLinks = [
@@ -62,11 +63,6 @@ const DashboardDoctorLayout: React.FunctionComponent<DashboardDoctorLayoutProps>
 		window.location.reload();
 	};
 
-	const formatCurrency = new Intl.NumberFormat('vi-VN', {
-		style: 'currency',
-		currency: 'VND',
-	}).format(balance);
-
 	return (
 		<div className="min-h-screen">
 			<Layout className="min-h-screen">
@@ -108,7 +104,9 @@ const DashboardDoctorLayout: React.FunctionComponent<DashboardDoctorLayoutProps>
 					>
 						<Meta
 							avatar={<Avatar src={avatar || `https://ui-avatars.com/api/?name=${name}`} />}
-							description={<p className="text-base font-medium text-gray-900">{formatCurrency}</p>}
+							description={
+								<p className="text-base font-medium text-gray-900">{currencyFormat(balance)}</p>
+							}
 							title={name}
 						/>
 					</Card>
