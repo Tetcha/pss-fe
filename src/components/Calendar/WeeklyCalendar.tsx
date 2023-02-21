@@ -185,7 +185,6 @@ const WeeklyCalendar = <T,>({
 	const renderHeadRow = React.useCallback(
 		(columns: ColumnsType<TableType>) => {
 			const currentWeekday = moment().format('ddd: DD/MM');
-			console.log('currentWeekday', currentWeekday);
 
 			const columnsFormatWeekday = columns.map((column) => {
 				switch (column.title) {

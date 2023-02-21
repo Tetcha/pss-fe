@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { useQuery } from '@tanstack/react-query';
-import { Button, Modal } from 'antd';
+import { Button, Col, Modal, Row } from 'antd';
 
 import StatusTag from 'src/components/Common/StatusTag';
 import ViewQuestionModal from 'src/components/Modals/ViewQuestionModal';
@@ -12,7 +12,10 @@ import { getBookingSlots } from 'src/api/slot';
 import { BookingSlotListFilter } from 'src/interface/slots';
 import { pagingMapper } from 'src/utils/object.helper';
 import { useStoreDoctor } from 'src/store';
-import { currencyFormat } from 'src/utils/string.helper';
+import { capitalizeFirstLetter, currencyFormat } from 'src/utils/string.helper';
+import FormFilterWrapper from 'src/components/Input/FormFilterWrapper';
+import { InputSelect } from 'src/components/Input';
+import { BookingSlotStatus } from 'src/models/slot';
 const { confirm } = Modal;
 
 interface BookingListProps {
@@ -64,6 +67,29 @@ const BookingList: React.FunctionComponent<BookingListProps> = ({ filters }) => 
 						Booking
 					</h2>
 				</div>
+				<FormFilterWrapper<BookingSlotListFilter> defaultValues={{ name: '', username: '' }}>
+					<Row className="gap-2">
+						<Col>
+							<InputSelect
+								commonField={{
+									name: 'status',
+									label: 'Status',
+								}}
+								options={[
+									{
+										label: 'All',
+										value: '',
+									},
+									...Object.keys(BookingSlotStatus).map((key) => ({
+										label: capitalizeFirstLetter(key),
+										value: key,
+									})),
+								]}
+								className="w-64"
+							/>
+						</Col>
+					</Row>
+				</FormFilterWrapper>
 			</div>
 			<TableBuilder
 				data={query.data.data}
