@@ -60,88 +60,110 @@ const Admin: React.FunctionComponent<AdminProps> = () => {
 						Dashboard
 					</h2>
 				</div>
-				<Row
-					gutter={[
-						{ xl: 16, lg: 8 },
-						{ xl: 16, lg: 8 },
-					]}
-				>
-					<Col span={8}>
-						<LineChart name={['Register']} data={[newlyRegistered]} title="New Register" />
-					</Col>
-					<Col span={8}>
-						<LineChart name={['Booking']} data={[newlyRegistered]} title="New booking" />
-					</Col>
-					<Col span={8}>
-						<LineChart name={['Profits']} data={[newlyRegistered]} title="Profits" />
-					</Col>
-					<Col span={14}>
-						<ColumnChart
-							xAxis={newlyBooking.map((item) => item.date)}
-							width={920}
-							height={500}
-							title="Booking"
-							series={[
-								{ name: 'Success', data: newlyBooking.map((item) => item.value) },
-								{ name: 'Cancel', data: newlyBooking.map((item) => item.value) },
-							]}
-							colors={['#00E396', '#FF4560']}
-						/>
-					</Col>
-					<Col span={10}>
-						<PieChart
-							labels={['Pending', 'Success', 'Cancel']}
-							series={[2, 3, 1]}
-							size={620}
-							colors={['#FEB019', '#00E396', '#FF4560']}
-							title="Booking status"
-						/>
-					</Col>
+				<Row justify="center">
 					<Col span={24}>
-						<AreaChart
-							name={['Abuse', 'Love', 'Hate', 'Sad', 'Serious illness', 'Other']}
-							data={[
-								[
-									{ date: '01-10-2023', value: 2 },
-									{ date: '08-20-2023', value: 5 },
-									{ date: '16-20-2023', value: 10 },
-									{ date: '24-20-2023', value: 2 },
-								],
-								[
-									{ date: '01-10-2023', value: 4 },
-									{ date: '08-20-2023', value: 7 },
-									{ date: '16-20-2023', value: 9 },
-									{ date: '24-20-2023', value: 20 },
-								],
-								[
-									{ date: '01-10-2023', value: 4 },
-									{ date: '08-20-2023', value: 10 },
-									{ date: '16-20-2023', value: 24 },
-									{ date: '24-20-2023', value: 6 },
-								],
-								[
-									{ date: '01-10-2023', value: 20 },
-									{ date: '08-20-2023', value: 9 },
-									{ date: '16-20-2023', value: 4 },
-									{ date: '24-20-2023', value: 24 },
-								],
-								[
-									{ date: '01-10-2023', value: 10 },
-									{ date: '08-20-2023', value: 12 },
-									{ date: '16-20-2023', value: 14 },
-									{ date: '24-20-2023', value: 16 },
-								],
-								[
-									{ date: '01-10-2023', value: 3 },
-									{ date: '08-20-2023', value: 2 },
-									{ date: '16-20-2023', value: 1 },
-									{ date: '24-20-2023', value: 14 },
-								],
+						<Row
+							gutter={[
+								{ xl: 16, lg: 8 },
+								{ xl: 16, lg: 8 },
 							]}
-							width={1200}
-							height={600}
-							title="Symbol trends"
-						/>
+						>
+							<Col span={8}>
+								<LineChart
+									name={['Register']}
+									data={[newlyRegistered]}
+									title="New Register"
+									width={420}
+									height={280}
+								/>
+							</Col>
+							<Col span={8}>
+								<LineChart
+									name={['Booking']}
+									data={[newlyRegistered]}
+									title="New booking"
+									width={420}
+									height={280}
+								/>
+							</Col>
+							<Col span={8}>
+								<LineChart
+									name={['Profits']}
+									data={[newlyRegistered]}
+									title="Profits"
+									width={420}
+									height={280}
+								/>
+							</Col>
+							<Col span={14}>
+								<ColumnChart
+									xAxis={newlyBooking.map((item) => item.date)}
+									width={720}
+									height={420}
+									title="Booking"
+									series={[
+										{ name: 'Success', data: newlyBooking.map((item) => item.value) },
+										{ name: 'Cancel', data: newlyBooking.map((item) => item.value) },
+									]}
+									colors={['#00E396', '#FF4560']}
+								/>
+							</Col>
+							<Col span={10}>
+								<PieChart
+									labels={['Pending', 'Success', 'Cancel']}
+									series={[2, 3, 1]}
+									size={546}
+									colors={['#FEB019', '#00E396', '#FF4560']}
+									title="Booking status"
+								/>
+							</Col>
+							<Col span={24}>
+								<AreaChart
+									name={['Abuse', 'Love', 'Hate', 'Sad', 'Serious illness', 'Other']}
+									data={[
+										[
+											{ date: '01-10-2023', value: 2 },
+											{ date: '08-20-2023', value: 5 },
+											{ date: '16-20-2023', value: 10 },
+											{ date: '24-20-2023', value: 2 },
+										],
+										[
+											{ date: '01-10-2023', value: 4 },
+											{ date: '08-20-2023', value: 7 },
+											{ date: '16-20-2023', value: 9 },
+											{ date: '24-20-2023', value: 20 },
+										],
+										[
+											{ date: '01-10-2023', value: 4 },
+											{ date: '08-20-2023', value: 10 },
+											{ date: '16-20-2023', value: 24 },
+											{ date: '24-20-2023', value: 6 },
+										],
+										[
+											{ date: '01-10-2023', value: 20 },
+											{ date: '08-20-2023', value: 9 },
+											{ date: '16-20-2023', value: 4 },
+											{ date: '24-20-2023', value: 24 },
+										],
+										[
+											{ date: '01-10-2023', value: 10 },
+											{ date: '08-20-2023', value: 12 },
+											{ date: '16-20-2023', value: 14 },
+											{ date: '24-20-2023', value: 16 },
+										],
+										[
+											{ date: '01-10-2023', value: 3 },
+											{ date: '08-20-2023', value: 2 },
+											{ date: '16-20-2023', value: 1 },
+											{ date: '24-20-2023', value: 14 },
+										],
+									]}
+									width={1200}
+									height={520}
+									title="Symbol trends"
+								/>
+							</Col>
+						</Row>
 					</Col>
 				</Row>
 			</Layout>

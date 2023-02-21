@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { updateDoctorActive } from 'src/api/admin/status';
-import { getDoctorSlots, update } from 'src/api/doctor';
+import { update } from 'src/api/doctor';
 
 import { constant } from 'src/constants/api/token';
 
