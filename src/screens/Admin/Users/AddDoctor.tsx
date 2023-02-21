@@ -15,7 +15,7 @@ interface AddDoctorProps {}
 
 const defaultValues: AddDoctorForm = {
 	birthday: moment('2000-01-01'),
-	email: '',
+	username: '',
 	gender: Gender.MALE,
 	name: '',
 	phone: '',

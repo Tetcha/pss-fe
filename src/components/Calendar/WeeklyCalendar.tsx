@@ -108,15 +108,17 @@ interface WeeklyCalendarProps<T> {
 	events: DataType<T>[];
 	slots: SlotType[];
 	onDisplayEvent: (event: T) => React.ReactNode;
+	onCompare: (event: DataType<T>, Slot: SlotType) => boolean;
 	currentWeek?: number;
 }
 
 /**
  * This is a component that displays a weekly calendar
  * @param {T} T - the type of the event
- * @param DateType<T> events - event only display if date of event in range the current week and correct slotId
+ * @param {DateType<T>} events - event only display if date of event in range the current week and correct slotId
  * @param {SlotType} slots - the slots of the calendar and make sure the id is unique
  * @param {Function} onDisplayEvent - the function to display the event return a ReactNode
+ * @param {Function} onCompare - the function to compare the event and the slot
  * @param {number} currentWeek - the current week of the calendar
  */
 
@@ -125,6 +127,7 @@ const WeeklyCalendar = <T,>({
 	slots,
 	currentWeek,
 	onDisplayEvent,
+	onCompare,
 }: WeeklyCalendarProps<T>) => {
 	const [week, setWeek] = React.useState(currentWeek || moment().weeks());
 
@@ -135,11 +138,11 @@ const WeeklyCalendar = <T,>({
 	}, [currentWeek]);
 
 	const getEventByWeekDayAndSlot = React.useCallback(
-		(weekday: number, slotId: unknown) => {
+		(weekday: number, slot: SlotType) => {
 			return events.find((event) => {
-				const { date: eventDate, slotId: eventSlotId } = event;
+				const { date: eventDate } = event;
 				const eventWeekday = moment(eventDate).weekday();
-				return eventWeekday === weekday && eventSlotId === slotId && event.date.week() === week;
+				return onCompare(event, slot) && eventWeekday === weekday && event.date.week() === week;
 			});
 		},
 		[events, week],
@@ -159,7 +162,7 @@ const WeeklyCalendar = <T,>({
 			};
 
 			for (let i = 0; i < 7; i++) {
-				const event = getEventByWeekDayAndSlot(i, slotId);
+				const event = getEventByWeekDayAndSlot(i, slot);
 				if (event) {
 					const { event: eventData } = event;
 					const weekday = moment().weekday(i).format('ddd') as keyof WeekDays;
@@ -181,8 +184,9 @@ const WeeklyCalendar = <T,>({
 
 	const renderHeadRow = React.useCallback(
 		(columns: ColumnsType<TableType>) => {
-			console.log('week', week);
-			return columns.map((column) => {
+			const currentWeekday = moment().format('ddd: DD/MM');
+
+			const columnsFormatWeekday = columns.map((column) => {
 				switch (column.title) {
 					case 'Mon':
 						return {
@@ -223,6 +227,18 @@ const WeeklyCalendar = <T,>({
 						return column;
 				}
 			});
+
+			const finaleColumns = columnsFormatWeekday.map((column) => {
+				if (column.title === currentWeekday) {
+					return {
+						...column,
+						className: 'bg-blue-50',
+					};
+				}
+				return column;
+			});
+
+			return finaleColumns;
 		},
 		[week],
 	);
@@ -230,9 +246,10 @@ const WeeklyCalendar = <T,>({
 	return (
 		<Table
 			sticky={true}
-			className="h-[1000px] overflow-y-auto relative"
+			className="relative overflow-y-auto h-[702px]"
 			bordered={true}
-			onHeaderRow={() => ({ className: 'bg-red-400' })}
+			onHeaderRow={() => ({ className: 'bg-gray-100' })}
+			onRow={() => ({ className: 'hover:bg-blue-50' })}
 			pagination={false}
 			columns={renderHeadRow(columns)}
 			dataSource={tableData}
