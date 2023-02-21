@@ -16,6 +16,7 @@ import { capitalizeFirstLetter, currencyFormat } from 'src/utils/string.helper';
 import FormFilterWrapper from 'src/components/Input/FormFilterWrapper';
 import { InputSelect } from 'src/components/Input';
 import { BookingSlotStatus } from 'src/models/slot';
+import moment from 'moment';
 const { confirm } = Modal;
 
 interface BookingListProps {
@@ -105,7 +106,12 @@ const BookingList: React.FunctionComponent<BookingListProps> = ({ filters }) => 
 									key={`${props.id}-${props.slot}-${props.date}`}
 									label={
 										<div className="flex flex-col">
-											<div className="text-sm font-medium text-gray-900">{props.date}</div>
+											<div className="text-sm font-medium text-gray-900">
+												{moment(props.slot.date).format('YYYY-MM-DD')}
+											</div>
+											<div className="text-sm font-medium text-gray-900">
+												{`${props.slot.endTime} - ${props.slot.startTime}`.toUpperCase()}
+											</div>
 										</div>
 									}
 								/>
