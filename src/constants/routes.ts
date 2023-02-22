@@ -11,6 +11,7 @@ export const ROUTES_URL = Object.freeze({
 	// Student
 	STUDENT: '/student',
 	STUDENT_ME: '/student/me',
+	DOCTORS: '/student/doctors',
 
 	// Admin
 	ADMIN: '/admin',

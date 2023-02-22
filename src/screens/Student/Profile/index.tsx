@@ -7,6 +7,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { toast } from 'react-toastify';
 import { FormWrapper, InputRadioGroup, TextField } from 'src/components/Input';
 import InputDatePicker from 'src/components/Input/InputDatePicker';
+import { ROUTES_URL } from 'src/constants/routes';
 import { useUpdateStudent } from 'src/hooks/auth';
 import { StudentUpdateDTO, StudentUpdateForm } from 'src/interface/auth';
 import { Gender } from 'src/interface/common';
@@ -103,7 +104,7 @@ const StudentProfile: React.FunctionComponent<StudentProfileProps> = () => {
 					<div className="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2">
 						<div className="flex items-center space-x-4 mt-2">
 							<Link
-								href={'/student/findDoctors'}
+								href={ROUTES_URL.DOCTORS}
 								className="flex items-center bg-blue-600 hover:bg-blue-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100 cursor-pointer border-none"
 								type="submit"
 							>

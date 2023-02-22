@@ -7,11 +7,11 @@ import { defaultPagingProps } from 'src/models/interface';
 import { objectHelper } from 'src/utils';
 import { NextPage } from 'next';
 
-interface FindDoctorsPageProps {
+interface DoctorsPageProps {
 	filters: DoctorListFilterForStudent;
 }
 
-const FindDoctorsPage: NextPage<FindDoctorsPageProps> = ({ filters }) => {
+const DoctorsPage: NextPage<DoctorsPageProps> = ({ filters }) => {
 	return (
 		<>
 			<StudentWrapper>
@@ -23,7 +23,7 @@ const FindDoctorsPage: NextPage<FindDoctorsPageProps> = ({ filters }) => {
 	);
 };
 
-FindDoctorsPage.getInitialProps = async (ctx): Promise<FindDoctorsPageProps> => {
+DoctorsPage.getInitialProps = async (ctx): Promise<DoctorsPageProps> => {
 	return {
 		filters: objectHelper.getObjectWithDefault<Partial<DoctorListFilterForStudent>>(ctx.query, {
 			...defaultPagingProps,
@@ -36,4 +36,4 @@ FindDoctorsPage.getInitialProps = async (ctx): Promise<FindDoctorsPageProps> => 
 	};
 };
 
-export default FindDoctorsPage;
+export default DoctorsPage;
