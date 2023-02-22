@@ -10,6 +10,11 @@ export interface EditSlotForm {
 	slots: number[];
 }
 
+export interface SlotForm {
+	date: Moment;
+	slots: any;
+}
+
 export interface FilterSlotForm {
 	id: string;
 	from: Moment;

@@ -7,7 +7,10 @@ import { getSlots } from 'src/api/slot';
 import { FormWrapper, InputSelect, TextareaField, TextField } from 'src/components/Input';
 import InputDatePicker from 'src/components/Input/InputDatePicker';
 import { useModalContext } from 'src/contexts/ModalContext';
+import { useStudentBooking } from 'src/hooks/booking';
+import { StudentBookingDTO, StudentBookingForm } from 'src/interface/booking';
 import { DoctorInfo } from 'src/interface/doctor';
+import { SlotForm } from 'src/interface/slot';
 import { Doctor } from 'src/models/doctor';
 // import { StudentBookingForm } from 'src/interface/student';
 import { Slot } from 'src/models/slot';
@@ -15,38 +18,55 @@ import { useStoreUser } from 'src/store';
 
 interface BookingDoctorProps {
 	doctor?: Doctor;
+	slot?: SlotForm;
 }
 
-// const values = {
-// 	name: '',
-// 	birthday: moment('2000-01-01'),
-// 	nameDoctor: '',
-// 	slot: '',
-// 	question: '',
-// };
+const values: StudentBookingDTO = {
+	name: '',
+	birthday: moment('2000-01-01'),
+	date: moment('2000-01-01'),
+	nameDoctor: '',
+	slotId: '',
+	question: '',
+};
 
-const BookingDoctor: React.FunctionComponent<BookingDoctorProps> = ({ doctor }) => {
-	console.log('doctor', doctor);
-	const methods = useForm({});
+const BookingDoctor: React.FunctionComponent<BookingDoctorProps> = ({ doctor, slot }) => {
+	const methods = useForm<StudentBookingDTO>({ values });
 	const { handleCloseModal, modal } = useModalContext();
 	const { bookingDoctor } = modal;
 	const [isVisible, setIsVisible] = React.useState(true);
 	const { name, birthday } = useStoreUser();
-	const handleOnSubmit = async (data: any) => {
-		console.log(data);
+	// const handleOnSubmit = async (data: any) => {
+	// 	console.log(data);
+	// };
+
+	React.useEffect(() => {
+		methods.reset({
+			name,
+			birthday: moment('2000-01-01'),
+			nameDoctor: doctor?.name,
+			date: slot?.date ? slot?.date : moment('2000-01-01'),
+			slotId: slot?.slots,
+			question: '',
+		});
+	}, [methods, birthday, name, slot?.date, doctor?.name, slot?.slots]);
+
+	const { mutateStudentBooking, isSuccess } = useStudentBooking();
+
+	const handleOnSubmit = async (data: StudentBookingDTO) => {
+		const { slotId } = data;
+		console.log('SlotId: ', slotId);
+		const payload: StudentBookingForm = {
+			slotId,
+		};
+		mutateStudentBooking(payload);
 	};
 
-	const querySlots = useQuery<Slot[]>(
-		['slots'],
-		async () => {
-			const { data } = await getSlots();
-
-			return data;
-		},
-		{
-			initialData: [],
-		},
-	);
+	React.useEffect(() => {
+		if (isSuccess) {
+			setIsVisible(false);
+		}
+	}, [isSuccess]);
 
 	return (
 		<>
@@ -68,17 +88,14 @@ const BookingDoctor: React.FunctionComponent<BookingDoctorProps> = ({ doctor }) 
 							value={doctor?.name}
 						/>
 						<TextField commonField={{ name: 'name', label: 'Name:' }} value={name} />
-						{/* <InputDatePicker
-							commonField={{ name: 'birthday', label: 'Birthday:' }}
-							defaultValue={birthday}
-						/> */}
+						<InputDatePicker commonField={{ name: 'date', label: 'Date:' }} />
 						<InputSelect
 							commonField={{
 								label: 'Select Slot:',
-								name: 'slot',
+								name: 'slotId',
 							}}
-							options={querySlots.data.map((item) => ({
-								label: `${item.name}: ${item.startTime} - ${item.endTime}`,
+							options={slot?.slots.map((item: any) => ({
+								label: `${item.startTime} - ${item.endTime}`,
 								value: item.id,
 							}))}
 							className="w-full"

@@ -18,6 +18,7 @@ import { Gender } from 'src/interface/common';
 import { useModalContext } from 'src/contexts/ModalContext';
 import BookingDoctor from '../BookingDoctor';
 import { Doctor } from 'src/models/doctor';
+import BookingCalendar from '../BookingCalendar';
 
 interface FilterDoctorsProps {
 	filters: Partial<DoctorListFilterForStudent>;
@@ -38,9 +39,9 @@ const FilterDoctors: React.FunctionComponent<FilterDoctorsProps> = ({ filters })
 		{ initialData: { data: [], count: 0 } },
 	);
 
-	const openBookingDoctorModal = (props: Doctor) => {
-		handleModal('BookingDoctor', <BookingDoctor doctor={props} />);
-		handleOpenModal('BookingDoctor');
+	const openBookingCalendar = (props: Doctor) => {
+		handleModal('BookingCalendar', <BookingCalendar doctor={props} />);
+		handleOpenModal('BookingCalendar');
 	};
 
 	return (
@@ -160,7 +161,7 @@ const FilterDoctors: React.FunctionComponent<FilterDoctorsProps> = ({ filters })
 										{props.isActive ? (
 											<Button
 												className="flex items-center bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded text-sm space-x-2 transition duration-100 cursor-pointer border-none"
-												onClick={() => openBookingDoctorModal(props)}
+												onClick={() => openBookingCalendar(props)}
 											>
 												<span>Book</span>
 											</Button>

@@ -23,7 +23,6 @@ const Schedule: FunctionComponent<ScheduleProps> = () => {
 	const handleOnSubmit = async (data: ScheduleDTO) => {
 		// const res = await authLogin(data);
 		// if (res) window.location.reload();
-		console.log('data', data);
 		// router.push(routes.homeUrl);
 	};
 	return (

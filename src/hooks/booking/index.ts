@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
-import { updateBookingStatus } from 'src/api/booking';
+import { studentBooking, updateBookingStatus } from 'src/api/booking';
 
 export const useUpdateBookingStatus = () => {
 	const {
@@ -13,4 +13,17 @@ export const useUpdateBookingStatus = () => {
 		},
 	});
 	return { mutateUpdateBookingStatus, mutateUpdateBookingStatusAsync, ...rest };
+};
+
+export const useStudentBooking = () => {
+	const {
+		mutate: mutateStudentBooking,
+		mutateAsync: mutateStudentBookingAsync,
+		...rest
+	} = useMutation(studentBooking, {
+		onSuccess: () => {
+			toast.success('Booking successfully');
+		},
+	});
+	return { mutateStudentBooking, mutateStudentBookingAsync, ...rest };
 };
