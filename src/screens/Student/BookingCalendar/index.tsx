@@ -1,18 +1,14 @@
 import * as React from 'react';
-import { BadgeProps, Modal } from 'antd';
+import { Modal } from 'antd';
 import { Badge, Calendar } from 'antd';
 import moment, { Moment } from 'moment';
 
-import MultiSlotEditModal from 'src/components/Modals/MultiSlotEditModal';
-import SlotEditModal from 'src/components/Modals/SlotEditModal';
 import { useModalContext } from 'src/contexts/ModalContext';
 import { AvailableSlot } from 'src/models/slot';
 import { useQuery } from '@tanstack/react-query';
-import { useStoreDoctor } from 'src/store';
 import { getDoctorSlots } from 'src/api/slot';
 import BookingDoctor from '../BookingDoctor';
 import { Doctor } from 'src/models/doctor';
-import { SlotForm } from 'src/interface/slot';
 
 interface BookingCalendarProps {
 	doctor: Doctor;
@@ -30,7 +26,8 @@ const getSlotsOfDay = (slots: AvailableSlot[], date: Moment) => {
 
 const BookingCalendar: React.FunctionComponent<BookingCalendarProps> = ({ doctor }) => {
 	const { handleModal, handleOpenModal, handleCloseModal, modal } = useModalContext();
-	const [isVisible, setIsVisible] = React.useState(true);
+	const { BookingCalendar } = modal;
+	const [isVisible, setIsVisible] = React.useState(BookingCalendar.isOpen);
 
 	const monthCellRender = (value: Moment) => {
 		const num = getMonthData(value);
@@ -44,7 +41,6 @@ const BookingCalendar: React.FunctionComponent<BookingCalendarProps> = ({ doctor
 
 	const [currentMonth, setCurrentMonth] = React.useState<Moment>(moment());
 
-	// const { id } = useStoreDoctor();
 	const id = doctor.id;
 	const queryAvailableSlots = useQuery<AvailableSlot[]>(
 		['availableSlots', id, currentMonth],

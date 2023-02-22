@@ -16,7 +16,6 @@ export interface StudentBookingForm {
 
 export interface StudentBookingDTO {
 	name: string;
-	birthday: Moment;
 	date: Moment;
 	nameDoctor: string;
 	slotId: string;

@@ -23,7 +23,6 @@ interface BookingDoctorProps {
 
 const values: StudentBookingDTO = {
 	name: '',
-	birthday: moment('2000-01-01'),
 	date: moment('2000-01-01'),
 	nameDoctor: '',
 	slotId: '',
@@ -33,25 +32,21 @@ const values: StudentBookingDTO = {
 const BookingDoctor: React.FunctionComponent<BookingDoctorProps> = ({ doctor, slot }) => {
 	const methods = useForm<StudentBookingDTO>({ values });
 	const { handleCloseModal, modal } = useModalContext();
-	const { bookingDoctor } = modal;
-	const [isVisible, setIsVisible] = React.useState(true);
-	const { name, birthday } = useStoreUser();
-	// const handleOnSubmit = async (data: any) => {
-	// 	console.log(data);
-	// };
+	const { BookingDoctor } = modal;
+	const [isVisible, setIsVisible] = React.useState(BookingDoctor.isOpen);
+	const { name } = useStoreUser();
 
 	console.log('Slot: ', slot);
 
 	React.useEffect(() => {
 		methods.reset({
 			name,
-			birthday: birthday ? moment(birthday) : moment('2000-01-01'),
 			nameDoctor: doctor?.name,
 			date: slot?.date ? slot?.date : moment('2000-01-01'),
-			slotId: slot?.slots ? `${slot?.slots[0].startTime} - ${slot?.slots[0].endTime}` : '',
+			slotId: slot?.slots,
 			question: '',
 		});
-	}, [methods, birthday, name, slot?.date, doctor?.name, slot?.slots]);
+	}, [methods, name, slot?.date, doctor?.name, slot?.slots]);
 
 	const { mutateStudentBooking, isSuccess } = useStudentBooking();
 
@@ -91,7 +86,6 @@ const BookingDoctor: React.FunctionComponent<BookingDoctorProps> = ({ doctor, sl
 							value={doctor?.name}
 						/>
 						<TextField commonField={{ name: 'name', label: 'Name:' }} value={name} />
-						<InputDatePicker commonField={{ name: 'birthday', label: 'Birthday:' }} />
 						<InputDatePicker commonField={{ name: 'date', label: 'Date:' }} />
 						<InputSelect
 							commonField={{
