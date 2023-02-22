@@ -40,13 +40,15 @@ const BookingDoctor: React.FunctionComponent<BookingDoctorProps> = ({ doctor, sl
 	// 	console.log(data);
 	// };
 
+	console.log('Slot: ', slot);
+
 	React.useEffect(() => {
 		methods.reset({
 			name,
-			birthday: moment('2000-01-01'),
+			birthday: birthday ? moment(birthday) : moment('2000-01-01'),
 			nameDoctor: doctor?.name,
 			date: slot?.date ? slot?.date : moment('2000-01-01'),
-			slotId: slot?.slots,
+			slotId: slot?.slots ? `${slot?.slots[0].startTime} - ${slot?.slots[0].endTime}` : '',
 			question: '',
 		});
 	}, [methods, birthday, name, slot?.date, doctor?.name, slot?.slots]);
@@ -54,6 +56,7 @@ const BookingDoctor: React.FunctionComponent<BookingDoctorProps> = ({ doctor, sl
 	const { mutateStudentBooking, isSuccess } = useStudentBooking();
 
 	const handleOnSubmit = async (data: StudentBookingDTO) => {
+		console.log('Data: ', data);
 		const { slotId } = data;
 		console.log('SlotId: ', slotId);
 		const payload: StudentBookingForm = {
@@ -88,6 +91,7 @@ const BookingDoctor: React.FunctionComponent<BookingDoctorProps> = ({ doctor, sl
 							value={doctor?.name}
 						/>
 						<TextField commonField={{ name: 'name', label: 'Name:' }} value={name} />
+						<InputDatePicker commonField={{ name: 'birthday', label: 'Birthday:' }} />
 						<InputDatePicker commonField={{ name: 'date', label: 'Date:' }} />
 						<InputSelect
 							commonField={{

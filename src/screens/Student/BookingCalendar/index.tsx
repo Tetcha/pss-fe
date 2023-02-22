@@ -83,7 +83,6 @@ const BookingCalendar: React.FunctionComponent<BookingCalendarProps> = ({ doctor
 	};
 	const openBookingDoctorModal = (doctor: Doctor, date: Moment) => {
 		const listData = getSlotsOfDay(queryAvailableSlots.data, date);
-		console.log('listData', listData[0]);
 		handleModal(
 			'BookingDoctor',
 			<BookingDoctor doctor={doctor} slot={{ date: date, slots: listData }} />,
