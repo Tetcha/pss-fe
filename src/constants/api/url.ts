@@ -29,4 +29,7 @@ export const API_URL = Object.freeze({
 
 	// Slot
 	SLOTS: '/slots',
+
+	// Booking
+	BOOKING_STATUS: (id: string) => `/bookings/${id}`,
 });
