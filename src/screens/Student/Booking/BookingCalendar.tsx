@@ -7,7 +7,7 @@ import { useModalContext } from 'src/contexts/ModalContext';
 import { AvailableSlot } from 'src/models/slot';
 import { useQuery } from '@tanstack/react-query';
 import { getDoctorSlots } from 'src/api/slot';
-import BookingDoctor from '../BookingDoctor';
+import BookingDoctor from './BookingDoctor';
 import { Doctor } from 'src/models/doctor';
 
 interface BookingCalendarProps {
