@@ -1,4 +1,11 @@
-import { CheckCircleFilled, CheckOutlined, EditFilled, SearchOutlined } from '@ant-design/icons';
+import {
+	CheckCircleFilled,
+	CheckOutlined,
+	EditFilled,
+	EditOutlined,
+	RollbackOutlined,
+	SearchOutlined,
+} from '@ant-design/icons';
 import moment from 'moment';
 import Link from 'next/link';
 import * as React from 'react';
@@ -55,6 +62,7 @@ const StudentProfile: React.FunctionComponent<StudentProfileProps> = ({ filters 
 			birthday: birthday.format('YYYY-MM-DD'),
 		};
 		mutateUpdate(payload);
+		setUpdate(!update);
 	};
 
 	// React.useEffect(() => {
@@ -71,6 +79,12 @@ const StudentProfile: React.FunctionComponent<StudentProfileProps> = ({ filters 
 			toast.success('Update profile successfully');
 		}
 	}, [isSuccess]);
+
+	const [update, setUpdate] = React.useState(false);
+
+	const handleClick = () => {
+		setUpdate(!update);
+	};
 
 	return (
 		<>
@@ -122,72 +136,122 @@ const StudentProfile: React.FunctionComponent<StudentProfileProps> = ({ filters 
 						<div className="w-full flex flex-col 2xl:w-1/3">
 							<div className="flex-1 bg-white rounded-lg shadow-xl p-8">
 								<h4 className="text-xl text-gray-900 font-bold">Personal Info</h4>
-								<FormWrapper methods={methods}>
-									<form
-										onSubmit={methods.handleSubmit(handleOnSubmit)}
-										className="mt-2 text-gray-700"
-									>
+								{update ? (
+									<FormWrapper methods={methods}>
+										<form
+											onSubmit={methods.handleSubmit(handleOnSubmit)}
+											className="mt-2 text-gray-700"
+										>
+											<li className="flex border-y py-2">
+												<TextField
+													commonField={{ label: 'Full Name:', name: 'name' }}
+													type="text"
+												/>
+											</li>
+											<li className="flex border-y py-2">
+												<TextField
+													commonField={{ label: 'Student Code:', name: 'studentCode' }}
+													type="text"
+												/>
+											</li>
+											<li className="flex border-y py-2">
+												<TextField commonField={{ label: 'Email:', name: 'email' }} type="text" />
+											</li>
+											<li className="flex border-y py-2">
+												<InputRadioGroup<string>
+													commonField={{
+														name: 'gender',
+														label: 'GENDER',
+													}}
+													options={[
+														{
+															label: 'Male',
+															value: Gender.MALE,
+														},
+														{
+															label: 'Female',
+															value: Gender.FEMALE,
+														},
+														{
+															label: 'Others',
+															value: Gender.OTHERS,
+														},
+													]}
+												/>
+											</li>
+											<li className="flex border-y py-2">
+												<InputDatePicker commonField={{ name: 'birthday', label: 'Birthday' }} />
+											</li>
+											<li className="flex border-y py-2">
+												<TextField
+													commonField={{ label: 'Phone Number:', name: 'phone' }}
+													type="phone"
+												/>
+											</li>
+											<div className="flex items-center justify-end space-x-4 mt-2">
+												<button
+													className="flex items-center bg-blue-600 hover:bg-blue-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100 cursor-pointer border-none"
+													type="submit"
+												>
+													<CheckOutlined type="icon" style={{ fontSize: '16px', color: '#fff' }} />
+													<span>Save</span>
+												</button>
+												<button
+													className="flex items-center bg-blue-600 hover:bg-blue-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100 cursor-pointer border-none"
+													type="button"
+													onClick={() => setUpdate(!update)}
+												>
+													<RollbackOutlined
+														type="icon"
+														style={{ fontSize: '16px', color: '#fff' }}
+													/>
+													<span>Cancel</span>
+												</button>
+											</div>
+										</form>
+									</FormWrapper>
+								) : (
+									<ul className="mt-2 ml-2 text-gray-700">
 										<li className="flex border-y py-2">
-											<TextField commonField={{ label: 'Full Name:', name: 'name' }} type="text" />
+											<span className="font-bold w-32">Full name:</span>
+											<span className="text-gray-700">{name}</span>
 										</li>
-										<li className="flex border-y py-2">
-											<TextField
-												commonField={{ label: 'Student Code:', name: 'studentCode' }}
-												type="text"
-											/>
+										<li className="flex border-b py-2">
+											<span className="font-bold w-32">Student Code:</span>
+											<span className="text-gray-700">{studentCode}</span>
 										</li>
-										<li className="flex border-y py-2">
-											<TextField commonField={{ label: 'Email:', name: 'email' }} type="text" />
+										<li className="flex border-b py-2">
+											<span className="font-bold w-32">Email:</span>
+											<span className="text-gray-700">{email}</span>
 										</li>
-										<li className="flex border-y py-2">
-											<InputRadioGroup<string>
-												commonField={{
-													name: 'gender',
-													label: 'GENDER',
-												}}
-												options={[
-													{
-														label: 'Male',
-														value: Gender.MALE,
-													},
-													{
-														label: 'Female',
-														value: Gender.FEMALE,
-													},
-													{
-														label: 'Others',
-														value: Gender.OTHERS,
-													},
-												]}
-											/>
+										<li className="flex border-b py-2">
+											<span className="font-bold w-32">Gender:</span>
+											<span className="text-gray-700">{gender}</span>
 										</li>
-										<li className="flex border-y py-2">
-											<InputDatePicker commonField={{ name: 'birthday', label: 'Birthday' }} />
+										<li className="flex border-b py-2">
+											<span className="font-bold w-32">Birthday:</span>
+											<span className="text-gray-700">{moment(birthday).format('YYYY-MM-DD')}</span>
 										</li>
-										<li className="flex border-y py-2">
-											<TextField
-												commonField={{ label: 'Phone Number:', name: 'phone' }}
-												type="phone"
-											/>
+										<li className="flex border-b py-2">
+											<span className="font-bold w-32">Phone Number</span>
+											<span className="text-gray-700">{phone}</span>
 										</li>
-										<li className="flex border-y py-2">
-											<TextField
-												commonField={{ label: 'Balance:', name: 'balance' }}
-												type="phone"
-												value={balance + ' VND'}
-											/>
+										<li className="flex border-b py-2">
+											<span className="font-bold w-32">Balance:</span>
+											<span className="text-gray-700">{balance} VND</span>
 										</li>
 										<div className="flex items-center justify-end space-x-4 mt-2">
 											<button
 												className="flex items-center bg-blue-600 hover:bg-blue-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100 cursor-pointer border-none"
-												type="submit"
+												type="button"
+												onClick={() => setUpdate(!update)}
 											>
-												<CheckOutlined type="icon" style={{ fontSize: '16px', color: '#fff' }} />
-												<span>Save</span>
+												<EditOutlined type="icon" style={{ fontSize: '16px', color: '#fff' }} />
+												<span>Update Profile</span>
 											</button>
 										</div>
-									</form>
-								</FormWrapper>
+									</ul>
+								)}
 							</div>
 						</div>
 						<div className="flex flex-col w-full 2xl:w-2/3">
