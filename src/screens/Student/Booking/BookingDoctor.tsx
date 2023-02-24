@@ -86,7 +86,7 @@ const BookingDoctor: React.FunctionComponent<BookingDoctorProps> = ({ doctor, sl
 							value={doctor?.name}
 						/>
 						<TextField commonField={{ name: 'name', label: 'Name:' }} value={name} />
-						<InputDatePicker commonField={{ name: 'date', label: 'Date:' }} />
+						<InputDatePicker commonField={{ name: 'date', label: 'Date:' }} disable={true} />
 						<InputSelect
 							commonField={{
 								label: 'Select Slot:',

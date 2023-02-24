@@ -28,3 +28,15 @@
 .p {
 	margin-bottom: 0px !important;
 }
+
+.ant-timeline {
+	width: 100% !important;
+}
+
+.ant-timeline-item {
+	width: 100% !important;
+}
+
+li {
+	padding: 0 !important;
+}

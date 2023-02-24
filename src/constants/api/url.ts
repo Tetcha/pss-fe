@@ -10,6 +10,7 @@ export const API_URL = Object.freeze({
 	STUDENT_ME: '/student/me',
 	UPDATE_STUDENT: '/student',
 	STUDENT_BOOKING: '/bookings',
+	STUDENT_BOOKING_HISTORY: (userId: string) => `/student/${userId}/bookings`,
 	// Doctor
 	DOCTOR: '/doctor',
 	DOCTOR_ME: '/doctor/me',

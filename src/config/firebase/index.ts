@@ -1,12 +1,12 @@
 import { FirebaseOptions, initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 const firebaseConfig: FirebaseOptions = {
-	apiKey: 'AIzaSyDsgqxFTAzpWi5jO6SqtAvFnuNpNZGk6Vo',
-	authDomain: 'psych-support-system-37213.firebaseapp.com',
-	projectId: 'psych-support-system-37213',
-	storageBucket: 'psych-support-system-37213.appspot.com',
-	messagingSenderId: '955612507216',
-	appId: '1:955612507216:web:8fb0047bc8d59202c8b555',
+	apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+	authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+	projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+	storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+	messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+	appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
 // Initialize Firebase
