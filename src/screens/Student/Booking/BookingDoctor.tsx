@@ -1,8 +1,10 @@
+import { PlusCircleOutlined } from '@ant-design/icons';
 import { useQuery } from '@tanstack/react-query';
 import { Modal } from 'antd';
 import moment from 'moment';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import { getSlots } from 'src/api/slot';
 import { FormWrapper, InputSelect, TextareaField, TextField } from 'src/components/Input';
 import InputDatePicker from 'src/components/Input/InputDatePicker';
@@ -36,22 +38,19 @@ const BookingDoctor: React.FunctionComponent<BookingDoctorProps> = ({ doctor, sl
 	const [isVisible, setIsVisible] = React.useState(BookingDoctor.isOpen);
 	const { name } = useStoreUser();
 
-	console.log('Slot: ', slot);
-
 	React.useEffect(() => {
 		methods.reset({
 			name,
 			nameDoctor: doctor?.name,
 			date: slot?.date ? slot?.date : moment('2000-01-01'),
-			slotId: slot?.slots,
+			slotId: '',
 			question: '',
 		});
-	}, [methods, name, slot?.date, doctor?.name, slot?.slots]);
+	}, [methods, name, slot?.date, doctor?.name, slot?.slots, slot]);
 
 	const { mutateStudentBooking, isSuccess } = useStudentBooking();
 
 	const handleOnSubmit = async (data: StudentBookingDTO) => {
-		console.log('Data: ', data);
 		const { slotId } = data;
 		console.log('SlotId: ', slotId);
 		const payload: StudentBookingForm = {
@@ -63,9 +62,19 @@ const BookingDoctor: React.FunctionComponent<BookingDoctorProps> = ({ doctor, sl
 	React.useEffect(() => {
 		if (isSuccess) {
 			setIsVisible(false);
+			toast.success('Booking successfully!');
+		}
+		if (!isSuccess) {
+			toast.error('Booking Failed!!! Try Again');
 		}
 	}, [isSuccess]);
 
+	const [question, setQuestion] = React.useState<React.ReactNode[]>([]);
+
+	const handleAddQuestion = () => {
+		const newQuestion = <TextField commonField={{ name: 'question' }} />;
+		setQuestion([...question, newQuestion]);
+	};
 	return (
 		<>
 			<Modal
@@ -75,7 +84,6 @@ const BookingDoctor: React.FunctionComponent<BookingDoctorProps> = ({ doctor, sl
 				width={600}
 				onOk={() => {
 					methods.handleSubmit(handleOnSubmit)();
-					setIsVisible(false);
 				}}
 				afterClose={() => handleCloseModal('BookingDoctor')}
 			>
@@ -98,7 +106,18 @@ const BookingDoctor: React.FunctionComponent<BookingDoctorProps> = ({ doctor, sl
 							}))}
 							className="w-full"
 						/>
-						<TextareaField commonField={{ name: 'question', label: 'Question:' }} rows={5} />
+						{/* <TextField commonField={{ name: 'question', label: 'Question:' }} /> */}
+						<label className="block text-sm font-medium text-gray-700 capitalize sm:mt-px">
+							Question:
+						</label>
+						{question}
+						<button
+							type="button"
+							className="w-full	inline-flex justify-center items-center gap-2 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-sm text-gray-400 focus:outline-none cursor-pointer my-2"
+							onClick={handleAddQuestion}
+						>
+							<PlusCircleOutlined style={{ fontSize: '16px', color: '#7f7f7f' }} /> Add Question
+						</button>
 					</form>
 				</FormWrapper>
 			</Modal>
