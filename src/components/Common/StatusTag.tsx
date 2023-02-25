@@ -43,7 +43,7 @@ const StatusTag: React.FunctionComponent<StatusTagProps> = ({ value, icon = <></
 	};
 
 	return (
-		<Tag icon={icon} color={color()}>
+		<Tag icon={icon} color={color()} className="min-w-[76px] text-center">
 			{typeof value == 'boolean'
 				? value
 					? 'Active'

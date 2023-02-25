@@ -16,9 +16,9 @@ import { InputSelect, TextField } from 'src/components/Input';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Gender } from 'src/interface/common';
 import { useModalContext } from 'src/contexts/ModalContext';
-import BookingDoctor from '../BookingDoctor';
+import BookingDoctor from '../Booking/BookingDoctor';
 import { Doctor } from 'src/models/doctor';
-import BookingCalendar from '../BookingCalendar';
+import BookingCalendar from '../Booking/BookingCalendar';
 
 interface FilterDoctorsProps {
 	filters: Partial<DoctorListFilterForStudent>;

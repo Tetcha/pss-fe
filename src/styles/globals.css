@@ -28,3 +28,8 @@
 .p {
 	margin-bottom: 0px !important;
 }
+
+ul {
+	margin: 0 !important;
+	padding: 0 !important;
+}

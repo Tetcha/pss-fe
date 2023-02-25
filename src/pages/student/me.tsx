@@ -1,14 +1,32 @@
+import { NextPage } from 'next';
 import * as React from 'react';
 import { StudentWrapper } from 'src/components/wrappers/studentWrapper';
+import { BookingHistoryListFilter } from 'src/interface/booking';
+import { BookingSlotStatus } from 'src/models/booking';
+import { defaultPagingProps } from 'src/models/interface';
 import StudentProfile from 'src/screens/Student/Profile';
+import { objectHelper } from 'src/utils';
 
-interface StudentProps {}
+interface StudentPageProps {
+	filters: BookingHistoryListFilter;
+}
 
-const Student: React.FunctionComponent<StudentProps> = () => {
+const StudentPage: NextPage<StudentPageProps> = ({ filters }) => {
 	return (
 		<StudentWrapper>
-			<StudentProfile />
+			<StudentProfile filters={filters} />
 		</StudentWrapper>
 	);
 };
-export default Student;
+
+StudentPage.getInitialProps = async (ctx): Promise<StudentPageProps> => {
+	return {
+		filters: objectHelper.getObjectWithDefault<Partial<BookingHistoryListFilter>>(ctx.query, {
+			...defaultPagingProps,
+			id: '',
+			status: '',
+		}),
+	};
+};
+
+export default StudentPage;

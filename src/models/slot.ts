@@ -5,6 +5,7 @@ export interface Slot {
 	name: string;
 	startTime: string;
 	endTime: string;
+	date?: string;
 }
 
 export interface AvailableSlot extends Omit<Slot, 'id' | 'name'> {
