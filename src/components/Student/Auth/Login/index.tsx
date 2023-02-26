@@ -17,9 +17,11 @@ const defaultValues: LoginTokenPayload = {
 	accessToken: '',
 };
 
-interface LoginProps {}
+interface LoginProps {
+	redirectUrl?: string;
+}
 
-const Login: FunctionComponent<LoginProps> = () => {
+const Login: FunctionComponent<LoginProps> = ({ redirectUrl = ROUTES_URL.STUDENT_ME }) => {
 	const methods = useForm<LoginTokenPayload>({
 		defaultValues,
 	});
@@ -31,8 +33,13 @@ const Login: FunctionComponent<LoginProps> = () => {
 		mutateLogin(data);
 	};
 
+	console.log(redirectUrl);
 	React.useEffect(() => {
 		if (isSuccess) {
+			if (redirectUrl) {
+				router.push(redirectUrl);
+			}
+
 			router.push(ROUTES_URL.STUDENT_ME);
 		}
 	}, [isSuccess, router]);
