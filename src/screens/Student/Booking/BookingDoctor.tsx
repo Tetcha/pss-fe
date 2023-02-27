@@ -1,9 +1,9 @@
-import { PlusCircleOutlined } from '@ant-design/icons';
+import { CloseCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { useQuery } from '@tanstack/react-query';
-import { Modal } from 'antd';
+import { Input, Modal } from 'antd';
 import moment from 'moment';
 import * as React from 'react';
-import { useForm } from 'react-hook-form';
+import { useFieldArray, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { getSlots } from 'src/api/slot';
 import { FormWrapper, InputSelect, TextareaField, TextField } from 'src/components/Input';
@@ -23,16 +23,17 @@ interface BookingDoctorProps {
 	slot?: SlotForm;
 }
 
-const values: StudentBookingDTO = {
+const defaultValues: StudentBookingDTO = {
 	name: '',
 	date: moment('2000-01-01'),
 	nameDoctor: '',
 	slotId: '',
-	question: '',
+	questionContent: [{}],
 };
 
 const BookingDoctor: React.FunctionComponent<BookingDoctorProps> = ({ doctor, slot }) => {
-	const methods = useForm<StudentBookingDTO>({ values });
+	const methods = useForm<StudentBookingDTO>({ defaultValues });
+	const { control } = useForm({ defaultValues });
 	const { handleCloseModal, modal } = useModalContext();
 	const { BookingDoctor } = modal;
 	const [isVisible, setIsVisible] = React.useState(BookingDoctor.isOpen);
@@ -44,17 +45,23 @@ const BookingDoctor: React.FunctionComponent<BookingDoctorProps> = ({ doctor, sl
 			nameDoctor: doctor?.name,
 			date: slot?.date ? slot?.date : moment('2000-01-01'),
 			slotId: '',
-			question: '',
+			questionContent: [{}],
 		});
 	}, [methods, name, slot?.date, doctor?.name, slot?.slots, slot]);
+
+	const { fields, append, remove } = useFieldArray({
+		name: 'questionContent',
+		control,
+	});
 
 	const { mutateStudentBooking, isSuccess } = useStudentBooking();
 
 	const handleOnSubmit = async (data: StudentBookingDTO) => {
 		const { slotId } = data;
-		console.log('SlotId: ', slotId);
+		console.log('data: ', data);
 		const payload: StudentBookingForm = {
 			slotId,
+			questionContent: data.questionContent.map((item) => item.questionContent),
 		};
 		mutateStudentBooking(payload);
 	};
@@ -64,17 +71,35 @@ const BookingDoctor: React.FunctionComponent<BookingDoctorProps> = ({ doctor, sl
 			setIsVisible(false);
 			toast.success('Booking successfully!');
 		}
-		if (!isSuccess) {
-			toast.error('Booking Failed!!! Try Again');
-		}
 	}, [isSuccess]);
 
-	const [question, setQuestion] = React.useState<React.ReactNode[]>([]);
+	// const [questions, setQuestions] = React.useState<React.ReactNode[]>([]);
 
-	const handleAddQuestion = () => {
-		const newQuestion = <TextField commonField={{ name: 'question' }} />;
-		setQuestion([...question, newQuestion]);
-	};
+	// const [numQuestion, setNumQuestion] = React.useState(0);
+
+	// const handleAddQuestion = () => {
+	// 	const newQuestion = (
+	// 		<>
+	// 			<TextField commonField={{ name: `questionContent-${numQuestion}` }} />
+	// 			<button
+	// 				type="button"
+	// 				className="inline-flex justify-center items-center gap-2 py-2 px-2 border border-transparent shadow-sm text-sm font-medium rounded-sm bg-red-500 focus:outline-none cursor-pointer my-2"
+	// 				onClick={() => handleDeleteQuestion(numQuestion)}
+	// 			>
+	// 				<CloseCircleOutlined style={{ fontSize: '16px', color: '#ffffff' }} />
+	// 			</button>
+	// 		</>
+	// 	);
+	// 	setQuestions([...questions, newQuestion]);
+	// 	setNumQuestion(numQuestion + 1);
+	// };
+
+	// const handleDeleteQuestion = (index: number) => {
+	// 	const updatedQuestions = [...questions];
+	// 	updatedQuestions.splice(index, 1);
+	// 	setQuestions(updatedQuestions);
+	// };
+
 	return (
 		<>
 			<Modal
@@ -110,11 +135,28 @@ const BookingDoctor: React.FunctionComponent<BookingDoctorProps> = ({ doctor, sl
 						<label className="block text-sm font-medium text-gray-700 capitalize sm:mt-px">
 							Question:
 						</label>
-						{question}
+						{fields.map((field, index) => {
+							return (
+								<div className="flex flex-row gap-2" key={field.id}>
+									<TextField commonField={{ name: `questionContent.${index}.questionContent` }} />
+									<button
+										type="button"
+										className="inline-flex justify-center items-center gap-2 py-2 px-2 border border-transparent shadow-sm text-sm font-medium rounded-sm bg-red-500 focus:outline-none cursor-pointer my-2"
+										onClick={() => remove(index)}
+									>
+										<CloseCircleOutlined style={{ fontSize: '16px', color: '#ffffff' }} />
+									</button>
+								</div>
+							);
+						})}
 						<button
 							type="button"
 							className="w-full	inline-flex justify-center items-center gap-2 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-sm text-gray-400 focus:outline-none cursor-pointer my-2"
-							onClick={handleAddQuestion}
+							onClick={() =>
+								append({
+									questionContent: '',
+								})
+							}
 						>
 							<PlusCircleOutlined style={{ fontSize: '16px', color: '#7f7f7f' }} /> Add Question
 						</button>

@@ -1,6 +1,6 @@
 export interface CommonFieldProps<Key = any> {
 	label?: string;
-	name: string & keyof Key;
+	name?: string & keyof Key;
 	isRequire?: boolean;
 	direction?: Direction;
 }
