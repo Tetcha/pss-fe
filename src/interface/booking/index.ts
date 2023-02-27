@@ -18,6 +18,7 @@ export interface BookingHistoryListFilter
 
 export interface StudentBookingForm {
 	slotId: string;
+	questionContent: Array<any>;
 }
 
 export interface StudentBookingDTO {
@@ -25,5 +26,5 @@ export interface StudentBookingDTO {
 	date: Moment;
 	nameDoctor: string;
 	slotId: string;
-	question: string;
+	questionContent: Array<any>;
 }

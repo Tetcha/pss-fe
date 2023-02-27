@@ -39,14 +39,14 @@ const BookingCalendar: React.FunctionComponent<BookingCalendarProps> = ({ doctor
 		) : null;
 	};
 
-	const [currentMonth, setCurrentMonth] = React.useState<Moment>(moment());
+	const [currentDate, setCurrentDate] = React.useState<Moment>(moment());
 
 	const id = doctor.id;
 	const queryAvailableSlots = useQuery<AvailableSlot[]>(
-		['availableSlots', id, currentMonth],
+		['availableSlots', id, currentDate],
 		async () => {
-			const firstDayOfMonth = currentMonth.startOf('month').format('YYYY-MM-DD');
-			const lastDayOfMonth = currentMonth.endOf('month').format('YYYY-MM-DD');
+			const firstDayOfMonth = currentDate.startOf('month').format('YYYY-MM-DD');
+			const lastDayOfMonth = currentDate.endOf('month').format('YYYY-MM-DD');
 
 			const { data } = await getDoctorSlots({
 				id,
@@ -62,28 +62,35 @@ const BookingCalendar: React.FunctionComponent<BookingCalendarProps> = ({ doctor
 	);
 
 	const dateCellRender = (value: Moment) => {
-		const listData = getSlotsOfDay(queryAvailableSlots.data, value);
+		const currentDay = moment();
 
-		return (
-			<ul className="events">
-				{listData.map((item) => (
-					<li key={item.id}>
-						<Badge
-							status={'processing'}
-							text={`${item.startTime.toUpperCase()}: ${item.status ? 'Booked' : 'Ready'}`}
-						/>
-					</li>
-				))}
-			</ul>
-		);
+		if (value > currentDay) {
+			const listData = getSlotsOfDay(queryAvailableSlots.data, value);
+
+			return (
+				<ul className="events">
+					{listData.map((item) => (
+						<li key={item.id}>
+							<Badge
+								status={'processing'}
+								text={`${item.startTime.toUpperCase()}: ${item.status ? 'Booked' : 'Ready'}`}
+							/>
+						</li>
+					))}
+				</ul>
+			);
+		}
 	};
 	const openBookingDoctorModal = (doctor: Doctor, date: Moment) => {
-		const listData = getSlotsOfDay(queryAvailableSlots.data, date);
-		handleModal(
-			'BookingDoctor',
-			<BookingDoctor doctor={doctor} slot={{ date: date, slots: listData }} />,
-		);
-		handleOpenModal('BookingDoctor');
+		const currentDay = moment();
+		if (date > currentDay) {
+			const listData = getSlotsOfDay(queryAvailableSlots.data, date);
+			handleModal(
+				'BookingDoctor',
+				<BookingDoctor doctor={doctor} slot={{ date: date, slots: listData }} />,
+			);
+			listData[0] && handleOpenModal('BookingDoctor');
+		}
 	};
 
 	return (
@@ -93,6 +100,7 @@ const BookingCalendar: React.FunctionComponent<BookingCalendarProps> = ({ doctor
 				onCancel={() => setIsVisible(false)}
 				width={1280}
 				afterClose={() => handleCloseModal('BookingCalendar')}
+				destroyOnClose
 			>
 				<div className="py-4 md:flex md:items-center md:justify-between">
 					<div className="flex-1 min-w-0">
@@ -107,7 +115,7 @@ const BookingCalendar: React.FunctionComponent<BookingCalendarProps> = ({ doctor
 					onSelect={(date) => {
 						openBookingDoctorModal(doctor, date);
 					}}
-					// onChange={(date) => setCurrentMonth(date)}
+					// onChange={(date) => setCurrentDate(date)}
 					className="px-4"
 				/>
 			</Modal>

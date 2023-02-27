@@ -23,7 +23,7 @@ export const TextField: React.FC<TextFieldProps> = ({ commonField, ...props }) =
 				className="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
 			/> */}
 			<Controller
-				name={name}
+				name={name || ''}
 				control={control}
 				render={({ field: { value, onChange } }) => (
 					<Input value={value} onChange={onChange} size="large" {...props} />
