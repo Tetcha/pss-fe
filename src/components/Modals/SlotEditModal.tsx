@@ -55,7 +55,6 @@ const SlotEditModal: React.FunctionComponent<SlotEditModalProps> = ({ defaultVal
 			initialData: [],
 		},
 	);
-
 	return (
 		<Modal
 			title="Edit slots"
@@ -87,6 +86,7 @@ const SlotEditModal: React.FunctionComponent<SlotEditModalProps> = ({ defaultVal
 							label: `${item.name}: ${item.startTime} - ${item.endTime}`,
 							value: item.id,
 						}))}
+						defaultChecked={defaultValues?.slots.map((item) => item)}
 					/>
 				</form>
 			</FormWrapper>

@@ -73,11 +73,13 @@ const MultiSlotEditModal: React.FunctionComponent<MultiSlotEditModalProps> = () 
 
 	const handleOnSubmit = (data: EditMultiSlotForm) => {
 		const dates = data.dates.map((item) => item.format('YYYY-MM-DD'));
-		const dataPost: EditSlotDTO = {
-			dates,
-			slots: data.slots,
-		};
-		mutatePostSlots(dataPost);
+		console.log('data', data);
+		console.log('dates', dates);
+		// const dataPost: EditSlotDTO = {
+		// 	dates,
+		// 	slots: data.slots,
+		// };
+		// mutatePostSlots(dataPost);
 	};
 
 	React.useEffect(() => {

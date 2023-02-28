@@ -22,7 +22,7 @@ export const useStudentBooking = () => {
 		...rest
 	} = useMutation(studentBooking, {
 		onSuccess: () => {
-			toast.success('Booking successfully');
+			toast.success('Booking successfully!!');
 		},
 	});
 	return { mutateStudentBooking, mutateStudentBookingAsync, ...rest };

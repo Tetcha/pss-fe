@@ -1,4 +1,6 @@
+import { VideoCameraOutlined } from '@ant-design/icons';
 import { useQuery } from '@tanstack/react-query';
+import { Button } from 'antd';
 import moment from 'moment';
 import * as React from 'react';
 import { getStudentBookingHistory } from 'src/api/booking';
@@ -13,6 +15,7 @@ interface BookingHistoryProps {
 
 const BookingHistory: React.FunctionComponent<BookingHistoryProps> = ({ filters }) => {
 	const { id } = useStoreUser();
+	const userId = id;
 
 	const query = useQuery(
 		['booking-history', filters, id],
@@ -47,13 +50,24 @@ const BookingHistory: React.FunctionComponent<BookingHistoryProps> = ({ filters 
 								<div className="w-3.5 h-3.5 bg-blue-500 rounded-full" />
 							</div>
 							<div className="w-11/12 flex justify-between items-center">
+								<div className="text-sm"></div>
 								<div className="text-sm">{moment(item.slot.date).format('YYYY-MM-DD')}</div>
 								<div className="text-sm">
 									{item.slot.startTime} - {item.slot.endTime}
 								</div>
 								<div className="text-sm">{item.cost}</div>
-								<div>
+								<div className="flex min-w-[120px] justify-start">
 									<StatusTag value={item.status} key={item.id} />
+									{item.status === 'ACCEPTED' ? (
+										<a
+											href={`https://localhost:3001/room/${item.id}-${userId}`}
+											className="flex items-center justify-center bg-blue-600 hover:bg-blue-500 px-2 rounded text-sm space-x-2 transition duration-100 cursor-pointer border-none"
+										>
+											<VideoCameraOutlined style={{ fontSize: '16px', color: '#fff' }} />
+										</a>
+									) : (
+										<></>
+									)}
 								</div>
 							</div>
 						</div>

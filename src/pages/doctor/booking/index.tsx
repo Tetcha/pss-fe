@@ -27,7 +27,7 @@ DoctorBookingPage.getInitialProps = async (ctx): Promise<DoctorBookingPageProps>
 		filters: objectHelper.getObjectWithDefault<Partial<BookingListFilter>>(ctx.query, {
 			...defaultPagingProps,
 			id: '',
-			status: '',
+			status: 'PENDING',
 		}),
 	};
 };

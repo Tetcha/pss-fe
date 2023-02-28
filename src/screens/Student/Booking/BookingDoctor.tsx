@@ -69,7 +69,6 @@ const BookingDoctor: React.FunctionComponent<BookingDoctorProps> = ({ doctor, sl
 	React.useEffect(() => {
 		if (isSuccess) {
 			setIsVisible(false);
-			toast.success('Booking successfully!');
 		}
 	}, [isSuccess]);
 

@@ -25,6 +25,7 @@ interface DoctorSlotCalendarProps {}
 
 const DoctorSlotCalendar: React.FunctionComponent<DoctorSlotCalendarProps> = () => {
 	const { handleModal, handleOpenModal } = useModalContext();
+
 	const monthCellRender = (value: Moment) => {
 		const num = getMonthData(value);
 		return num ? (
@@ -41,10 +42,24 @@ const DoctorSlotCalendar: React.FunctionComponent<DoctorSlotCalendarProps> = () 
 	};
 
 	const openSlotEditModal = (dates: Moment) => {
-		handleModal('slotEdit', <SlotEditModal defaultValues={{ dates: dates, slots: [1, 4, 3] }} />);
+		handleModal(
+			'slotEdit',
+			<SlotEditModal
+				defaultValues={{
+					dates: dates,
+					slots: [
+						...queryAvailableSlots.data
+							.filter((date) => date.date.slice(0, 10) === dates.format('YYYY-MM-DD'))
+							.map((date) => date.slotEnumId),
+					],
+				}}
+			/>,
+		);
 		handleOpenModal('slotEdit');
 	};
+
 	const [currentMonth, setCurrentMonth] = React.useState<Moment>(moment());
+	const [nextMonth, setCurrentNextMonth] = React.useState<Moment>(moment().add(1, 'months'));
 
 	const { id } = useStoreDoctor();
 
@@ -52,12 +67,12 @@ const DoctorSlotCalendar: React.FunctionComponent<DoctorSlotCalendarProps> = () 
 		['availableSlots', id, currentMonth],
 		async () => {
 			const firstDayOfMonth = currentMonth.startOf('month').format('YYYY-MM-DD');
-			const lastDayOfMonth = currentMonth.endOf('month').format('YYYY-MM-DD');
+			const lastDayOfNextMonth = nextMonth.endOf('month').format('YYYY-MM-DD');
 
 			const { data } = await getDoctorSlots({
 				id,
 				from: firstDayOfMonth,
-				to: lastDayOfMonth,
+				to: lastDayOfNextMonth,
 			});
 
 			return data;
@@ -75,7 +90,7 @@ const DoctorSlotCalendar: React.FunctionComponent<DoctorSlotCalendarProps> = () 
 				{listData.map((item) => (
 					<li key={item.id}>
 						<Badge
-							status={'processing'}
+							status={`${item.status ? 'processing' : 'success'}`}
 							text={`${item.startTime.toUpperCase()}: ${item.status ? 'Booked' : 'Ready'}`}
 						/>
 					</li>
@@ -83,6 +98,8 @@ const DoctorSlotCalendar: React.FunctionComponent<DoctorSlotCalendarProps> = () 
 			</ul>
 		);
 	};
+
+	React.useEffect(() => {}, [queryAvailableSlots]);
 
 	return (
 		<>
@@ -104,9 +121,9 @@ const DoctorSlotCalendar: React.FunctionComponent<DoctorSlotCalendarProps> = () 
 			</div>
 			<Calendar
 				dateCellRender={dateCellRender}
-				monthCellRender={monthCellRender}
+				// monthCellRender={monthCellRender}
 				onSelect={(date) => openSlotEditModal(date)}
-				onChange={(date) => setCurrentMonth(date)}
+				// onChange={(date) => setCurrentMonth(date)}
 				className="px-4"
 			/>
 		</>

@@ -27,5 +27,6 @@ export interface FilterSlotDTO extends Omit<FilterSlotForm, 'from' | 'to'> {
 }
 
 export interface EditSlotDTO extends Omit<EditMultiSlotForm | EditSlotForm, 'dates'> {
+	id?: string;
 	dates: string[];
 }
