@@ -14,7 +14,7 @@ export const RouterProtectionAdminWrapper: React.FC<RouterProtectionAdminWrapper
 
 	React.useEffect(() => {
 		if (admin.isLogin && !admin.id) {
-			router.push(ROUTES_URL.ADMIN_LOGIN);
+			router.push(`${ROUTES_URL.ADMIN_LOGIN}`);
 		}
 	}, [admin, router]);
 

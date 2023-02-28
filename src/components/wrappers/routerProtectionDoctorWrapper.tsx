@@ -14,7 +14,7 @@ export const RouterProtectionDoctorWrapper: React.FC<RouterProtectionDoctorWrapp
 
 	React.useEffect(() => {
 		if (doctor.isLogin && !doctor.id) {
-			router.push(ROUTES_URL.DOCTOR_LOGIN);
+			router.push(`${ROUTES_URL.DOCTOR_LOGIN}`);
 		}
 	}, [doctor, router]);
 

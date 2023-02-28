@@ -14,6 +14,7 @@ export const RouterUnAuthDoctorProtectionWrapper: React.FC<
 
 	React.useEffect(() => {
 		if (doctor.isLogin && doctor.id) {
+			if (router.asPath.includes('redirectUrl')) return;
 			router.push(ROUTES_URL.DOCTOR);
 		}
 	}, [doctor, router]);
