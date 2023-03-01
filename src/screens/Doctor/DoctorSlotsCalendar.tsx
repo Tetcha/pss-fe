@@ -10,13 +10,6 @@ import { AvailableSlot } from 'src/models/slot';
 import { useQuery } from '@tanstack/react-query';
 import { useStoreDoctor } from 'src/store';
 import { getDoctorSlots } from 'src/api/slot';
-import { useDebounce } from 'usehooks-ts';
-
-const getMonthData = (value: Moment) => {
-	if (value.month() === 8) {
-		return 1394;
-	}
-};
 
 const getSlotsOfDay = (slots: AvailableSlot[], date: Moment) => {
 	return slots.filter((slot) => moment(slot.date).isSame(date, 'day'));
@@ -174,7 +167,6 @@ const DoctorSlotCalendar: React.FunctionComponent<DoctorSlotCalendarProps> = () 
 				}}
 				dateCellRender={dateCellRender}
 				onSelect={(date) => openSlotEditModal(date)}
-				// onChange={dateCellRender}
 				className="px-4"
 			/>
 		</>
