@@ -40,7 +40,9 @@ const DoctorSlotCalendar: React.FunctionComponent<DoctorSlotCalendarProps> = () 
 			return;
 		}
 
-		handleModal('slotEdit', <SlotEditModal defaultValues={{ dates: dates, slots: [] }} />);
+		const slots = getSlotsOfDay(queryAvailableSlots.data, dates).map((slot) => slot.slotEnumId);
+
+		handleModal('slotEdit', <SlotEditModal defaultValues={{ dates: dates, slots }} />);
 		handleOpenModal('slotEdit');
 	};
 
