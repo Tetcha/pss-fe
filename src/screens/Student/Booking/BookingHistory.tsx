@@ -43,7 +43,11 @@ const BookingHistory: React.FunctionComponent<BookingHistoryProps> = ({ filters 
 							<div>status</div>
 						</div>
 					</div> */}
-					<div className="absolute h-full border-[0.5px] border-solid border-opacity-80 border-secondary flex gap-y-4" />
+					{query.data.count > 0 ? (
+						<div className="absolute h-full border-[0.5px] border-solid border-opacity-80 border-secondary flex gap-y-4" />
+					) : (
+						<></>
+					)}
 					{query.data.data.map((item) => (
 						<div className="flex items-center w-full my-6 -ml-1.5" key={item.id}>
 							<div className="w-1/12 z-10">

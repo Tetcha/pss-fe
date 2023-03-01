@@ -50,8 +50,8 @@ const BookingDoctor: React.FunctionComponent<BookingDoctorProps> = ({ doctor, sl
 	}, [methods, name, slot?.date, doctor?.name, slot?.slots, slot]);
 
 	const { fields, append, remove } = useFieldArray({
-		name: 'questionContent',
 		control,
+		name: 'questionContent',
 	});
 
 	const { mutateStudentBooking, isSuccess } = useStudentBooking();

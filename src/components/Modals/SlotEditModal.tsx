@@ -35,11 +35,11 @@ const SlotEditModal: React.FunctionComponent<SlotEditModalProps> = ({ defaultVal
 			slots: data.slots,
 		};
 		mutatePostSlots(dataPost);
+		window.location.reload();
 	};
 
 	React.useEffect(() => {
 		if (isSuccess) {
-			toast.success('Edit slot successfully');
 			setIsVisible(false);
 		}
 	}, [isSuccess]);
@@ -57,7 +57,6 @@ const SlotEditModal: React.FunctionComponent<SlotEditModalProps> = ({ defaultVal
 	);
 	return (
 		<Modal
-			title="Edit slots"
 			open={isVisible}
 			width={920}
 			onCancel={() => setIsVisible(false)}
@@ -66,6 +65,7 @@ const SlotEditModal: React.FunctionComponent<SlotEditModalProps> = ({ defaultVal
 				setIsVisible(false);
 			}}
 			afterClose={() => handleCloseModal('slotEdit')}
+			destroyOnClose
 		>
 			<FormWrapper methods={methods}>
 				<form onSubmit={methods.handleSubmit(handleOnSubmit)} className="space-y-5">

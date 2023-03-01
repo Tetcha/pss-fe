@@ -84,13 +84,12 @@ const DoctorSlotCalendar: React.FunctionComponent<DoctorSlotCalendarProps> = () 
 
 	const dateCellRender = (value: Moment) => {
 		const listData = getSlotsOfDay(queryAvailableSlots.data, value);
-
 		return (
 			<ul className="events">
 				{listData.map((item) => (
 					<li key={item.id}>
 						<Badge
-							status={`${item.status ? 'processing' : 'success'}`}
+							status={`${item?.booking[0]?.status === 'ACCEPTED' ? 'processing' : 'success'}`}
 							text={`${item.startTime.toUpperCase()}: ${item.status ? 'Booked' : 'Ready'}`}
 						/>
 					</li>
@@ -121,9 +120,9 @@ const DoctorSlotCalendar: React.FunctionComponent<DoctorSlotCalendarProps> = () 
 			</div>
 			<Calendar
 				dateCellRender={dateCellRender}
-				// monthCellRender={monthCellRender}
+				monthCellRender={monthCellRender}
 				onSelect={(date) => openSlotEditModal(date)}
-				// onChange={(date) => setCurrentMonth(date)}
+				// onChange={dateCellRender}
 				className="px-4"
 			/>
 		</>

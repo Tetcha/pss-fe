@@ -67,7 +67,6 @@ const BookingCalendar: React.FunctionComponent<BookingCalendarProps> = ({ doctor
 
 		if (value.format('YYYY-MM-DD') >= currentDay.format('YYYY-MM-DD')) {
 			const listData = getSlotsOfDay(queryAvailableSlots.data, value);
-
 			return (
 				<ul className="events">
 					{listData.map((item) => (

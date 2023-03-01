@@ -37,8 +37,6 @@ const BookingList: React.FunctionComponent<BookingListProps> = ({ filters }) => 
 		{ initialData: { data: [], count: 0 } },
 	);
 
-	console.log(query);
-
 	const { mutateUpdateBookingStatus } = useUpdateBookingStatus();
 
 	const onAccept = (id: string) => {
