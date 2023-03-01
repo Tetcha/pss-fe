@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { BadgeProps } from 'antd';
+import { BadgeProps, Col, Radio, Row, Select, Typography } from 'antd';
 import { Badge, Calendar } from 'antd';
 import moment, { Moment } from 'moment';
 
@@ -10,6 +10,7 @@ import { AvailableSlot } from 'src/models/slot';
 import { useQuery } from '@tanstack/react-query';
 import { useStoreDoctor } from 'src/store';
 import { getDoctorSlots } from 'src/api/slot';
+import { useDebounce } from 'usehooks-ts';
 
 const getMonthData = (value: Moment) => {
 	if (value.month() === 8) {
@@ -26,15 +27,7 @@ interface DoctorSlotCalendarProps {}
 const DoctorSlotCalendar: React.FunctionComponent<DoctorSlotCalendarProps> = () => {
 	const { handleModal, handleOpenModal } = useModalContext();
 
-	const monthCellRender = (value: Moment) => {
-		const num = getMonthData(value);
-		return num ? (
-			<div className="notes-month">
-				<section>{num}</section>
-				<span>Backlog number</span>
-			</div>
-		) : null;
-	};
+	const [currentMonth, setCurrentMonth] = React.useState<Moment>(moment());
 
 	const openMultiSlotEditModal = () => {
 		handleModal('multiSlotEdit', <MultiSlotEditModal />);
@@ -42,24 +35,16 @@ const DoctorSlotCalendar: React.FunctionComponent<DoctorSlotCalendarProps> = () 
 	};
 
 	const openSlotEditModal = (dates: Moment) => {
-		handleModal(
-			'slotEdit',
-			<SlotEditModal
-				defaultValues={{
-					dates: dates,
-					slots: [
-						...queryAvailableSlots.data
-							.filter((date) => date.date.slice(0, 10) === dates.format('YYYY-MM-DD'))
-							.map((date) => date.slotEnumId),
-					],
-				}}
-			/>,
-		);
+		if (!dates.isSame(currentMonth, 'month')) {
+			setCurrentMonth(dates);
+			return;
+		}
+
+		const slots = getSlotsOfDay(queryAvailableSlots.data, dates).map((slot) => slot.slotEnumId);
+
+		handleModal('slotEdit', <SlotEditModal defaultValues={{ dates: dates, slots }} />);
 		handleOpenModal('slotEdit');
 	};
-
-	const [currentMonth, setCurrentMonth] = React.useState<Moment>(moment());
-	const [nextMonth, setCurrentNextMonth] = React.useState<Moment>(moment().add(1, 'months'));
 
 	const { id } = useStoreDoctor();
 
@@ -67,12 +52,12 @@ const DoctorSlotCalendar: React.FunctionComponent<DoctorSlotCalendarProps> = () 
 		['availableSlots', id, currentMonth],
 		async () => {
 			const firstDayOfMonth = currentMonth.startOf('month').format('YYYY-MM-DD');
-			const lastDayOfNextMonth = nextMonth.endOf('month').format('YYYY-MM-DD');
+			const lastDayOfMonth = currentMonth.endOf('month').format('YYYY-MM-DD');
 
 			const { data } = await getDoctorSlots({
 				id,
 				from: firstDayOfMonth,
-				to: lastDayOfNextMonth,
+				to: lastDayOfMonth,
 			});
 
 			return data;
@@ -121,8 +106,73 @@ const DoctorSlotCalendar: React.FunctionComponent<DoctorSlotCalendarProps> = () 
 				</div>
 			</div>
 			<Calendar
+				headerRender={({ value, type, onChange, onTypeChange }) => {
+					const start = 0;
+					const end = 12;
+					const monthOptions = [];
+
+					const current = value.clone();
+					const localeData = value.localeData();
+					const months = [];
+					for (let i = 0; i < 12; i++) {
+						current.month(i);
+						months.push(localeData.monthsShort(current));
+					}
+
+					for (let i = start; i < end; i++) {
+						monthOptions.push(
+							<Select.Option key={i} value={i} className="month-item">
+								{months[i]}
+							</Select.Option>,
+						);
+					}
+
+					const year = value.year();
+					const month = value.month();
+					const options = [];
+					for (let i = year - 10; i < year + 10; i += 1) {
+						options.push(
+							<Select.Option key={i} value={i} className="year-item">
+								{i}
+							</Select.Option>,
+						);
+					}
+					return (
+						<div style={{ padding: 8 }}>
+							<Typography.Title level={4}>Custom header</Typography.Title>
+							<Row gutter={8}>
+								<Col>
+									<Select
+										size="small"
+										dropdownMatchSelectWidth={false}
+										className="my-year-select"
+										value={year}
+										onChange={(newYear) => {
+											const now = value.clone().year(newYear);
+											onChange(now);
+										}}
+									>
+										{options}
+									</Select>
+								</Col>
+								<Col>
+									<Select
+										size="small"
+										dropdownMatchSelectWidth={false}
+										value={month}
+										onChange={(newMonth) => {
+											const now = value.clone().month(newMonth);
+											onChange(now);
+										}}
+									>
+										{monthOptions}
+									</Select>
+								</Col>
+							</Row>
+						</div>
+					);
+				}}
 				dateCellRender={dateCellRender}
-				monthCellRender={monthCellRender}
 				onSelect={(date) => openSlotEditModal(date)}
 				// onChange={dateCellRender}
 				className="px-4"

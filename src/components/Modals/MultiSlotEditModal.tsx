@@ -20,34 +20,6 @@ const defaultValues: EditMultiSlotForm = {
 	slots: [],
 };
 
-const dataExample = {
-	date: ['2021-08-01', '2021-08-02'],
-	slots: [
-		{ label: 'Slot 1: 07:00 - 08:00', value: '1' },
-		{ label: 'Slot 2: 08:00 - 09:00', value: '2' },
-		{
-			label: 'Slot 3: 09:00 - 10:00',
-			value: '3',
-		},
-		{
-			label: 'Slot 4: 10:00 - 11:00',
-			value: '4',
-		},
-		{
-			label: 'Slot 5: 11:00 - 12:00',
-			value: '5',
-		},
-		{
-			label: 'Slot 6: 12:00 - 13:00',
-			value: '6',
-		},
-		{
-			label: 'Slot 7: 13:00 - 14:00',
-			value: '7',
-		},
-	],
-};
-
 const MultiSlotEditModal: React.FunctionComponent<MultiSlotEditModalProps> = () => {
 	const { handleCloseModal, modal } = useModalContext();
 	const { multiSlotEdit } = modal;
@@ -72,7 +44,16 @@ const MultiSlotEditModal: React.FunctionComponent<MultiSlotEditModalProps> = () 
 	);
 
 	const handleOnSubmit = (data: EditMultiSlotForm) => {
-		const dates = data.dates.map((item) => item.format('YYYY-MM-DD'));
+		let dates: string[] = [];
+
+		const [start, end] = data.dates;
+
+		const diff = end.diff(start, 'days');
+
+		for (let i = 0; i <= diff; i++) {
+			dates.push(start.clone().add(i, 'days').format('YYYY-MM-DD'));
+		}
+
 		const dataPost: EditSlotDTO = {
 			dates,
 			slots: data.slots,

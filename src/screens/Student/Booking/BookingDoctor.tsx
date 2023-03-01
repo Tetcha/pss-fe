@@ -49,6 +49,7 @@ const BookingDoctor: React.FunctionComponent<BookingDoctorProps> = ({ doctor, sl
 		});
 	}, [methods, name, slot?.date, doctor?.name, slot?.slots, slot]);
 
+	// @ts-ignore
 	const { fields, append, remove } = useFieldArray({
 		control,
 		name: 'questionContent',
@@ -82,7 +83,7 @@ const BookingDoctor: React.FunctionComponent<BookingDoctorProps> = ({ doctor, sl
 	// 			<TextField commonField={{ name: `questionContent-${numQuestion}` }} />
 	// 			<button
 	// 				type="button"
-	// 				className="inline-flex justify-center items-center gap-2 py-2 px-2 border border-transparent shadow-sm text-sm font-medium rounded-sm bg-red-500 focus:outline-none cursor-pointer my-2"
+	// 				className="inline-flex items-center justify-center gap-2 px-2 py-2 my-2 text-sm font-medium bg-red-500 border border-transparent rounded-sm shadow-sm cursor-pointer focus:outline-none"
 	// 				onClick={() => handleDeleteQuestion(numQuestion)}
 	// 			>
 	// 				<CloseCircleOutlined style={{ fontSize: '16px', color: '#ffffff' }} />
@@ -140,7 +141,7 @@ const BookingDoctor: React.FunctionComponent<BookingDoctorProps> = ({ doctor, sl
 									<TextField commonField={{ name: `questionContent.${index}.questionContent` }} />
 									<button
 										type="button"
-										className="inline-flex justify-center items-center gap-2 py-2 px-2 border border-transparent shadow-sm text-sm font-medium rounded-sm bg-red-500 focus:outline-none cursor-pointer my-2"
+										className="inline-flex items-center justify-center gap-2 px-2 py-2 my-2 text-sm font-medium bg-red-500 border border-transparent rounded-sm shadow-sm cursor-pointer focus:outline-none"
 										onClick={() => remove(index)}
 									>
 										<CloseCircleOutlined style={{ fontSize: '16px', color: '#ffffff' }} />
@@ -150,7 +151,7 @@ const BookingDoctor: React.FunctionComponent<BookingDoctorProps> = ({ doctor, sl
 						})}
 						<button
 							type="button"
-							className="w-full	inline-flex justify-center items-center gap-2 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-sm text-gray-400 focus:outline-none cursor-pointer my-2"
+							className="inline-flex items-center justify-center w-full gap-2 px-4 py-2 my-2 text-sm font-medium text-gray-400 border border-transparent rounded-sm shadow-sm cursor-pointer focus:outline-none"
 							onClick={() =>
 								append({
 									questionContent: '',
