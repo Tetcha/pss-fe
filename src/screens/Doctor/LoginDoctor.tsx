@@ -12,9 +12,11 @@ const defaultValues: LoginPayload = {
 	username: '',
 };
 
-interface LoginDoctorProps {}
+interface LoginDoctorProps {
+	redirectUrl: string;
+}
 
-const LoginDoctor: FunctionComponent<LoginDoctorProps> = () => {
+const LoginDoctor: FunctionComponent<LoginDoctorProps> = ({ redirectUrl }) => {
 	const methods = useForm<LoginPayload>({
 		defaultValues,
 	});
@@ -28,6 +30,7 @@ const LoginDoctor: FunctionComponent<LoginDoctorProps> = () => {
 
 	React.useEffect(() => {
 		if (isSuccess) {
+			if (redirectUrl) router.push(redirectUrl);
 			router.push('/doctor');
 		}
 	}, [isSuccess]);

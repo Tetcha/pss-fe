@@ -12,7 +12,7 @@ export const RouterProtectionWrapper: React.FC<RouterProtectionWrapperProps> = (
 
 	React.useEffect(() => {
 		if (user.isLogin && !user.id) {
-			router.push(ROUTES_URL.STUDENT_LOGIN);
+			router.push(`${ROUTES_URL.STUDENT_LOGIN}`);
 		}
 	}, [user, router]);
 

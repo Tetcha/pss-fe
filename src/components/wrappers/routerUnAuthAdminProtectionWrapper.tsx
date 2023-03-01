@@ -14,6 +14,7 @@ export const RouterUnAuthAdminProtectionWrapper: React.FC<
 
 	React.useEffect(() => {
 		if (admin.isLogin && admin.id) {
+			if (router.asPath.includes('redirectUrl')) return;
 			router.push(ROUTES_URL.ADMIN);
 		}
 	}, [admin, router]);

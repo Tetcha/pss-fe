@@ -4,10 +4,13 @@ import { useRouter } from 'next/router';
 import {
 	CalendarOutlined,
 	EditOutlined,
+	EyeOutlined,
 	LogoutOutlined,
 	MenuFoldOutlined,
 	MenuUnfoldOutlined,
+	SolutionOutlined,
 	TableOutlined,
+	TeamOutlined,
 	WalletOutlined,
 } from '@ant-design/icons';
 import { Avatar, Card, Layout, Menu } from 'antd';
@@ -43,9 +46,24 @@ const menuLinks = [
 		label: 'Booking',
 	},
 	{
+		key: ROUTES_URL.DOCTOR_APPOINTMENT,
+		icon: <TeamOutlined />,
+		label: 'Appointment',
+	},
+	{
 		key: ROUTES_URL.DOCTOR_TRANSACTION,
 		icon: <WalletOutlined />,
 		label: 'Transaction',
+	},
+	{
+		key: ROUTES_URL.DOCTOR_SYMPTOM,
+		icon: <EyeOutlined />,
+		label: 'Symptom',
+	},
+	{
+		key: ROUTES_URL.DOCTOR_CATEGORY,
+		icon: <SolutionOutlined />,
+		label: 'Category',
 	},
 ];
 

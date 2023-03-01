@@ -23,6 +23,7 @@
 		"apexcharts": "^3.36.3",
 		"axios": "^1.2.1",
 		"clsx": "^1.2.1",
+		"cors": "^2.8.5",
 		"firebase": "^9.16.0",
 		"lodash.get": "^4.4.2",
 		"moment": "^2.29.4",
@@ -44,6 +45,7 @@
 		"universal-cookie": "^4.0.4"
 	},
 	"devDependencies": {
+		"@types/cors": "^2.8.13",
 		"@types/lodash": "^4.14.191",
 		"@types/lodash.get": "^4.4.7",
 		"@types/node": "^18.14.0",

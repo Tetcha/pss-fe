@@ -1,9 +1,14 @@
+import { NextPage } from 'next';
 import Head from 'next/head';
 
 import Login from 'src/components/Student/Auth/Login';
 import { GetCurrentUserWrapper, RouterUnAuthProtectionWrapper } from 'src/components/wrappers';
 
-export default function LoginPage() {
+interface LoginPageProps {
+	redirectUrl: string;
+}
+
+const LoginPage: NextPage<LoginPageProps> = ({ redirectUrl }) => {
 	return (
 		<>
 			<GetCurrentUserWrapper>
@@ -14,9 +19,16 @@ export default function LoginPage() {
 						<meta name="viewport" content="width=device-width, initial-scale=1" />
 						<link rel="icon" href="/favicon.ico" />
 					</Head>
-					<Login />
+					<Login redirectUrl={redirectUrl} />
 				</RouterUnAuthProtectionWrapper>
 			</GetCurrentUserWrapper>
 		</>
 	);
-}
+};
+
+LoginPage.getInitialProps = async (ctx): Promise<LoginPageProps> => {
+	const redirectUrl = ctx.query.redirectUrl || '';
+	return { redirectUrl: redirectUrl as string };
+};
+
+export default LoginPage;

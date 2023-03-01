@@ -34,4 +34,7 @@ export const ROUTES_URL = Object.freeze({
 	DOCTOR_SLOTS_WEEK_CALENDAR: '/doctor/slots/week-calendar',
 	DOCTOR_BOOKING: '/doctor/booking',
 	DOCTOR_TRANSACTION: '/doctor/transaction',
+	DOCTOR_SYMPTOM: '/doctor/symptom ',
+	DOCTOR_CATEGORY: '/doctor/category',
+	DOCTOR_APPOINTMENT: '/doctor/appointment',
 });

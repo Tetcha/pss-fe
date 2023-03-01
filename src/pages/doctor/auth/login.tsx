@@ -1,10 +1,15 @@
+import { NextPage } from 'next';
 import Head from 'next/head';
 
 import { GetCurrentAdminWrapper } from 'src/components/wrappers';
 import { RouterUnAuthAdminProtectionWrapper } from 'src/components/wrappers/routerUnAuthAdminProtectionWrapper';
 import LoginDoctor from 'src/screens/Doctor/LoginDoctor';
 
-export default function LoginAdminPage() {
+interface LoginDoctorPageProps {
+	redirectUrl: string;
+}
+
+const LoginDoctorPage: NextPage<LoginDoctorPageProps> = ({ redirectUrl }) => {
 	return (
 		<>
 			<GetCurrentAdminWrapper>
@@ -15,9 +20,16 @@ export default function LoginAdminPage() {
 						<meta name="viewport" content="width=device-width, initial-scale=1" />
 						<link rel="icon" href="/favicon.ico" />
 					</Head>
-					<LoginDoctor />
+					<LoginDoctor redirectUrl={redirectUrl} />
 				</RouterUnAuthAdminProtectionWrapper>
 			</GetCurrentAdminWrapper>
 		</>
 	);
-}
+};
+
+LoginDoctorPage.getInitialProps = async (ctx): Promise<LoginDoctorPageProps> => {
+	const redirectUrl = ctx.query.redirectUrl || '';
+	return { redirectUrl: redirectUrl as string };
+};
+
+export default LoginDoctorPage;
