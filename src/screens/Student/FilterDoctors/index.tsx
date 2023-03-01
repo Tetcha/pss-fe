@@ -160,7 +160,7 @@ const FilterDoctors: React.FunctionComponent<FilterDoctorsProps> = ({ filters })
 									<div className="flex items-center space-x-4 mt-2">
 										{props.isActive ? (
 											<Button
-												className="flex items-center bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded text-sm space-x-2 transition duration-100 cursor-pointer border-none"
+												className="flex items-center justify-center bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded text-sm space-x-2 transition duration-100 cursor-pointer border-none"
 												onClick={() => openBookingCalendar(props)}
 											>
 												<span>Book</span>

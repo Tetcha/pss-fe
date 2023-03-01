@@ -9,6 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getDoctorSlots } from 'src/api/slot';
 import BookingDoctor from './BookingDoctor';
 import { Doctor } from 'src/models/doctor';
+import { useStudentBooking } from 'src/hooks/booking';
 
 interface BookingCalendarProps {
 	doctor: Doctor;
@@ -64,15 +65,14 @@ const BookingCalendar: React.FunctionComponent<BookingCalendarProps> = ({ doctor
 	const dateCellRender = (value: Moment) => {
 		const currentDay = moment();
 
-		if (value > currentDay) {
+		if (value.format('YYYY-MM-DD') >= currentDay.format('YYYY-MM-DD')) {
 			const listData = getSlotsOfDay(queryAvailableSlots.data, value);
-
 			return (
 				<ul className="events">
 					{listData.map((item) => (
 						<li key={item.id}>
 							<Badge
-								status={'processing'}
+								status={`${item.status ? 'processing' : 'success'}`}
 								text={`${item.startTime.toUpperCase()}: ${item.status ? 'Booked' : 'Ready'}`}
 							/>
 						</li>
@@ -83,7 +83,7 @@ const BookingCalendar: React.FunctionComponent<BookingCalendarProps> = ({ doctor
 	};
 	const openBookingDoctorModal = (doctor: Doctor, date: Moment) => {
 		const currentDay = moment();
-		if (date > currentDay) {
+		if (date.format('YYYY-MM-DD') >= currentDay.format('YYYY-MM-DD')) {
 			const listData = getSlotsOfDay(queryAvailableSlots.data, date);
 			handleModal(
 				'BookingDoctor',
@@ -92,6 +92,13 @@ const BookingCalendar: React.FunctionComponent<BookingCalendarProps> = ({ doctor
 			listData[0] && handleOpenModal('BookingDoctor');
 		}
 	};
+	const { isSuccess } = useStudentBooking();
+
+	React.useEffect(() => {
+		if (isSuccess) {
+			setIsVisible(false);
+		}
+	}, [isSuccess]);
 
 	return (
 		<>

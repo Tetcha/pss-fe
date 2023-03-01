@@ -29,7 +29,7 @@ export function InputCheckboxGroup<Value, Key = any>({
 
 	React.useEffect(() => {
 		register(name);
-	}, [name]);
+	}, [name, register]);
 	return (
 		<CommonFieldWrapper {...commonField}>
 			{/* <div
@@ -49,7 +49,7 @@ export function InputCheckboxGroup<Value, Key = any>({
 								id={`${name}-option-${option.value}`}
 								label={option.label}
 								value={option.value}
-								defaultChecked={option.value === defaultChecked}
+								defaultChecked={defaultChecked?.includes(option.value)}
 								{...register(name)}
 							/>
 						</Col>

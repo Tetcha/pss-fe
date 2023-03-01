@@ -1,3 +1,4 @@
+import { Booking } from 'src/models/booking';
 import { Doctor } from './doctor';
 
 export interface Slot {
@@ -14,4 +15,5 @@ export interface AvailableSlot extends Omit<Slot, 'id' | 'name'> {
 	date: string;
 	doctor: Doctor;
 	slotEnumId: number;
+	booking: Array<Booking>;
 }
