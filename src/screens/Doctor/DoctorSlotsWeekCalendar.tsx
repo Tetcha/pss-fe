@@ -56,7 +56,10 @@ const DoctorWeekCalendar: React.FunctionComponent<DoctorWeekCalendarProps> = () 
 		slotId: item.slotEnumId,
 		event: item,
 		data: item,
+		booking: item.booking,
 	}));
+
+	console.log('events', events);
 
 	return (
 		<>
@@ -74,11 +77,17 @@ const DoctorWeekCalendar: React.FunctionComponent<DoctorWeekCalendarProps> = () 
 							slots={slots}
 							onCompare={(event, slot) => event.slotId === slot.id}
 							currentWeek={currentWeek.week()}
-							onDisplayEvent={() => (
+							onDisplayEvent={(event) => (
 								<>
-									<Button className="w-full h-auto font-medium text-gray-700 whitespace-normal bg-blue-300 border-none rounded-md hover:bg-blue-500 hover:text-white">
-										Available booking slot
-									</Button>
+									{event?.booking[0]?.status === 'ACCEPTED' ? (
+										<Button className="w-full h-auto font-medium text-gray-700 whitespace-normal bg-green-300 border-none rounded-md hover:bg-green-500 hover:text-white">
+											Booked
+										</Button>
+									) : (
+										<Button className="w-full h-auto font-medium text-gray-700 whitespace-normal bg-blue-300 border-none rounded-md hover:bg-blue-500 hover:text-white">
+											Available slot
+										</Button>
+									)}
 								</>
 							)}
 						/>

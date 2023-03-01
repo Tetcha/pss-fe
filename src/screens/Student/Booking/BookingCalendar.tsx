@@ -72,8 +72,10 @@ const BookingCalendar: React.FunctionComponent<BookingCalendarProps> = ({ doctor
 					{listData.map((item) => (
 						<li key={item.id}>
 							<Badge
-								status={`${item.status ? 'processing' : 'success'}`}
-								text={`${item.startTime.toUpperCase()}: ${item.status ? 'Booked' : 'Ready'}`}
+								status={`${item?.booking[0]?.status === 'ACCEPTED' ? 'success' : 'processing'}`}
+								text={`${item.startTime.toUpperCase()}: ${
+									item?.booking[0]?.status === 'ACCEPTED' ? 'Booked' : 'Ready'
+								}`}
 							/>
 						</li>
 					))}

@@ -106,7 +106,7 @@ const DashboardDoctorLayout: React.FunctionComponent<DashboardDoctorLayoutProps>
 					/>
 					<Card
 						actions={[
-							<EditOutlined key="edit" onClick={() => router.push(ROUTES_URL.DOCTOR_ME)} />,
+							<EditOutlined key="edit" onClick={() => router.push(ROUTES_URL.DOCTOR_UPDATE)} />,
 							<button
 								className="border-none outline-none cursor-pointer bg-inherit"
 								key="sign-out"
@@ -120,13 +120,17 @@ const DashboardDoctorLayout: React.FunctionComponent<DashboardDoctorLayoutProps>
 							block: !collapsed,
 						})}
 					>
-						<Meta
-							avatar={<Avatar src={avatar || `https://ui-avatars.com/api/?name=${name}`} />}
-							description={
-								<p className="text-base font-medium text-gray-900">{currencyFormat(balance)}</p>
-							}
-							title={name}
-						/>
+						<Link href={ROUTES_URL.DOCTOR_ME}>
+							<Meta
+								avatar={<Avatar src={avatar || `https://ui-avatars.com/api/?name=${name}`} />}
+								description={
+									<p className="text-base font-medium text-gray-900 cursor-pointer">
+										{currencyFormat(balance)}
+									</p>
+								}
+								title={name}
+							/>
+						</Link>
 					</Card>
 				</Sider>
 				<Layout className="site-layout">

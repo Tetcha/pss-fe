@@ -89,8 +89,10 @@ const DoctorSlotCalendar: React.FunctionComponent<DoctorSlotCalendarProps> = () 
 				{listData.map((item) => (
 					<li key={item.id}>
 						<Badge
-							status={`${item?.booking[0]?.status === 'ACCEPTED' ? 'processing' : 'success'}`}
-							text={`${item.startTime.toUpperCase()}: ${item.status ? 'Booked' : 'Ready'}`}
+							status={`${item?.booking[0]?.status === 'ACCEPTED' ? 'success' : 'processing'}`}
+							text={`${item.startTime.toUpperCase()}: ${
+								item?.booking[0]?.status === 'ACCEPTED' ? 'Booked' : 'Ready'
+							}`}
 						/>
 					</li>
 				))}
