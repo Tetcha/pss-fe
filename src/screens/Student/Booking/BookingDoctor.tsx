@@ -48,7 +48,7 @@ const BookingDoctor: React.FunctionComponent<BookingDoctorProps> = ({ doctor, sl
 			questionContent: [{}],
 		});
 	}, [methods, name, slot?.date, doctor?.name, slot?.slots, slot]);
-
+	console.log('slot: ', slot);
 	// @ts-ignore
 	const { fields, append, remove } = useFieldArray({
 		control,
@@ -125,13 +125,14 @@ const BookingDoctor: React.FunctionComponent<BookingDoctorProps> = ({ doctor, sl
 								label: 'Select Slot:',
 								name: 'slotId',
 							}}
-							options={slot?.slots.map((item: any) => ({
-								label: `${item.startTime} - ${item.endTime}`,
-								value: item.id,
-							}))}
+							options={slot?.slots
+								.filter((item: any) => !item.booking[0])
+								.map((item: any) => ({
+									label: `${item.startTime} - ${item.endTime}`,
+									value: item.id,
+								}))}
 							className="w-full"
 						/>
-						{/* <TextField commonField={{ name: 'question', label: 'Question:' }} /> */}
 						<label className="block text-sm font-medium text-gray-700 capitalize sm:mt-px">
 							Question:
 						</label>
