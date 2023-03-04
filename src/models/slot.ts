@@ -15,5 +15,5 @@ export interface AvailableSlot extends Omit<Slot, 'id' | 'name'> {
 	date: string;
 	doctor: Doctor;
 	slotEnumId: number;
-	booking: Array<Booking>;
+	booking: Booking[];
 }

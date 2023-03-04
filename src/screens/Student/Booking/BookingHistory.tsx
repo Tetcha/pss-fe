@@ -64,7 +64,7 @@ const BookingHistory: React.FunctionComponent<BookingHistoryProps> = ({ filters 
 									<StatusTag value={item.status} key={item.id} />
 									{item.status === 'ACCEPTED' ? (
 										<a
-											href={`https://localhost:3001/room/${item.id}-${userId}`}
+											href={`https://localhost:3001/room/${item.id}`}
 											className="flex items-center justify-center bg-blue-600 hover:bg-blue-500 px-2 rounded text-sm space-x-2 transition duration-100 cursor-pointer border-none"
 										>
 											<VideoCameraOutlined style={{ fontSize: '16px', color: '#fff' }} />

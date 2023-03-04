@@ -115,7 +115,7 @@ const BookingList: React.FunctionComponent<BookingListProps> = ({ filters }) => 
 				</FormFilterWrapper>
 			</div>
 			<TableBuilder
-				data={query.data.data}
+				data={query.data.data.filter((item) => moment(item.slot.date).isSameOrAfter(moment()))}
 				columns={[
 					{
 						title: () => <TableHeaderCell key="slot" sortKey="slot" label="Date - Slot" />,

@@ -11,12 +11,6 @@ import { useQuery } from '@tanstack/react-query';
 import { useStoreDoctor } from 'src/store';
 import { getDoctorSlots } from 'src/api/slot';
 
-const getMonthData = (value: Moment) => {
-	if (value.month() === 8) {
-		return 1394;
-	}
-};
-
 const getSlotsOfDay = (slots: AvailableSlot[], date: Moment) => {
 	return slots.filter((slot) => moment(slot.date).isSame(date, 'day'));
 };
@@ -73,8 +67,10 @@ const DoctorSlotCalendar: React.FunctionComponent<DoctorSlotCalendarProps> = () 
 				{listData.map((item) => (
 					<li key={item.id}>
 						<Badge
-							status={`${item?.booking[0]?.status === 'ACCEPTED' ? 'processing' : 'success'}`}
-							text={`${item.startTime.toUpperCase()}: ${item.status ? 'Booked' : 'Ready'}`}
+							status={`${item?.booking[0]?.status === 'ACCEPTED' ? 'success' : 'processing'}`}
+							text={`${item.startTime.toUpperCase()}: ${
+								item?.booking[0]?.status === 'ACCEPTED' ? 'Booked' : 'Ready'
+							}`}
 						/>
 					</li>
 				))}
@@ -171,7 +167,6 @@ const DoctorSlotCalendar: React.FunctionComponent<DoctorSlotCalendarProps> = () 
 				}}
 				dateCellRender={dateCellRender}
 				onSelect={(date) => openSlotEditModal(date)}
-				// onChange={dateCellRender}
 				className="px-4"
 			/>
 		</>
