@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BadgeProps, Col, Radio, Row, Select, Typography } from 'antd';
+import { Col, Row, Select, Typography } from 'antd';
 import { Badge, Calendar } from 'antd';
 import moment, { Moment } from 'moment';
 
@@ -10,7 +10,6 @@ import { AvailableSlot } from 'src/models/slot';
 import { useQuery } from '@tanstack/react-query';
 import { useStoreDoctor } from 'src/store';
 import { getDoctorSlots } from 'src/api/slot';
-import { useDebounce } from 'usehooks-ts';
 
 const getMonthData = (value: Moment) => {
 	if (value.month() === 8) {
