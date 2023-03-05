@@ -33,3 +33,7 @@ ul {
 	margin: 0 !important;
 	padding: 0 !important;
 }
+
+.ant-timeline-item-label {
+	font-size: 12px;
+}

@@ -132,7 +132,7 @@ const BookingList: React.FunctionComponent<BookingListProps> = ({ filters }) => 
 												{moment(props.slot.date).format('YYYY-MM-DD')}
 											</div>
 											<div className="text-sm font-medium text-gray-900">
-												{`${props.slot.endTime} - ${props.slot.startTime}`.toUpperCase()}
+												{`${props.slot.startTime} - ${props.slot.endTime}`.toUpperCase()}
 											</div>
 										</div>
 									}

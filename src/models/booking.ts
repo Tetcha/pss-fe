@@ -6,7 +6,7 @@ import { Slot } from './slot';
 export interface Booking {
 	id: string;
 	slot: Slot;
-	status: BookingSlotStatus;
+	status: BookingSlotStatus | string;
 }
 
 export enum BookingSlotStatus {

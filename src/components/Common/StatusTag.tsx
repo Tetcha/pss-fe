@@ -8,9 +8,10 @@ import { BookingSlotStatus } from 'src/models/booking';
 interface StatusTagProps {
 	value: string | boolean | UserStatus;
 	icon?: React.ReactNode;
+	className?: string;
 }
 
-const StatusTag: React.FunctionComponent<StatusTagProps> = ({ value, icon = <></> }) => {
+const StatusTag: React.FunctionComponent<StatusTagProps> = ({ value, icon, className = <></> }) => {
 	const color = () => {
 		switch (value.toString().toUpperCase()) {
 			case 'TRUE':
@@ -43,7 +44,7 @@ const StatusTag: React.FunctionComponent<StatusTagProps> = ({ value, icon = <></
 	};
 
 	return (
-		<Tag icon={icon} color={color()} className="min-w-[76px] text-center">
+		<Tag icon={icon} color={color()} className={`min-w-[76px] text-center ${className}`}>
 			{typeof value == 'boolean'
 				? value
 					? 'Active'
