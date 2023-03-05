@@ -18,7 +18,7 @@ const getSlotsOfDay = (slots: AvailableSlot[], date: Moment) => {
 interface DoctorSlotCalendarProps {}
 
 const DoctorSlotCalendar: React.FunctionComponent<DoctorSlotCalendarProps> = () => {
-	const { handleModal, handleOpenModal } = useModalContext();
+	const { handleModal, handleOpenModal, modal } = useModalContext();
 
 	const [currentMonth, setCurrentMonth] = React.useState<Moment>(moment());
 
@@ -78,7 +78,9 @@ const DoctorSlotCalendar: React.FunctionComponent<DoctorSlotCalendarProps> = () 
 		);
 	};
 
-	React.useEffect(() => {}, [queryAvailableSlots]);
+	React.useEffect(() => {
+		queryAvailableSlots.refetch();
+	}, [modal['slotEdit'], modal['multiSlotEdit']]);
 
 	return (
 		<>

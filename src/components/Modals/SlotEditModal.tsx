@@ -8,7 +8,7 @@ import { EditSlotDTO, EditSlotForm } from 'src/interface/slot';
 
 import { FormWrapper, InputCheckboxGroup } from '../Input';
 import InputDatePicker from '../Input/InputDatePicker';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Slot } from 'src/models/slot';
 import { getSlots } from 'src/api/slot';
 import { usePostSlots } from 'src/hooks/slot';
@@ -18,6 +18,7 @@ interface SlotEditModalProps {
 }
 
 const SlotEditModal: React.FunctionComponent<SlotEditModalProps> = ({ defaultValues }) => {
+	const queryClient = useQueryClient();
 	const { handleCloseModal, modal } = useModalContext();
 	const { slotEdit } = modal;
 	const [isVisible, setIsVisible] = React.useState(slotEdit.isOpen);
@@ -35,7 +36,6 @@ const SlotEditModal: React.FunctionComponent<SlotEditModalProps> = ({ defaultVal
 			slots: data.slots,
 		};
 		mutatePostSlots(dataPost);
-		window.location.reload();
 	};
 
 	React.useEffect(() => {
@@ -62,7 +62,6 @@ const SlotEditModal: React.FunctionComponent<SlotEditModalProps> = ({ defaultVal
 			onCancel={() => setIsVisible(false)}
 			onOk={() => {
 				methods.handleSubmit(handleOnSubmit)();
-				setIsVisible(false);
 			}}
 			afterClose={() => handleCloseModal('slotEdit')}
 			destroyOnClose

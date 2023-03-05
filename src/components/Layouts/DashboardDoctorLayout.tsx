@@ -56,11 +56,6 @@ const menuLinks = [
 		label: 'Transaction',
 	},
 	{
-		key: ROUTES_URL.DOCTOR_SYMPTOM,
-		icon: <EyeOutlined />,
-		label: 'Symptom',
-	},
-	{
 		key: ROUTES_URL.DOCTOR_CATEGORY,
 		icon: <SolutionOutlined />,
 		label: 'Category',

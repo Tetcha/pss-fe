@@ -24,7 +24,6 @@ StudentPage.getInitialProps = async (ctx): Promise<StudentPageProps> => {
 		filters: objectHelper.getObjectWithDefault<Partial<BookingHistoryListFilter>>(ctx.query, {
 			...defaultPagingProps,
 			id: '',
-			status: '',
 		}),
 	};
 };
