@@ -82,10 +82,6 @@ const StudentProfile: React.FunctionComponent<StudentProfileProps> = ({ filters 
 
 	const [update, setUpdate] = React.useState(false);
 
-	const handleClick = () => {
-		setUpdate(!update);
-	};
-
 	return (
 		<>
 			<div className="h-full px-2 py-5 w-full flex flex-col justify-center items-center">

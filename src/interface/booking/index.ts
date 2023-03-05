@@ -13,7 +13,7 @@ export interface BookingUpdateStatusDTO extends Pick<Booking, 'status' | 'id'> {
 
 export interface BookingHistoryListFilter
 	extends CommonFilterProps,
-		Pick<Booking, 'status'>,
+		// Pick<Booking, 'status'>,
 		Pick<User, 'id'> {}
 
 export interface StudentBookingForm {

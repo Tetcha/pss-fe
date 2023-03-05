@@ -1,5 +1,6 @@
 import { Moment } from 'moment';
 import { Student } from 'src/models/student';
+import { Doctor } from './doctor';
 import { Slot } from './slot';
 
 export interface Booking {
@@ -15,6 +16,7 @@ export enum BookingSlotStatus {
 }
 
 export interface SlotHistory extends Pick<Slot, 'startTime' | 'endTime'> {
+	doctor: Doctor;
 	date: Moment;
 }
 
