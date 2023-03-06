@@ -50,6 +50,13 @@ const BookingHistory: React.FunctionComponent<BookingHistoryProps> = ({ filters 
 		}
 	};
 
+	const [token, setToken] = React.useState<string>('');
+
+	React.useEffect(() => {
+		const token = localStorage.getItem('access-token') || '';
+		setToken(token);
+	}, []);
+
 	return (
 		<>
 			<div className="flex-1 bg-white rounded-lg shadow-xl mt-4 p-4 lg:p-8">
@@ -79,7 +86,7 @@ const BookingHistory: React.FunctionComponent<BookingHistoryProps> = ({ filters 
 											<StatusTag value={item.status} key={item.id} />
 											{item.status === BookingSlotStatus.ACCEPTED ? (
 												<a
-													href={`${ENV_VARIABLES.CALL_URL}/room/${item.id}`}
+													href={`${ENV_VARIABLES.CALL_URL}/room/${item.id}?token=${token}`}
 													className="flex items-center justify-center bg-blue-600 hover:bg-blue-500 px-2 rounded text-base space-x-2 transition duration-100 cursor-pointer border-none"
 												>
 													<VideoCameraOutlined style={{ fontSize: '16px', color: '#fff' }} />
@@ -91,7 +98,7 @@ const BookingHistory: React.FunctionComponent<BookingHistoryProps> = ({ filters 
 										<div className="flex sm:hidden">
 											{item.status === BookingSlotStatus.ACCEPTED ? (
 												<a
-													href={`${ENV_VARIABLES.CALL_URL}/room/${item.id}`}
+													href={`${ENV_VARIABLES.CALL_URL}/room/${item.id}?token=${token}`}
 													className="flex items-center justify-center bg-blue-600 hover:bg-blue-500 px-1 rounded text-base space-x-2 transition duration-100 cursor-pointer border-none"
 												>
 													<VideoCameraOutlined style={{ fontSize: '16px', color: '#fff' }} />
