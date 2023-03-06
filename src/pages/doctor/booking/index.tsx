@@ -11,6 +11,7 @@ interface DoctorBookingPageProps {
 }
 
 const DoctorBookingPage: NextPage<DoctorBookingPageProps> = ({ filters }) => {
+	console.log(filters);
 	return (
 		<>
 			<DoctorWrapper>

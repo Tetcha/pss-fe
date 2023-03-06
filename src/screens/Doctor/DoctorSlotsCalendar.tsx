@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BadgeProps, Col, Radio, Row, Select, Typography } from 'antd';
+import { Col, Row, Select, Typography } from 'antd';
 import { Badge, Calendar } from 'antd';
 import moment, { Moment } from 'moment';
 
@@ -18,7 +18,7 @@ const getSlotsOfDay = (slots: AvailableSlot[], date: Moment) => {
 interface DoctorSlotCalendarProps {}
 
 const DoctorSlotCalendar: React.FunctionComponent<DoctorSlotCalendarProps> = () => {
-	const { handleModal, handleOpenModal } = useModalContext();
+	const { handleModal, handleOpenModal, modal } = useModalContext();
 
 	const [currentMonth, setCurrentMonth] = React.useState<Moment>(moment());
 
@@ -78,7 +78,9 @@ const DoctorSlotCalendar: React.FunctionComponent<DoctorSlotCalendarProps> = () 
 		);
 	};
 
-	React.useEffect(() => {}, [queryAvailableSlots]);
+	React.useEffect(() => {
+		queryAvailableSlots.refetch();
+	}, [modal['slotEdit'], modal['multiSlotEdit']]);
 
 	return (
 		<>

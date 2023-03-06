@@ -9,7 +9,7 @@ import { EditMultiSlotForm, EditSlotDTO } from 'src/interface/slot';
 import { FormWrapper, InputCheckboxGroup } from '../Input';
 import InputDateRangePicker from '../Input/InputDateRangePicker';
 import { usePostSlots } from 'src/hooks/slot';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getSlots } from 'src/api/slot';
 import { Slot } from 'src/models/slot';
 
@@ -21,6 +21,7 @@ const defaultValues: EditMultiSlotForm = {
 };
 
 const MultiSlotEditModal: React.FunctionComponent<MultiSlotEditModalProps> = () => {
+	const queryClient = useQueryClient();
 	const { handleCloseModal, modal } = useModalContext();
 	const { multiSlotEdit } = modal;
 	const [isVisible, setIsVisible] = React.useState(multiSlotEdit.isOpen);
@@ -76,7 +77,6 @@ const MultiSlotEditModal: React.FunctionComponent<MultiSlotEditModalProps> = () 
 			width={920}
 			onOk={() => {
 				methods.handleSubmit(handleOnSubmit)();
-				setIsVisible(false);
 			}}
 			afterClose={() => handleCloseModal('multiSlotEdit')}
 		>

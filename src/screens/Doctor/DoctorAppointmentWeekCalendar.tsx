@@ -20,6 +20,13 @@ const DoctorAppointmentWeekCalendar: React.FunctionComponent<
 > = () => {
 	const [currentWeek, setCurrentWeek] = React.useState<Moment>(moment());
 
+	const [token, setToken] = React.useState<string>('');
+
+	React.useEffect(() => {
+		const token = localStorage.getItem('access-token') || '';
+		setToken(token);
+	}, []);
+
 	const { id } = useStoreDoctor();
 
 	const query = useQuery(
@@ -100,7 +107,7 @@ const DoctorAppointmentWeekCalendar: React.FunctionComponent<
 								<>
 									<Button
 										className="w-full h-auto font-medium text-gray-700 whitespace-normal bg-blue-300 border-none rounded-md hover:bg-blue-500 hover:text-white"
-										href={`${ENV_VARIABLES.CALL_URL}/${event.id}/doctor`}
+										href={`${ENV_VARIABLES.CALL_URL}/room/${event.id}/doctor?token=${token}`}
 									>
 										Call now
 									</Button>

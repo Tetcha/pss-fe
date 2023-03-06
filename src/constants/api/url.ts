@@ -33,4 +33,10 @@ export const API_URL = Object.freeze({
 
 	// Booking
 	BOOKING_STATUS: (id: string) => `/bookings/${id}`,
+
+	// SYMPTOM
+	SYMPTOM: '/symptom',
+
+	// category
+	CATEGORY: '/category',
 });
