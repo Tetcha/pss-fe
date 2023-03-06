@@ -228,7 +228,9 @@ const StudentProfile: React.FunctionComponent<StudentProfileProps> = ({ filters 
 										</li>
 										<li className="flex border-b py-2">
 											<span className="font-bold w-32">Birthday:</span>
-											<span className="text-gray-700">{moment(birthday).format('YYYY-MM-DD')}</span>
+											<span className="text-gray-700">
+												{birthday ? moment(birthday).format('YYYY-MM-DD') : ''}
+											</span>
 										</li>
 										<li className="flex border-b py-2">
 											<span className="font-bold w-32">Phone Number:</span>
