@@ -1,8 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import Cors from 'cors';
+import { ENV_VARIABLES } from 'src/constants/env';
 
 const cors = Cors({
-	origin: 'http://localhost:3001',
+	origin: ENV_VARIABLES.CALL_URL,
 	methods: ['GET', 'POST', 'PUT', 'DELETE'],
 });
 
