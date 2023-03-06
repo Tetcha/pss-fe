@@ -94,13 +94,15 @@ const StudentProfile: React.FunctionComponent<StudentProfileProps> = ({ filters 
 				<div className="bg-white rounded-lg shadow-xl pb-8 w-full max-w-container">
 					<div className="flex flex-col items-center -mt-20">
 						<LazyLoadImage
+							className="w-40 border-4 border-white rounded-full"
 							src={
 								avatar
 									? avatar
-									: 'https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png'
+									: `https://ui-avatars.com/api/?name=${name}&background=0D8ABC&color=fff`
 							}
-							className="w-40 border-4 border-white rounded-full"
+							alt=""
 						/>
+
 						<div className="flex items-center justify-center space-x-2 mt-2">
 							<div className="text-2xl">{name}</div>
 							<CheckCircleFilled
