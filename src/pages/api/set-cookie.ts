@@ -14,7 +14,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
 			// Set the "access-token" in a cookie with a domain of ".localhost"
 			res.setHeader('Set-Cookie', `access-token=${token}; Domain=.localhost; Path=/; HttpOnly;`);
-			res.status(200).json({ success: true });
+			res.status(200).json({ token });
 		});
 	});
 }

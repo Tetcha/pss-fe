@@ -18,6 +18,7 @@ import { InputSelect } from 'src/components/Input';
 import moment from 'moment';
 import { BookingSlotStatus } from 'src/models/booking';
 import { useUpdateBookingStatus } from 'src/hooks/booking';
+import { useTableUtil } from 'src/contexts/TableUtilContext';
 const { confirm } = Modal;
 
 interface BookingListProps {
@@ -26,15 +27,17 @@ interface BookingListProps {
 
 const BookingList: React.FunctionComponent<BookingListProps> = ({ filters }) => {
 	const { id } = useStoreDoctor();
+	const { setTotalItem } = useTableUtil();
 
 	const query = useQuery(
 		['booking-slots', filters, id],
 		async () => {
 			const newFilters = { ...filters, id };
 			const res = await getBooking(pagingMapper(newFilters));
+			setTotalItem(res.data.count);
 			return res.data;
 		},
-		{ initialData: { data: [], count: 0 } },
+		{ initialData: { data: [], count: 0 }, enabled: Boolean(id) },
 	);
 
 	const { mutateUpdateBookingStatus } = useUpdateBookingStatus();
@@ -115,7 +118,8 @@ const BookingList: React.FunctionComponent<BookingListProps> = ({ filters }) => 
 				</FormFilterWrapper>
 			</div>
 			<TableBuilder
-				data={query.data.data.filter((item) => moment(item.slot.date).isSameOrAfter(moment()))}
+				// data={query.data.data.filter((item) => moment(item.slot.date).isSameOrAfter(moment()))}
+				data={query.data.data}
 				columns={[
 					{
 						title: () => <TableHeaderCell key="slot" sortKey="slot" label="Date - Slot" />,
