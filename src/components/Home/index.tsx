@@ -10,7 +10,7 @@ const Home: FunctionComponent<HomeProps> = () => {
 	return (
 		<div className="flex flex-col justify-center w-full">
 			<Banner />
-			{/* <Introduce /> */}
+			<Introduce />
 			<Schedule />
 		</div>
 	);

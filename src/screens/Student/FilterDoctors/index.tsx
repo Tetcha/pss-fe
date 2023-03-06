@@ -114,7 +114,7 @@ const FilterDoctors: React.FunctionComponent<FilterDoctorsProps> = ({ filters })
 											props.avatar ? props.avatar : `https://ui-avatars.com/api/?name=${props.name}`
 										}
 										className="border-solid border-[0.5px] border-gray-200 
-										w-16 md:w-48"
+										w-16 md:w-32"
 									/>
 								);
 							},
