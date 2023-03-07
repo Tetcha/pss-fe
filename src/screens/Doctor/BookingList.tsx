@@ -35,6 +35,28 @@ const BookingList: React.FunctionComponent<BookingListProps> = ({ filters }) => 
 			const newFilters = { ...filters, id };
 			const res = await getBooking(pagingMapper(newFilters));
 			setTotalItem(res.data.count);
+
+			// sort base on prioritize: near current date and time, before date, after date
+
+			const { data } = res;
+
+			const sortedData = data.data.sort((a, b) => {
+				const aDate = moment(a.slot.date);
+				const bDate = moment(b.slot.date);
+
+				if (aDate.isSame(bDate)) {
+					return 0;
+				}
+
+				if (aDate.isBefore(bDate)) {
+					return -1;
+				}
+
+				return 1;
+			});
+
+			res.data.data = sortedData;
+
 			return res.data;
 		},
 		{ initialData: { data: [], count: 0 }, enabled: Boolean(id) },
