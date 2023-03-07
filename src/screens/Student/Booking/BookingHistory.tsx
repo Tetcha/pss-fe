@@ -38,8 +38,6 @@ const BookingHistory: React.FunctionComponent<BookingHistoryProps> = ({ filters 
 		{ initialData: { data: [], count: 0 } },
 	);
 
-	console.log('query', query.data);
-
 	const color = (item: any) => {
 		if (item === BookingSlotStatus.ACCEPTED) {
 			return 'green';
@@ -74,7 +72,7 @@ const BookingHistory: React.FunctionComponent<BookingHistoryProps> = ({ filters 
 									label={`${moment(item.slot.date).format('YYYY-MM-DD')} || ${
 										item.slot.startTime
 									} - ${item.slot.endTime}`}
-									key=""
+									key={item.id}
 								>
 									<div className="flex justify-between gap-x-2 items-center">
 										<div className="text-sm sm:text-base font-semibold">
