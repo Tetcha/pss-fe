@@ -81,6 +81,7 @@ const BookingList: React.FunctionComponent<BookingListProps> = ({ filters }) => 
 
 	const { handleOpenModal, handleModal } = useModalContext();
 	const onViewQuestions = (questions: QuestionPreview[]) => {
+		console.log('question', questions);
 		handleModal('viewQuestions', <ViewQuestionModal questions={questions} />);
 		handleOpenModal('viewQuestions');
 	};
@@ -122,7 +123,7 @@ const BookingList: React.FunctionComponent<BookingListProps> = ({ filters }) => 
 				data={query.data.data}
 				columns={[
 					{
-						title: () => <TableHeaderCell key="slot" sortKey="slot" label="Date - Slot" />,
+						title: () => <TableHeaderCell key="slot" sortKey="createAt" label="Date - Slot" />,
 						width: 300,
 						key: 'slot',
 
@@ -174,7 +175,7 @@ const BookingList: React.FunctionComponent<BookingListProps> = ({ filters }) => 
 						key: '',
 						render: ({ ...props }) => {
 							return (
-								<div className="flex items-center justify-end gap-4">
+								<div className="flex items-center justify-start gap-4">
 									{props.questions ? (
 										<Button type="link" onClick={() => onViewQuestions(props.questions)}>
 											View questions
