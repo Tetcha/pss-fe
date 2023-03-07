@@ -45,10 +45,9 @@ const BookingDoctor: React.FunctionComponent<BookingDoctorProps> = ({ doctor, sl
 			nameDoctor: doctor?.name,
 			date: slot?.date ? slot?.date : moment('2000-01-01'),
 			slotId: '',
-			questionContent: [{}],
+			questionContent: [],
 		});
 	}, [methods, name, slot?.date, doctor?.name, slot?.slots, slot]);
-	console.log('slot: ', slot);
 	// @ts-ignore
 	const { fields, append, remove } = useFieldArray({
 		control,
@@ -59,10 +58,14 @@ const BookingDoctor: React.FunctionComponent<BookingDoctorProps> = ({ doctor, sl
 
 	const handleOnSubmit = async (data: StudentBookingDTO) => {
 		const { slotId } = data;
-		console.log('data: ', data);
+		// @ts-ignore
+		console.log('abc', data.questionContent[0].questionContent);
 		const payload: StudentBookingForm = {
 			slotId,
-			questionContent: data.questionContent.map((item) => item.questionContent),
+			//@ts-ignore
+			questionContent: data?.questionContent[0]?.questionContent
+				? data.questionContent?.map((item) => item.questionContent)
+				: [],
 		};
 		mutateStudentBooking(payload);
 	};
@@ -72,33 +75,6 @@ const BookingDoctor: React.FunctionComponent<BookingDoctorProps> = ({ doctor, sl
 			setIsVisible(false);
 		}
 	}, [isSuccess]);
-
-	// const [questions, setQuestions] = React.useState<React.ReactNode[]>([]);
-
-	// const [numQuestion, setNumQuestion] = React.useState(0);
-
-	// const handleAddQuestion = () => {
-	// 	const newQuestion = (
-	// 		<>
-	// 			<TextField commonField={{ name: `questionContent-${numQuestion}` }} />
-	// 			<button
-	// 				type="button"
-	// 				className="inline-flex items-center justify-center gap-2 px-2 py-2 my-2 text-sm font-medium bg-red-500 border border-transparent rounded-sm shadow-sm cursor-pointer focus:outline-none"
-	// 				onClick={() => handleDeleteQuestion(numQuestion)}
-	// 			>
-	// 				<CloseCircleOutlined style={{ fontSize: '16px', color: '#ffffff' }} />
-	// 			</button>
-	// 		</>
-	// 	);
-	// 	setQuestions([...questions, newQuestion]);
-	// 	setNumQuestion(numQuestion + 1);
-	// };
-
-	// const handleDeleteQuestion = (index: number) => {
-	// 	const updatedQuestions = [...questions];
-	// 	updatedQuestions.splice(index, 1);
-	// 	setQuestions(updatedQuestions);
-	// };
 
 	return (
 		<>
@@ -128,7 +104,7 @@ const BookingDoctor: React.FunctionComponent<BookingDoctorProps> = ({ doctor, sl
 							options={slot?.slots
 								.filter((item: any) => !item.booking[0])
 								.map((item: any) => ({
-									label: `${item.startTime} - ${item.endTime}`,
+									label: `${item.startTime.toUpperCase()} - ${item.endTime.toUpperCase()}`,
 									value: item.id,
 								}))}
 							className="w-full"

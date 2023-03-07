@@ -35,7 +35,7 @@ const BookingHistory: React.FunctionComponent<BookingHistoryProps> = ({ filters 
 			const res = await getStudentBookingHistory(pagingMapper(filterProps));
 			return res.data;
 		},
-		{ initialData: { data: [], count: 0 } },
+		{ initialData: { data: [], count: 0 }, enabled: Boolean(id) },
 	);
 
 	const color = (item: any) => {
@@ -69,9 +69,9 @@ const BookingHistory: React.FunctionComponent<BookingHistoryProps> = ({ filters 
 							.map((item) => (
 								<Timeline.Item
 									color={color(item.status)}
-									label={`${moment(item.slot.date).format('YYYY-MM-DD')} || ${
-										item.slot.startTime
-									} - ${item.slot.endTime}`}
+									label={`${moment(item.slot.date).format(
+										'YYYY-MM-DD',
+									)} || ${item.slot.startTime.toUpperCase()} - ${item.slot.endTime.toUpperCase()}`}
 									key={item.id}
 								>
 									<div className="flex justify-between gap-x-2 items-center">
