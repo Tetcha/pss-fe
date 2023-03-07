@@ -58,8 +58,6 @@ const BookingDoctor: React.FunctionComponent<BookingDoctorProps> = ({ doctor, sl
 
 	const handleOnSubmit = async (data: StudentBookingDTO) => {
 		const { slotId } = data;
-		// @ts-ignore
-		console.log('abc', data.questionContent[0].questionContent);
 		const payload: StudentBookingForm = {
 			slotId,
 			//@ts-ignore
