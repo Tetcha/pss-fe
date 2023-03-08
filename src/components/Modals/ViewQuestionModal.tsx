@@ -27,8 +27,10 @@ const ViewQuestionModal: React.FunctionComponent<ViewQuestionModalProps> = ({ qu
 				</Button>,
 			]}
 		>
-			{questions?.map((question) => (
-				<p key={question.id}>{question.content}</p>
+			{questions?.map((question, index) => (
+				<p key={question.id} className="text-base">
+					<span className="font-bold ">Question {index}</span>: {question.content}
+				</p>
 			))}
 		</Modal>
 	);
