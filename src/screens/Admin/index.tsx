@@ -5,52 +5,247 @@ import { AreaChart } from 'src/components/Chart/AreaChart';
 import { ColumnChart } from 'src/components/Chart/ColumnChart';
 import { LineChart } from 'src/components/Chart/LineChart';
 import { PieChart } from 'src/components/Chart/PieChart';
-import { ChartData } from 'src/interface/chart';
+import { ChartData, ChartPieStatus, ColumnChartData } from 'src/interface/chart';
+import { useQueries, useQuery } from '@tanstack/react-query';
+import { http } from 'src/config/axios';
+import moment from 'moment';
+import _get from 'lodash.get';
 
 interface AdminProps {}
 
 const Admin: React.FunctionComponent<AdminProps> = () => {
-	const [newlyRegistered, setNewlyRegistered] = React.useState<ChartData[]>([
-		{ date: '01-10-2023', value: 2 },
-		{ date: '24-20-2023', value: 10 },
-	]);
+	const dates = {
+		lastMonth: {
+			startDate: moment().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'),
+			endDate: moment().subtract(1, 'month').endOf('month').format('YYYY-MM-DD'),
+			present: moment().subtract(1, 'month').format('MMMM'),
+		},
+		thisMonth: {
+			startDate: moment().startOf('month').format('YYYY-MM-DD'),
+			endDate: moment().endOf('month').format('YYYY-MM-DD'),
+			present: moment().format('MMMM'),
+		},
+		thisWeek: {
+			startDate: moment().startOf('week').format('YYYY-MM-DD'),
+			endDate: moment().endOf('week').format('YYYY-MM-DD'),
+		},
+		week: {
+			startDate: moment().subtract(6, 'days').format('YYYY-MM-DD'),
+			endDate: moment().format('YYYY-MM-DD'),
+		},
+	};
 
-	const [newlyBooking, setNewlyBooking] = React.useState<ChartData[]>([
-		{ date: '01-10-2023', value: 10 },
-		{ date: '02-10-2023', value: 50 },
+	const queriesProfits = useQueries({
+		queries: [
+			{
+				queryKey: ['profits-last-month'],
+				queryFn: async () => {
+					const { startDate, endDate } = dates.lastMonth;
+
+					const { data } = await http.get('/profix', {
+						params: {
+							startDate,
+							endDate,
+						},
+					});
+
+					return data.profix;
+				},
+				enabled: Boolean(dates),
+				initialData: 0,
+			},
+			{
+				queryKey: ['profits-this-month'],
+				queryFn: async () => {
+					const { startDate, endDate } = dates.thisMonth;
+
+					const { data } = await http.get('/profix', {
+						params: {
+							startDate,
+							endDate,
+						},
+					});
+
+					return data.profix;
+				},
+				enabled: Boolean(dates),
+				initialData: 0,
+			},
+		],
+	});
+
+	const profits: ChartData[] = [
 		{
-			date: '03-10-2023',
-			value: 20,
+			date: dates.lastMonth.present,
+
+			value: queriesProfits[0].data,
 		},
 		{
-			date: '04-10-2023',
-			value: 30,
+			date: dates.thisMonth.present,
+			value: queriesProfits[1].data,
+		},
+	];
+
+	const queriesNewlyRegistered = useQueries({
+		queries: [
+			{
+				queryKey: ['register-last-month'],
+				queryFn: async () => {
+					const { startDate, endDate } = dates.lastMonth;
+
+					const { data } = await http.get('/students/register', {
+						params: {
+							startDate,
+							endDate,
+						},
+					});
+
+					return data.count;
+				},
+				enabled: Boolean(dates),
+				initialData: 0,
+			},
+			{
+				queryKey: ['register-this-month'],
+				queryFn: async () => {
+					const { startDate, endDate } = dates.thisMonth;
+
+					const { data } = await http.get('/students/register', {
+						params: {
+							startDate,
+							endDate,
+						},
+					});
+
+					return data.count;
+				},
+				enabled: Boolean(dates),
+				initialData: 0,
+			},
+		],
+	});
+
+	const newlyRegisteredData: ChartData[] = [
+		{
+			date: dates.lastMonth.present,
+			value: queriesNewlyRegistered[0].data,
 		},
 		{
-			date: '05-10-2023',
-			value: 10,
+			date: dates.thisMonth.present,
+			value: queriesNewlyRegistered[1].data,
+		},
+	];
+
+	const queriesNewlyBooking = useQueries({
+		queries: [
+			{
+				queryKey: ['bookings-last-month'],
+				queryFn: async () => {
+					const { startDate, endDate } = dates.lastMonth;
+
+					const { data } = await http.get('/bookings/dashboard', {
+						params: {
+							startDate,
+							endDate,
+						},
+					});
+
+					return data.count;
+				},
+				enabled: Boolean(dates),
+				initialData: 0,
+			},
+			{
+				queryKey: ['bookings-this-month'],
+				queryFn: async () => {
+					const { startDate, endDate } = dates.thisMonth;
+
+					const { data } = await http.get('/bookings/dashboard', {
+						params: {
+							startDate,
+							endDate,
+						},
+					});
+
+					return data.count;
+				},
+				enabled: Boolean(dates),
+				initialData: 0,
+			},
+		],
+	});
+
+	const newlyBookingData: ChartData[] = [
+		{
+			date: dates.lastMonth.present,
+			value: queriesNewlyBooking[0].data,
 		},
 		{
-			date: '06-10-2023',
-			value: 10,
+			date: dates.thisMonth.present,
+			value: queriesNewlyBooking[1].data,
+		},
+	];
+
+	const queryPieStatus = useQuery<ChartPieStatus>(
+		['pie-status'],
+		async () => {
+			const { endDate, startDate } = dates.thisWeek;
+
+			const { data } = await http.get<ChartPieStatus>('/bookings/dashboard/status', {
+				params: {
+					startDate,
+					endDate,
+				},
+			});
+
+			return data;
 		},
 		{
-			date: '07-10-2023',
-			value: 10,
+			initialData: { acceptedBooking: 0, pendingBooking: 0, rejectedBooking: 0 } as ChartPieStatus,
+		},
+	);
+
+	const pieStatus = [
+		{
+			type: 'Accepted',
+			value: queryPieStatus.data.acceptedBooking,
+			color: '#00E396',
 		},
 		{
-			date: '08-10-2023',
-			value: 10,
+			type: 'Pending',
+			value: queryPieStatus.data.pendingBooking,
+			color: '#FFBB28',
 		},
 		{
-			date: '09-10-2023',
-			value: 10,
+			type: 'Rejected',
+			value: queryPieStatus.data.rejectedBooking,
+			color: '#FF4560',
+		},
+	];
+
+	const queryColumnStatus = useQuery<ColumnChartData[]>(
+		['column-status'],
+		async () => {
+			const { endDate, startDate } = dates.week;
+
+			const { data } = await http.get<ColumnChartData[]>('/bookings/dashboard/status-by-day', {
+				params: {
+					startDate,
+					endDate,
+				},
+			});
+
+			const newData = data.map((item) => ({
+				status: item.status,
+				date: moment(item.date).format('ddd'),
+			}));
+
+			return newData;
 		},
 		{
-			date: '10-10-2023',
-			value: 10,
+			initialData: [] as ColumnChartData[],
 		},
-	]);
+	);
 
 	return (
 		<>
@@ -71,7 +266,7 @@ const Admin: React.FunctionComponent<AdminProps> = () => {
 							<Col span={8}>
 								<LineChart
 									name={['Register']}
-									data={[newlyRegistered]}
+									data={[newlyRegisteredData]}
 									title="New Register"
 									width={420}
 									height={280}
@@ -80,7 +275,7 @@ const Admin: React.FunctionComponent<AdminProps> = () => {
 							<Col span={8}>
 								<LineChart
 									name={['Booking']}
-									data={[newlyRegistered]}
+									data={[newlyBookingData]}
 									title="New booking"
 									width={420}
 									height={280}
@@ -89,7 +284,7 @@ const Admin: React.FunctionComponent<AdminProps> = () => {
 							<Col span={8}>
 								<LineChart
 									name={['Profits']}
-									data={[newlyRegistered]}
+									data={[profits]}
 									title="Profits"
 									width={420}
 									height={280}
@@ -97,23 +292,33 @@ const Admin: React.FunctionComponent<AdminProps> = () => {
 							</Col>
 							<Col span={14}>
 								<ColumnChart
-									xAxis={newlyBooking.map((item) => item.date)}
+									xAxis={queryColumnStatus.data.map((item) => item.date)}
 									width={720}
 									height={420}
 									title="Booking"
 									series={[
-										{ name: 'Success', data: newlyBooking.map((item) => item.value) },
-										{ name: 'Cancel', data: newlyBooking.map((item) => item.value) },
+										{
+											name: 'Pending',
+											data: queryColumnStatus.data.map((item) => item.status.pendingBooking),
+										},
+										{
+											name: 'Accepted',
+											data: queryColumnStatus.data.map((item) => item.status.acceptedBooking),
+										},
+										{
+											name: 'Rejected',
+											data: queryColumnStatus.data.map((item) => item.status.rejectedBooking),
+										},
 									]}
-									colors={['#00E396', '#FF4560']}
+									colors={['#FFBB28', '#00E396', '#FF4560']}
 								/>
 							</Col>
 							<Col span={10}>
 								<PieChart
-									labels={['Pending', 'Success', 'Cancel']}
-									series={[2, 3, 1]}
+									labels={pieStatus.map((item) => item.type)}
+									series={pieStatus.map((item) => item.value)}
 									size={546}
-									colors={['#FEB019', '#00E396', '#FF4560']}
+									colors={pieStatus.map((item) => item.color)}
 									title="Booking status"
 								/>
 							</Col>

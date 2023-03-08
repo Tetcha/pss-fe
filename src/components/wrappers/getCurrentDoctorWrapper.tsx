@@ -8,8 +8,6 @@ interface GetCurrentDoctorWrapperProps extends React.PropsWithChildren {}
 
 export const GetCurrentDoctorWrapper: React.FC<GetCurrentDoctorWrapperProps> = ({ children }) => {
 	React.useEffect(() => {
-		// const cookies = new Cookies();
-		// const token = cookies.get(constant.TOKEN_COOKIE_KEY);
 		const token = localStorage.getItem(constant.TOKEN_KEY);
 		if (token) {
 			store.dispatch(doctorThunk.getCurrentDoctor());

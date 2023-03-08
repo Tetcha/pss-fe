@@ -17,7 +17,8 @@ import clsx from 'clsx';
 
 import { logout } from 'src/api/student/auth';
 import { ROUTES_URL } from 'src/constants/routes';
-import { useStoreAdmin } from 'src/store';
+import { store, useStoreAdmin } from 'src/store';
+import { adminActions } from 'src/store/admin';
 const { Sider, Content } = Layout;
 
 const menuLinks = [
@@ -61,7 +62,9 @@ const DashboardLayout: React.FunctionComponent<DashboardLayoutProps> = ({ childr
 
 	const signOut = () => {
 		logout();
-		window.location.reload();
+		localStorage.removeItem('access-token');
+		store.dispatch(adminActions.resetState());
+		router.push(ROUTES_URL.ADMIN_LOGIN);
 	};
 
 	return (

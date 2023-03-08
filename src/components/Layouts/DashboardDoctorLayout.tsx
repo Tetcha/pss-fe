@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import {
 	CalendarOutlined,
 	EditOutlined,
-	EyeOutlined,
 	LogoutOutlined,
 	MenuFoldOutlined,
 	MenuUnfoldOutlined,
@@ -20,8 +19,9 @@ import clsx from 'clsx';
 
 import { logout } from 'src/api/student/auth';
 import { ROUTES_URL } from 'src/constants/routes';
-import { useStoreDoctor } from 'src/store';
+import { store, useStoreDoctor } from 'src/store';
 import { currencyFormat } from 'src/utils/string.helper';
+import { doctorActions } from 'src/store/doctor';
 const { Sider, Content } = Layout;
 
 const menuLinks = [
@@ -73,7 +73,9 @@ const DashboardDoctorLayout: React.FunctionComponent<DashboardDoctorLayoutProps>
 
 	const signOut = () => {
 		logout();
-		window.location.reload();
+		localStorage.removeItem('access-token');
+		store.dispatch(doctorActions.resetState());
+		router.push(ROUTES_URL.DOCTOR_LOGIN);
 	};
 
 	return (

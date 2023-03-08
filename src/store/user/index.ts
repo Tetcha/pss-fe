@@ -37,8 +37,7 @@ const reducer = createSlice({
 			return { ...state, ...payload, isLogin: true };
 		});
 		builder.addCase(userThunk.getCurrentUser.rejected, (state) => {
-			const cookies = new Cookies();
-			cookies.set(constant.TOKEN_COOKIE_KEY, '', { maxAge: -999 });
+			localStorage.removeItem('access-token');
 
 			return { ...state, isLogin: true };
 		});
