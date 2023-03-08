@@ -3,10 +3,13 @@ import { Modal } from 'antd';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { getCategories } from 'src/api/category';
 import { useModalContext } from 'src/contexts/ModalContext';
 import { useAddSymptom } from 'src/hooks/symptom';
 import { EditMultiSlotForm } from 'src/interface/slot';
 import { SymptomForm } from 'src/interface/symptom';
+import { SortOrder } from 'src/models/interface';
+import { pagingMapper } from 'src/utils/object.helper';
 import { FormWrapper, InputSelect, TextField } from '../Input';
 
 interface AddSymptomModalProps {}
@@ -31,6 +34,28 @@ const AddSymptomModal: React.FunctionComponent<AddSymptomModalProps> = () => {
 		mutateAddSymptom(data);
 	};
 
+	const query = useQuery(
+		['categories'],
+		async () => {
+			const filterProps = {
+				orderBy: 'name',
+				order: SortOrder.ASC,
+				page: 0,
+				pageSize: 100,
+			};
+			const res = await getCategories(pagingMapper(filterProps));
+			return res.data;
+		},
+		{
+			initialData: {
+				data: [],
+				count: 0,
+			},
+		},
+	);
+
+	console.log('query', query.data);
+
 	React.useEffect(() => {
 		if (isSuccess) {
 			toast.success('Add symptom successfully');
@@ -54,9 +79,11 @@ const AddSymptomModal: React.FunctionComponent<AddSymptomModalProps> = () => {
 						<TextField commonField={{ name: 'name', label: 'Name' }} />
 						<InputSelect
 							commonField={{ name: 'categoryId', label: 'Category' }}
-							className="w-full"
-							// options={[{ label: 'Select Category', value: '' }]}
-							placeholder="Select Category"
+							className="w-full bg-black"
+							options={query.data.data.map((category) => ({
+								label: category.name,
+								value: category.id,
+							}))}
 						/>
 					</div>
 				</form>

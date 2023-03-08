@@ -39,4 +39,5 @@ export const API_URL = Object.freeze({
 
 	// category
 	CATEGORY: '/category',
+	CATEGORIES: '/categories',
 });

@@ -7,43 +7,34 @@ import { useModalContext } from 'src/contexts/ModalContext';
 import AddSymptomModal from 'src/components/Modals/AddSymptomModal';
 import { Button } from 'antd';
 import AddCategoryModal from 'src/components/Modals/AddCategoryModal';
+import { SortOrder } from 'src/models/interface';
+import { getCategories } from 'src/api/category';
+import { pagingMapper } from 'src/utils/object.helper';
 
 interface DoctorCategoryProps {}
 
 const DoctorCategory: React.FunctionComponent<DoctorCategoryProps> = () => {
 	const query = useQuery(
-		['doctors'],
+		['categories'],
 		async () => {
-			const res = {
-				data: [
-					{
-						id: '1',
-						name: 'John Doe',
-						action: 'Withdraw',
-						status: 'Success',
-						balance: 100000,
-					},
-					{
-						id: '2',
-						name: 'John Doe',
-						action: 'Add Balance',
-						status: 'Pending',
-						balance: 20000,
-					},
-					{
-						id: '3',
-						name: 'John Doe',
-						action: 'Withdraw',
-						status: 'Failed',
-						balance: 200000,
-					},
-				],
-				count: 3,
+			const filterProps = {
+				orderBy: 'name',
+				order: SortOrder.ASC,
+				page: 0,
+				pageSize: 100,
 			};
-			return res;
+			const res = await getCategories(pagingMapper(filterProps));
+			return res.data;
 		},
-		{ initialData: { data: [], count: 0 } },
+		{
+			initialData: {
+				data: [],
+				count: 0,
+			},
+		},
 	);
+
+	console.log('query', query.data);
 
 	const renderCurrency = (value: number) => {
 		return new Intl.NumberFormat('vi-VN', {
@@ -69,7 +60,7 @@ const DoctorCategory: React.FunctionComponent<DoctorCategoryProps> = () => {
 			<div className="py-4 md:flex md:items-center md:justify-between">
 				<div className="flex-1 min-w-0">
 					<h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
-						Transaction
+						Category
 					</h2>
 				</div>
 				<div className="flex gap-2">
@@ -85,7 +76,7 @@ const DoctorCategory: React.FunctionComponent<DoctorCategoryProps> = () => {
 				data={query.data.data}
 				columns={[
 					{
-						title: () => <TableHeaderCell key="name" sortKey="name" label="Name" />,
+						title: () => <TableHeaderCell key="name" sortKey="name" label="Name Category" />,
 						width: 200,
 						key: 'name',
 
@@ -93,41 +84,41 @@ const DoctorCategory: React.FunctionComponent<DoctorCategoryProps> = () => {
 							return <TableBodyCell key={`${props.id}-${props.name}`} label={props.name} />;
 						},
 					},
-					{
-						title: () => (
-							<TableHeaderCell key="action" sortKey="action" label="Transaction Action" />
-						),
-						key: 'action',
-						render: ({ ...props }) => {
-							const index: number = _get(props, 'row.index', 0);
-							const data = _get(props, `data[${index}].action`, 'unknown');
+					// {
+					// 	title: () => (
+					// 		<TableHeaderCell key="action" sortKey="action" label="Transaction Action" />
+					// 	),
+					// 	key: 'action',
+					// 	render: ({ ...props }) => {
+					// 		const index: number = _get(props, 'row.index', 0);
+					// 		const data = _get(props, `data[${index}].action`, 'unknown');
 
-							return <TableBodyCell key={`${props.id}-${props.action}`} label={props.action} />;
-						},
-					},
-					{
-						title: () => <TableHeaderCell key="action" sortKey="action" label="Amount" />,
-						key: 'action',
-						render: ({ ...props }) => {
-							const index: number = _get(props, 'row.index', 0);
-							const data = _get(props, `data[${index}].action`, 'unknown');
+					// 		return <TableBodyCell key={`${props.id}-${props.action}`} label={props.action} />;
+					// 	},
+					// },
+					// {
+					// 	title: () => <TableHeaderCell key="action" sortKey="action" label="Amount" />,
+					// 	key: 'action',
+					// 	render: ({ ...props }) => {
+					// 		const index: number = _get(props, 'row.index', 0);
+					// 		const data = _get(props, `data[${index}].action`, 'unknown');
 
-							return (
-								<TableBodyCell
-									key={`${props.id}-${props.balance}`}
-									label={renderCurrency(props.balance)}
-								/>
-							);
-						},
-					},
+					// 		return (
+					// 			<TableBodyCell
+					// 				key={`${props.id}-${props.balance}`}
+					// 				label={renderCurrency(props.balance)}
+					// 			/>
+					// 		);
+					// 	},
+					// },
 
-					{
-						title: () => <TableHeaderCell key="status" sortKey="status" label="Status" />,
-						key: 'status',
-						render: ({ ...props }) => {
-							return <StatusTag value={props.status} key={`${props.id}-${props.status}`} />;
-						},
-					},
+					// {
+					// 	title: () => <TableHeaderCell key="status" sortKey="status" label="Status" />,
+					// 	key: 'status',
+					// 	render: ({ ...props }) => {
+					// 		return <StatusTag value={props.status} key={`${props.id}-${props.status}`} />;
+					// 	},
+					// },
 				]}
 				rowKey="id"
 				isLoading={query.isLoading}
