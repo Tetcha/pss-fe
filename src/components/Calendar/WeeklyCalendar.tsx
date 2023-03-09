@@ -1,5 +1,6 @@
 import { Space, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
+import clsx from 'clsx';
 import moment, { Moment } from 'moment';
 import * as React from 'react';
 
@@ -243,13 +244,29 @@ const WeeklyCalendar = <T,>({
 		[week],
 	);
 
+	// format of 05:32:34 AM to only get 05:00:00 AM
+
+	const formatHour = (input: string, hour: string) => {
+		const hourFormat = hour.split(':');
+		const hourFormatOnlyHour = hourFormat[0];
+		const hourFormatOnlyMinute = hourFormat[1];
+		const hourFormatOnlySecond = hourFormat[2].split(' ')[0];
+		const hourFormatOnlyAMPM = hourFormat[2].split(' ')[1];
+		return `${hourFormatOnlyHour}:00:00 ${hourFormatOnlyAMPM}`;
+	};
+
 	return (
 		<Table
 			sticky={true}
 			className="relative overflow-y-auto h-[702px]"
 			bordered={true}
 			onHeaderRow={() => ({ className: 'bg-gray-100' })}
-			onRow={() => ({ className: 'hover:bg-blue-50' })}
+			onRow={(data) => ({
+				className: clsx('hover:bg-blue-50', {
+					'bg-blue-50':
+						data.hour.toUpperCase() === formatHour(data.hour, moment().format('hh:mm:ss A')),
+				}),
+			})}
 			pagination={false}
 			columns={renderHeadRow(columns)}
 			dataSource={tableData}

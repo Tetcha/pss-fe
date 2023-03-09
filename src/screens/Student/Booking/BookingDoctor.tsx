@@ -74,6 +74,8 @@ const BookingDoctor: React.FunctionComponent<BookingDoctorProps> = ({ doctor, sl
 		}
 	}, [isSuccess]);
 
+	console.log(slot);
+
 	return (
 		<>
 			<Modal
@@ -100,7 +102,11 @@ const BookingDoctor: React.FunctionComponent<BookingDoctorProps> = ({ doctor, sl
 								name: 'slotId',
 							}}
 							options={slot?.slots
-								.filter((item: any) => !item.booking[0])
+								.filter(
+									(item: any) =>
+										!item.booking[0] || moment().isBefore(moment(item.endTime, 'HH:mm')),
+								)
+								.sort((a: any, b: any) => a.slotEnumId - b.slotEnumId)
 								.map((item: any) => ({
 									label: `${item.startTime.toUpperCase()} - ${item.endTime.toUpperCase()}`,
 									value: item.id,

@@ -18,10 +18,9 @@ const getSlotsOfDay = (slots: AvailableSlot[], date: Moment) => {
 interface DoctorSlotCalendarProps {}
 
 const DoctorSlotCalendar: React.FunctionComponent<DoctorSlotCalendarProps> = () => {
-	const { handleModal, handleOpenModal, modal } = useModalContext();
-
 	const [currentMonth, setCurrentMonth] = React.useState<Moment>(moment());
 
+	const { handleModal, handleOpenModal, modal } = useModalContext();
 	const openMultiSlotEditModal = () => {
 		handleModal('multiSlotEdit', <MultiSlotEditModal />);
 		handleOpenModal('multiSlotEdit');
@@ -57,14 +56,21 @@ const DoctorSlotCalendar: React.FunctionComponent<DoctorSlotCalendarProps> = () 
 		},
 		{
 			initialData: [],
+			enabled: Boolean(id),
 		},
 	);
 
 	const dateCellRender = (value: Moment) => {
 		const listData = getSlotsOfDay(queryAvailableSlots.data, value);
+
+		// Sort by start time
+		const sortedListData = listData.sort((a, b) => {
+			return a.slotEnumId - b.slotEnumId;
+		});
+
 		return (
 			<ul className="events">
-				{listData.map((item) => (
+				{sortedListData.map((item) => (
 					<li key={item.id}>
 						<Badge
 							status={`${item?.booking[0]?.status === 'ACCEPTED' ? 'success' : 'processing'}`}
@@ -134,7 +140,7 @@ const DoctorSlotCalendar: React.FunctionComponent<DoctorSlotCalendarProps> = () 
 					}
 					return (
 						<div style={{ padding: 8 }}>
-							<Typography.Title level={4}>Custom header</Typography.Title>
+							<Typography.Title level={4}>Slots calendar</Typography.Title>
 							<Row gutter={8}>
 								<Col>
 									<Select
