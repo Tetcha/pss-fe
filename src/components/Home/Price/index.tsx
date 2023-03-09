@@ -12,7 +12,7 @@ const OurPrice: React.FunctionComponent<OurPriceProps> = () => {
 			<section className="relative px-4 flex justify-center items-center">
 				<div className="flex flex-col lg:flex-row lg:-mx-8 justify-center items-center max-w-container">
 					<div className="w-full lg:px-8">
-						<h2 className="text-3xl leading-tight font-bold mt-4">
+						<h2 className="text-2xl md:text-4xl leading-tight font-bold mt-4">
 							Simple, Transparent Pricing for Everyone
 						</h2>
 						<p className="mt-2 leading-relaxed">

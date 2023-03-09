@@ -11,7 +11,7 @@ const Introduce: React.FunctionComponent<IntroduceProps> = () => {
 					<section className="relative p-4 sm:p-2">
 						<div className="flex flex-col lg:flex-row lg:-mx-8">
 							<div className="w-full lg:w-1/2 lg:px-8">
-								<h2 className="text-4xl leading-tight font-bold mt-4">
+								<h2 className="text-2xl md:text-4xl leading-tight font-bold mt-4">
 									Welcome to the Psych Support System
 								</h2>
 								<p className="text-xl mt-4 font-semibold">
