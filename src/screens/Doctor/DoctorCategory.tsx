@@ -7,50 +7,38 @@ import { useModalContext } from 'src/contexts/ModalContext';
 import AddSymptomModal from 'src/components/Modals/AddSymptomModal';
 import { Button } from 'antd';
 import AddCategoryModal from 'src/components/Modals/AddCategoryModal';
+import { SortOrder } from 'src/models/interface';
+import { getCategories } from 'src/api/category';
+import { pagingMapper } from 'src/utils/object.helper';
+import ViewSymptomModal from 'src/components/Modals/ViewSymptomModal';
+import { useTableUtil } from 'src/contexts/TableUtilContext';
 
 interface DoctorCategoryProps {}
 
 const DoctorCategory: React.FunctionComponent<DoctorCategoryProps> = () => {
+	const { setTotalItem } = useTableUtil();
 	const query = useQuery(
-		['doctors'],
+		['categories'],
 		async () => {
-			const res = {
-				data: [
-					{
-						id: '1',
-						name: 'John Doe',
-						action: 'Withdraw',
-						status: 'Success',
-						balance: 100000,
-					},
-					{
-						id: '2',
-						name: 'John Doe',
-						action: 'Add Balance',
-						status: 'Pending',
-						balance: 20000,
-					},
-					{
-						id: '3',
-						name: 'John Doe',
-						action: 'Withdraw',
-						status: 'Failed',
-						balance: 200000,
-					},
-				],
-				count: 3,
+			const filterProps = {
+				orderBy: 'name',
+				order: SortOrder.ASC,
+				page: 0,
+				pageSize: 8,
 			};
-			return res;
+			const { data } = await getCategories(pagingMapper(filterProps));
+			setTotalItem(data.count);
+			return data;
 		},
-		{ initialData: { data: [], count: 0 } },
+		{
+			initialData: {
+				data: [],
+				count: 0,
+			},
+		},
 	);
 
-	const renderCurrency = (value: number) => {
-		return new Intl.NumberFormat('vi-VN', {
-			style: 'currency',
-			currency: 'VND',
-		}).format(value);
-	};
+	console.log('query', query.data);
 
 	const { handleOpenModal, handleModal } = useModalContext();
 
@@ -64,75 +52,81 @@ const DoctorCategory: React.FunctionComponent<DoctorCategoryProps> = () => {
 		handleOpenModal('addCategoryModal');
 	};
 
+	// const onViewSympTom = (categoryId: string) => {
+	// 	// console.log('question', questions);
+	// 	handleModal('viewSymptom', <ViewSymptomModal categoryId={categoryId} />);
+	// 	handleOpenModal('viewSymptom');
+	// };
+
+	const [id, setId] = React.useState('');
+	const [nameSympton, setNameSympton] = React.useState('All Sympton');
+
+	// const handleChangeCategoryId = () => {};
+
+	React.useEffect(() => {}, [id]);
+
 	return (
-		<>
-			<div className="py-4 md:flex md:items-center md:justify-between">
-				<div className="flex-1 min-w-0">
-					<h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
-						Transaction
-					</h2>
+		<div className="flex gap-10">
+			<div className="w-1/2">
+				<div className="py-4 md:flex md:items-center md:justify-between">
+					<div className="flex-1 min-w-0">
+						<h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+							Category
+						</h2>
+					</div>
+					<div className="flex gap-2">
+						<Button type="primary" onClick={() => openAddSymptomModal()}>
+							Add Symptom
+						</Button>
+						<Button type="primary" onClick={() => openAddCategoryModal()}>
+							Add Category
+						</Button>
+					</div>
 				</div>
-				<div className="flex gap-2">
-					<Button type="primary" onClick={() => openAddSymptomModal()}>
-						Add Symptom
-					</Button>
-					<Button type="primary" onClick={() => openAddCategoryModal()}>
-						Add Category
-					</Button>
-				</div>
+				<TableBuilder<any>
+					data={query.data.data}
+					columns={[
+						{
+							title: () => <TableHeaderCell key="name" sortKey="name" label="Name Category" />,
+							width: 500,
+							key: 'name',
+
+							render: ({ ...props }) => {
+								return <TableBodyCell key={`${props.id}-${props.name}`} label={props.name} />;
+							},
+						},
+						{
+							title: () => <TableHeaderCell key="detail" sortKey="" label="" />,
+							key: '',
+							render: ({ ...props }) => {
+								return (
+									<div className="flex items-center justify-start gap-4">
+										{props.id ? (
+											<Button
+												type="link"
+												onClick={() => {
+													setId(props.id);
+													setNameSympton(props.name);
+												}}
+											>
+												View detail
+											</Button>
+										) : (
+											<></>
+										)}
+									</div>
+								);
+							},
+						},
+					]}
+					rowKey="id"
+					isLoading={query.isLoading}
+				/>
 			</div>
-			<TableBuilder<any>
-				data={query.data.data}
-				columns={[
-					{
-						title: () => <TableHeaderCell key="name" sortKey="name" label="Name" />,
-						width: 200,
-						key: 'name',
-
-						render: ({ ...props }) => {
-							return <TableBodyCell key={`${props.id}-${props.name}`} label={props.name} />;
-						},
-					},
-					{
-						title: () => (
-							<TableHeaderCell key="action" sortKey="action" label="Transaction Action" />
-						),
-						key: 'action',
-						render: ({ ...props }) => {
-							const index: number = _get(props, 'row.index', 0);
-							const data = _get(props, `data[${index}].action`, 'unknown');
-
-							return <TableBodyCell key={`${props.id}-${props.action}`} label={props.action} />;
-						},
-					},
-					{
-						title: () => <TableHeaderCell key="action" sortKey="action" label="Amount" />,
-						key: 'action',
-						render: ({ ...props }) => {
-							const index: number = _get(props, 'row.index', 0);
-							const data = _get(props, `data[${index}].action`, 'unknown');
-
-							return (
-								<TableBodyCell
-									key={`${props.id}-${props.balance}`}
-									label={renderCurrency(props.balance)}
-								/>
-							);
-						},
-					},
-
-					{
-						title: () => <TableHeaderCell key="status" sortKey="status" label="Status" />,
-						key: 'status',
-						render: ({ ...props }) => {
-							return <StatusTag value={props.status} key={`${props.id}-${props.status}`} />;
-						},
-					},
-				]}
-				rowKey="id"
-				isLoading={query.isLoading}
-			/>
-		</>
+			<div className="w-1/2">
+				<ViewSymptomModal categoryId={id} nameSympton={nameSympton} />
+			</div>
+		</div>
 	);
 };
 

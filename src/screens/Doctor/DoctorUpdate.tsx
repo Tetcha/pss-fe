@@ -69,7 +69,6 @@ const DoctorUpdate: React.FunctionComponent<DoctorUpdateProps> = () => {
 			...other,
 			birthday: birthday.format('YYYY-MM-DD'),
 		};
-		console.log(data);
 
 		mutateUpdate(data);
 	};

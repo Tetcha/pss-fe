@@ -47,10 +47,10 @@ const DoctorAppointmentWeekCalendar: React.FunctionComponent<
 
 			const filterCurrentWeek = res.data.data.filter((item) => {
 				const isInRange = moment(item.slot.date).isBetween(firstDayOfWeek, lastDayOfWeek);
-				console.log('isInRange', isInRange);
-				if (isInRange) {
-					console.log('item', item);
-				}
+				// console.log('isInRange', isInRange);
+				// if (isInRange) {
+				// 	console.log('item', item);
+				// }
 				return isInRange;
 			});
 

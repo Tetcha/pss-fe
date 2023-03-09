@@ -5,6 +5,9 @@ import 'swiper/css/pagination';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import { Navigation } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import Link from 'next/link';
+import { useStoreUser } from 'src/store';
+import { ROUTES_URL } from 'src/constants/routes';
 
 interface BannerProps {}
 const sliderItem = [
@@ -27,6 +30,7 @@ const sliderItem = [
 ];
 
 export const Banner: React.FunctionComponent<BannerProps> = () => {
+	const { id } = useStoreUser();
 	const navigationPrevRef = React.useRef(null);
 	const navigationNextRef = React.useRef(null);
 	return (
@@ -85,19 +89,26 @@ export const Banner: React.FunctionComponent<BannerProps> = () => {
 				</div>
 				<div className="lg:w-3/4 xl:w-2/4 relative z-10 h-100 lg:mt-16">
 					<div>
-						<h1 className="text-white text-4xl md:text-5xl xl:text-6xl font-bold leading-tight">
-							A better life starts with a beautiful smile.
+						<h1 className="text-white text-3xl md:text-4xl xl:text-5xl font-bold leading-tight">
+							Your mental health matters. Get the support you need with our support system.
 						</h1>
 						<p className="text-blue-100 text-xl md:text-2xl leading-snug mt-4">
-							Welcome to the Dentist Office of Dr. Thomas Dooley, where trust and comfort are
-							priorities.
+							Welcome to the Psych Support System, where trust and comfort are priorities.
 						</p>
-						<a
-							href="#"
-							className="px-8 py-4 bg-teal-500 text-white rounded inline-block mt-8 font-semibold"
-						>
-							Book Appointment
-						</a>
+						<div className="flex gap-4">
+							<Link
+								href={id ? ROUTES_URL.DOCTORS : ROUTES_URL.STUDENT_LOGIN}
+								className="px-6 py-4 bg-teal-500 text-white rounded inline-block mt-8 font-semibold text-lg"
+							>
+								Book Appointment
+							</Link>
+							<Link
+								href={id ? ROUTES_URL.DOCTORS : ROUTES_URL.STUDENT_LOGIN}
+								className="px-6 py-4 bg-teal-500 text-white rounded inline-block mt-8 font-semibold text-lg"
+							>
+								Download Now
+							</Link>
+						</div>
 					</div>
 				</div>
 			</section>
