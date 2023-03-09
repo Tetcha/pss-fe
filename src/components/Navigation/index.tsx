@@ -14,14 +14,13 @@ interface NavigationProps {}
 const NAV_LINK = [
 	{ label: 'Home', link: '/' },
 	{ label: 'About Us', link: '/about' },
-	{ label: 'Service', link: '/service' },
-	{ label: 'Contact Us', link: '#contact' },
+	// { label: 'Service', link: '/service' },
+	// { label: 'Contact Us', link: '#contact' },
 ];
 
 export const Navigation: React.FunctionComponent<NavigationProps> = () => {
 	const router = useRouter();
 	const [visible, setVisible] = React.useState<boolean>(true);
-	const user = useStoreUser();
 	React.useEffect(() => {}, [router]);
 	const handleLogout = () => {
 		logout();
@@ -29,7 +28,7 @@ export const Navigation: React.FunctionComponent<NavigationProps> = () => {
 		window.location.reload();
 	};
 
-	const { name, avatar } = useStoreUser();
+	const { id, name, avatar } = useStoreUser();
 	return (
 		<nav className="bg-gray-50 border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800 fixed z-50 w-full shadow-md">
 			<div className="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto">
@@ -44,7 +43,7 @@ export const Navigation: React.FunctionComponent<NavigationProps> = () => {
 					</span>
 				</Link>
 				<div className="flex items-center lg:order-2">
-					{!user.id ? (
+					{!id ? (
 						<Link
 							href={ROUTES_URL.STUDENT_LOGIN}
 							className="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800 bg-blue-500"
@@ -61,49 +60,50 @@ export const Navigation: React.FunctionComponent<NavigationProps> = () => {
 						// 		Log out
 						// 	</Link>
 						// </div>
-						<Menu as="div" className="relative">
-							<Menu.Button
-								className={
-									'flex justify-center items-center gap-2 cursor-pointer border-none bg-blue-500 rounded-md'
-								}
-							>
-								<h1 className="text-white font-bold text-base leading-8 my-1">{name}</h1>
-								<div className="flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-									<span className="sr-only">Open user menu</span>
-									<LazyLoadImage
-										className="h-8 w-8 rounded-full"
-										src={
-											avatar
-												? avatar
-												: `https://ui-avatars.com/api/?name=${name}&background=0D8ABC&color=fff&size=32`
-										}
-										alt=""
-									/>
-								</div>
-							</Menu.Button>
-							<Transition
-								as={React.Fragment}
-								enter="transition ease-out duration-100"
-								enterFrom="transform opacity-0 scale-95"
-								enterTo="transform opacity-100 scale-100"
-								leave="transition ease-in duration-75"
-								leaveFrom="transform opacity-100 scale-100"
-								leaveTo="transform opacity-0 scale-95"
-							>
-								<Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-									<Menu.Item>
-										{({ active }) => (
-											<Link
-												href={ROUTES_URL.STUDENT_ME}
-												className={`${
-													active ? 'bg-gray-100' : ''
-												} block px-4 py-2 text-sm text-gray-700`}
-											>
-												Your Profile
-											</Link>
-										)}
-									</Menu.Item>
-									{/* <Menu.Item>
+						<>
+							<h1 className="text-gray-800 font-bold text-base leading-8 my-1 ml-1">{name}</h1>
+							<Menu as="div" className="relative">
+								<Menu.Button
+									className={
+										'flex justify-center items-center gap-2 cursor-pointer border-none rounded-md'
+									}
+								>
+									<div className="flex rounded-full text-sm">
+										<span className="sr-only">Open user menu</span>
+										<LazyLoadImage
+											className="h-8 w-8 rounded-full"
+											src={
+												avatar
+													? avatar
+													: `https://ui-avatars.com/api/?name=${name}&background=0D8ABC&color=fff&size=32`
+											}
+											alt=""
+										/>
+									</div>
+								</Menu.Button>
+								<Transition
+									as={React.Fragment}
+									enter="transition ease-out duration-100"
+									enterFrom="transform opacity-0 scale-95"
+									enterTo="transform opacity-100 scale-100"
+									leave="transition ease-in duration-75"
+									leaveFrom="transform opacity-100 scale-100"
+									leaveTo="transform opacity-0 scale-95"
+								>
+									<Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+										<Menu.Item>
+											{({ active }) => (
+												<Link
+													href={ROUTES_URL.STUDENT_ME}
+													className={`${
+														active ? 'bg-gray-100' : ''
+													} block px-4 py-2 text-sm text-gray-700`}
+												>
+													Your Profile
+												</Link>
+											)}
+										</Menu.Item>
+										{/* <Menu.Item>
 											{({ active }) => (
 												<a
 													href="#"
@@ -115,21 +115,22 @@ export const Navigation: React.FunctionComponent<NavigationProps> = () => {
 												</a>
 											)}
 										</Menu.Item> */}
-									<Menu.Item>
-										{({ active }) => (
-											<a
-												className={`${
-													active ? 'bg-gray-100' : ''
-												} block px-4 py-2 text-sm text-gray-700`}
-												onClick={handleLogout}
-											>
-												Sign out
-											</a>
-										)}
-									</Menu.Item>
-								</Menu.Items>
-							</Transition>
-						</Menu>
+										<Menu.Item>
+											{({ active }) => (
+												<a
+													className={`${
+														active ? 'bg-gray-100' : ''
+													} block px-4 py-2 text-sm text-gray-700`}
+													onClick={handleLogout}
+												>
+													Sign out
+												</a>
+											)}
+										</Menu.Item>
+									</Menu.Items>
+								</Transition>
+							</Menu>
+						</>
 					)}
 					<button
 						onClick={() => setVisible(!visible)}
@@ -167,6 +168,16 @@ export const Navigation: React.FunctionComponent<NavigationProps> = () => {
 								{item.label}
 							</Link>
 						))}
+						<Link
+							href={ROUTES_URL.DOCTORS}
+							className={`${
+								router.pathname === '/doctors'
+									? 'block py-2 pr-4 pl-3 text-blue-500 rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white'
+									: 'block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700'
+							}`}
+						>
+							Doctors
+						</Link>
 					</ul>
 				</div>
 			</div>
