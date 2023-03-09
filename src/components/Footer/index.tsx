@@ -19,16 +19,16 @@ export const Footer: React.FunctionComponent<FooterProps> = () => {
 			<div className="max-w-screen-xl mx-auto">
 				<div className="md:flex md:justify-between">
 					<div className="mb-6 md:mb-0">
-						<a href="https://flowbite.com" className="flex items-center">
+						<Link href={ROUTES_URL.HOME} className="flex items-center">
 							<LazyLoadImage
-								src="https://flowbite.com/docs/images/logo.svg"
+								src="/assets/images/logo/pss_logo.png"
 								className="h-8 mr-3"
 								alt="FlowBite Logo"
 							/>
 							<span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
 								PSYCH
 							</span>
-						</a>
+						</Link>
 					</div>
 					<div className="grid grid-cols-2 gap-8 text-black sm:gap-6 sm:grid-cols-4">
 						<div>

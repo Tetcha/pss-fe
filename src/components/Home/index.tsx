@@ -1,6 +1,7 @@
 import { FunctionComponent } from 'react';
+import Banner from './Banner2';
 
-import { Banner } from './Banner';
+// import { Banner } from './Banner';
 import Introduce from './Introduce';
 import OurDoctors from './OurDoctors';
 import OurPrice from './Price';
