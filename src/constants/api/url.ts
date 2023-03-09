@@ -36,6 +36,7 @@ export const API_URL = Object.freeze({
 
 	// SYMPTOM
 	SYMPTOM: '/symptom',
+	SYMPTOMS: '/symptoms',
 
 	// category
 	CATEGORY: '/category',
