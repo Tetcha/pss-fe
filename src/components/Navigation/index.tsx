@@ -31,7 +31,7 @@ export const Navigation: React.FunctionComponent<NavigationProps> = () => {
 
 	const { name, avatar } = useStoreUser();
 	return (
-		<nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800 fixed z-50 w-full">
+		<nav className="bg-gray-50 border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800 fixed z-50 w-full shadow-md">
 			<div className="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto">
 				<Link href={ROUTES_URL.HOME} className="flex items-center">
 					<LazyLoadImage
