@@ -43,7 +43,11 @@ const DoctorAppointmentWeekCalendar: React.FunctionComponent<
 			const res = await getBooking(pagingMapper(filterProps));
 
 			const firstDayOfWeek = currentWeek.clone().startOf('isoWeek').format('YYYY-MM-DD');
-			const lastDayOfWeek = currentWeek.clone().endOf('isoWeek').format('YYYY-MM-DD');
+			const lastDayOfWeek = currentWeek
+				.clone()
+				.endOf('isoWeek')
+				.add(1, 'days')
+				.format('YYYY-MM-DD');
 
 			const filterCurrentWeek = res.data.data.filter((item) => {
 				const isInRange = moment(item.slot.date).isBetween(firstDayOfWeek, lastDayOfWeek);
@@ -109,7 +113,7 @@ const DoctorAppointmentWeekCalendar: React.FunctionComponent<
 										className="w-full h-auto font-medium text-gray-700 whitespace-normal bg-blue-300 border-none rounded-md hover:bg-blue-500 hover:text-white"
 										href={`${ENV_VARIABLES.CALL_URL}/room/${event.id}/doctor?token=${token}`}
 									>
-										Call now
+										Join
 									</Button>
 								</>
 							)}
