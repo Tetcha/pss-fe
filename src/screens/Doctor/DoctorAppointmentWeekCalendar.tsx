@@ -42,8 +42,8 @@ const DoctorAppointmentWeekCalendar: React.FunctionComponent<
 			};
 			const res = await getBooking(pagingMapper(filterProps));
 
-			const firstDayOfWeek = currentWeek.clone().startOf('week').add(1, 'day').format('YYYY-MM-DD');
-			const lastDayOfWeek = currentWeek.clone().endOf('week').add(1, 'day').format('YYYY-MM-DD');
+			const firstDayOfWeek = currentWeek.clone().startOf('isoWeek').format('YYYY-MM-DD');
+			const lastDayOfWeek = currentWeek.clone().endOf('isoWeek').format('YYYY-MM-DD');
 
 			const filterCurrentWeek = res.data.data.filter((item) => {
 				const isInRange = moment(item.slot.date).isBetween(firstDayOfWeek, lastDayOfWeek);
@@ -59,7 +59,7 @@ const DoctorAppointmentWeekCalendar: React.FunctionComponent<
 				count: res.data.count,
 			};
 		},
-		{ initialData: { data: [], count: 0 } },
+		{ initialData: { data: [], count: 0 }, enabled: Boolean(id) },
 	);
 
 	const querySlots = useQuery<Slot[]>(
@@ -102,7 +102,7 @@ const DoctorAppointmentWeekCalendar: React.FunctionComponent<
 							events={events}
 							slots={slots}
 							onCompare={(event, slot) => event.slotId === slot.id}
-							currentWeek={currentWeek.week()}
+							currentWeek={currentWeek.isoWeek()}
 							onDisplayEvent={(event) => (
 								<>
 									<Button
