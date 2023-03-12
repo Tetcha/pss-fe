@@ -35,7 +35,7 @@ export const Footer: React.FunctionComponent<FooterProps> = () => {
 							<h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
 								Information
 							</h2>
-							<ul className="pl-0 text-gray-600 list-none dark:text-gray-400">
+							<ul className="pl-0 text-gray-600 list-none dark:text-white">
 								<li className="mb-4">
 									<a href="https://flowbite.com" className="text-black hover:underline">
 										PSYCH
@@ -52,7 +52,7 @@ export const Footer: React.FunctionComponent<FooterProps> = () => {
 							<h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
 								Follow us
 							</h2>
-							<ul className="pl-0 text-gray-600 list-none dark:text-gray-400">
+							<ul className="pl-0 text-gray-600 list-none dark:text-white">
 								<li className="mb-4">
 									<a
 										href="https://github.com/themesberg/flowbite"
@@ -72,7 +72,7 @@ export const Footer: React.FunctionComponent<FooterProps> = () => {
 							<h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
 								Legal
 							</h2>
-							<ul className="pl-0 text-gray-600 list-none dark:text-gray-400">
+							<ul className="pl-0 text-gray-600 list-none dark:text-white">
 								<li className="mb-4">
 									<a href="#" className="text-black hover:underline">
 										Privacy Policy
@@ -89,7 +89,7 @@ export const Footer: React.FunctionComponent<FooterProps> = () => {
 							<h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
 								Account
 							</h2>
-							<ul className="pl-0 text-gray-600 list-none dark:text-gray-400">
+							<ul className="pl-0 text-gray-600 list-none dark:text-white">
 								<li className="mb-4">
 									<Link href={ROUTES_URL.ADMIN_LOGIN} className="text-black hover:underline">
 										<UserOutlined className="pr-1 text-gray-500 hover:text-gray-900 dark:hover:text-white" />
@@ -108,7 +108,7 @@ export const Footer: React.FunctionComponent<FooterProps> = () => {
 				</div>
 				<hr className="h-0 m-0 my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8 border-t-px text-inherit" />
 				<div className="sm:flex sm:items-center sm:justify-between">
-					<span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
+					<span className="text-sm text-gray-500 sm:text-center dark:text-white">
 						© 2022 PSYCH™ . All Rights Reserved.
 					</span>
 					<div className="flex mt-4 space-x-6 sm:justify-center sm:mt-0">

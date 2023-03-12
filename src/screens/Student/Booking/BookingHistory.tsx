@@ -57,7 +57,7 @@ const BookingHistory: React.FunctionComponent<BookingHistoryProps> = ({ filters 
 
 	return (
 		<>
-			<div className="flex-1 bg-white rounded-lg shadow-xl mt-4 p-4 lg:p-8">
+			<div className="flex-1 bg-white rounded-lg shadow-xl p-4 lg:p-8">
 				<h3 className="text-xl text-gray-900 font-bold">Booking History</h3>
 				<div className="relative px-4">
 					<Timeline mode="left">

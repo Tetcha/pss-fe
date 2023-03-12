@@ -86,7 +86,7 @@ const DashboardDoctorLayout: React.FunctionComponent<DashboardDoctorLayoutProps>
 						<Link href={'/'}>
 							<div className="w-20 h-20">
 								<img
-									src="/assets/images/logo/logo.png"
+									src="/assets/images/logo/pss_logo.png"
 									alt="PSS-logo"
 									className="object-cover w-full h-full"
 								/>
