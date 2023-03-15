@@ -62,7 +62,6 @@ const StudentProfile: React.FunctionComponent<StudentProfileProps> = ({ filters 
 			birthday: birthday.format('YYYY-MM-DD'),
 		};
 		mutateUpdate(payload);
-		setUpdate(!update);
 	};
 
 	// React.useEffect(() => {
