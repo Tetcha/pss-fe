@@ -38,8 +38,6 @@ const DoctorCategory: React.FunctionComponent<DoctorCategoryProps> = () => {
 		},
 	);
 
-	console.log('query', query.data);
-
 	const { handleOpenModal, handleModal } = useModalContext();
 
 	const openAddSymptomModal = () => {
@@ -53,7 +51,6 @@ const DoctorCategory: React.FunctionComponent<DoctorCategoryProps> = () => {
 	};
 
 	// const onViewSympTom = (categoryId: string) => {
-	// 	// console.log('question', questions);
 	// 	handleModal('viewSymptom', <ViewSymptomModal categoryId={categoryId} />);
 	// 	handleOpenModal('viewSymptom');
 	// };

@@ -25,8 +25,6 @@ const ViewSymptomModal: React.FunctionComponent<ViewSymptomModalProps> = ({
 		setIsVisible(false);
 	};
 
-	// console.log('categoryId', categoryId);
-	console.log('nameSympton', nameSympton);
 	const query = useQuery(
 		['symptons'],
 		async () => {
@@ -50,8 +48,6 @@ const ViewSymptomModal: React.FunctionComponent<ViewSymptomModalProps> = ({
 	React.useEffect(() => {
 		query.refetch();
 	}, [categoryId, query]);
-
-	// console.log('query', query.data?.data);
 
 	return (
 		// <Modal
@@ -79,8 +75,8 @@ const ViewSymptomModal: React.FunctionComponent<ViewSymptomModalProps> = ({
 		// 		</div>
 		// 	</div>
 
-		// 	<div className="bg-white p-2">
-		// 		<h1 className="text-xl uppercase font-bold">{nameSympton}</h1>
+		// 	<div className="p-2 bg-white">
+		// 		<h1 className="text-xl font-bold uppercase">{nameSympton}</h1>
 		// 		{query.data?.data.map((symton) => (
 		// 			<p key={symton.id} className="text-base">
 		// 				<span className="font-semibold ">{symton.name}</span>

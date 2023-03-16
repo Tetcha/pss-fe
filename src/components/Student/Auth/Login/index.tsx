@@ -33,7 +33,6 @@ const Login: FunctionComponent<LoginProps> = ({ redirectUrl = ROUTES_URL.STUDENT
 		mutateLogin(data);
 	};
 
-	console.log(redirectUrl);
 	React.useEffect(() => {
 		if (isSuccess) {
 			if (redirectUrl) {

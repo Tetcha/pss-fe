@@ -74,8 +74,6 @@ const BookingDoctor: React.FunctionComponent<BookingDoctorProps> = ({ doctor, sl
 		}
 	}, [isSuccess]);
 
-	console.log(slot);
-
 	return (
 		<>
 			<Modal

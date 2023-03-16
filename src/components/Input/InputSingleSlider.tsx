@@ -23,7 +23,6 @@ export const InputSingleSlider: React.FC<InputSingleSliderProps> = ({
 		register(name);
 		const value = getValues(name);
 		if (value) {
-			console.log(value);
 			setValue(name, value);
 		}
 	}, []);

@@ -103,7 +103,6 @@ const BookingList: React.FunctionComponent<BookingListProps> = ({ filters }) => 
 
 	const { handleOpenModal, handleModal } = useModalContext();
 	const onViewQuestions = (questions: QuestionPreview[]) => {
-		console.log('question', questions);
 		handleModal('viewQuestions', <ViewQuestionModal questions={questions} />);
 		handleOpenModal('viewQuestions');
 	};

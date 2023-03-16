@@ -54,8 +54,6 @@ const AddSymptomModal: React.FunctionComponent<AddSymptomModalProps> = () => {
 		},
 	);
 
-	console.log('query', query.data);
-
 	React.useEffect(() => {
 		if (isSuccess) {
 			toast.success('Add symptom successfully');

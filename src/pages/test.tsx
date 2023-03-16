@@ -102,9 +102,7 @@ const TestPage: React.FunctionComponent<TestPageProps> = () => {
 		defaultValues,
 	});
 
-	const handleOnSubmit = async (data: TestFormSubmit) => {
-		console.log(data);
-	};
+	const handleOnSubmit = async (data: TestFormSubmit) => {};
 
 	return (
 		<div className="flex flex-col w-full h-full min-h-screen p-10 bg-indigo-200">
