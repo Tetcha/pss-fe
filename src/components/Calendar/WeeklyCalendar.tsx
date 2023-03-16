@@ -36,6 +36,14 @@ const columns: ColumnsType<TableType> = [
 		),
 	},
 	{
+		title: 'Sun',
+		dataIndex: 'Sun',
+		key: 'Sun',
+		render: (index, record) => {
+			return record.weekdays.Sun;
+		},
+	},
+	{
 		title: 'Mon',
 		dataIndex: 'Mon',
 		key: 'Mon',
@@ -81,14 +89,6 @@ const columns: ColumnsType<TableType> = [
 		key: 'Sat',
 		render: (_, record) => {
 			return record.weekdays.Sat;
-		},
-	},
-	{
-		title: 'Sun',
-		dataIndex: 'Sun',
-		key: 'Sun',
-		render: (index, record) => {
-			return record.weekdays.Sun;
 		},
 	},
 ];
@@ -153,13 +153,13 @@ const WeeklyCalendar = <T,>({
 		const tableData = slots.map((slot: SlotType) => {
 			const { id: slotId, name: slotName, hour } = slot;
 			const weekdays: WeekDays = {
+				Sun: null,
 				Mon: null,
 				Tue: null,
 				Wed: null,
 				Thu: null,
 				Fri: null,
 				Sat: null,
-				Sun: null,
 			};
 
 			for (let i = 0; i < 7; i++) {
@@ -189,6 +189,11 @@ const WeeklyCalendar = <T,>({
 
 			const columnsFormatWeekday = columns.map((column) => {
 				switch (column.title) {
+					case 'Sun':
+						return {
+							...column,
+							title: moment().week(week).weekday(0).format('ddd: DD/MM'),
+						};
 					case 'Mon':
 						return {
 							...column,
@@ -219,11 +224,7 @@ const WeeklyCalendar = <T,>({
 							...column,
 							title: moment().week(week).weekday(6).format('ddd: DD/MM'),
 						};
-					case 'Sun':
-						return {
-							...column,
-							title: moment().week(week).weekday(7).format('ddd: DD/MM'),
-						};
+
 					default:
 						return column;
 				}

@@ -20,8 +20,8 @@ const DoctorWeekCalendar: React.FunctionComponent<DoctorWeekCalendarProps> = () 
 	const queryAvailableSlots = useQuery<AvailableSlot[]>(
 		['availableSlots', id, currentWeek],
 		async () => {
-			const firstDayOfWeek = currentWeek.clone().startOf('week').add(1, 'day').format('YYYY-MM-DD');
-			const lastDayOfWeek = currentWeek.clone().endOf('week').add(1, 'day').format('YYYY-MM-DD');
+			const firstDayOfWeek = currentWeek.clone().startOf('week').format('YYYY-MM-DD');
+			const lastDayOfWeek = currentWeek.clone().endOf('week').format('YYYY-MM-DD');
 
 			const { data } = await getDoctorSlots({
 				id,
