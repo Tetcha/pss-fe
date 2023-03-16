@@ -9,6 +9,7 @@ import { useStoreDoctor } from 'src/store';
 import MultiSlotEditModal from 'src/components/Modals/MultiSlotEditModal';
 import { useModalContext } from 'src/contexts/ModalContext';
 import SlotEditModal from 'src/components/Modals/SlotEditModal';
+import { BookingSlotStatus } from 'src/models/booking';
 
 interface DoctorWeekCalendarProps {}
 
@@ -117,14 +118,22 @@ const DoctorWeekCalendar: React.FunctionComponent<DoctorWeekCalendarProps> = () 
 							currentWeek={currentWeek.week()}
 							onDisplayEvent={(event) => (
 								<>
-									{event?.booking[0]?.status === 'ACCEPTED' ? (
+									{event?.booking[0]?.status === BookingSlotStatus.ACCEPTED ? (
 										<Button className="w-full h-auto font-medium text-gray-700 whitespace-normal bg-green-300 border-none rounded-md hover:bg-green-500 hover:text-white">
 											Booked
 										</Button>
 									) : (
-										<Button className="w-full h-auto font-medium text-gray-700 whitespace-normal bg-blue-300 border-none rounded-md hover:bg-blue-500 hover:text-white">
-											Available slot
-										</Button>
+										<>
+											{moment(event.date).isBefore(moment(), 'day') ? (
+												<Button className="w-full h-auto font-medium text-gray-700 whitespace-normal bg-red-300 border-none rounded-md hover:bg-red-500 hover:text-white">
+													Expired
+												</Button>
+											) : (
+												<Button className="w-full h-auto font-medium text-gray-700 whitespace-normal bg-blue-300 border-none rounded-md hover:bg-blue-500 hover:text-white">
+													Available slot
+												</Button>
+											)}
+										</>
 									)}
 								</>
 							)}
