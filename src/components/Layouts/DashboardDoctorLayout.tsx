@@ -28,16 +28,7 @@ const menuLinks = [
 	{
 		label: 'Slots',
 		icon: <CalendarOutlined />,
-		children: [
-			{
-				key: ROUTES_URL.DOCTOR_SLOTS_CALENDAR,
-				label: 'Calendar',
-			},
-			{
-				key: ROUTES_URL.DOCTOR_SLOTS_WEEK_CALENDAR,
-				label: 'Week Calendar',
-			},
-		],
+		key: ROUTES_URL.DOCTOR_SLOTS_WEEK_CALENDAR,
 	},
 
 	{

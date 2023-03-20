@@ -4,6 +4,7 @@ export const ROUTES_URL = Object.freeze({
 
 	// Auth
 	STUDENT_LOGIN: '/student/auth/login',
+	STUDENT_BALANCE: '/student/balance',
 	REGISTER: '/register',
 	ADMIN_LOGIN: '/admin/auth/login',
 	DOCTOR_LOGIN: '/doctor/auth/login',

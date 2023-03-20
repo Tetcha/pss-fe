@@ -48,10 +48,10 @@ export const Navigation: React.FunctionComponent<NavigationProps> = () => {
 							href={ROUTES_URL.STUDENT_LOGIN}
 							className="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800 bg-blue-500"
 						>
-							Book Appointment
+							Login
 						</Link>
 					) : (
-						// <div className="flex justify-center items-center gap-4">
+						// <div className="flex items-center justify-center gap-4">
 						// 	<Link
 						// 		href={ROUTES_URL.HOME}
 						// 		onClick={handleLogout}
@@ -61,17 +61,17 @@ export const Navigation: React.FunctionComponent<NavigationProps> = () => {
 						// 	</Link>
 						// </div>
 						<>
-							<h1 className="text-gray-800 font-bold text-base leading-8 my-1 ml-1">{name}</h1>
+							<h1 className="my-1 ml-1 text-base font-bold leading-8 text-gray-800">{name}</h1>
 							<Menu as="div" className="relative">
 								<Menu.Button
 									className={
 										'flex justify-center items-center gap-2 cursor-pointer border-none rounded-md'
 									}
 								>
-									<div className="flex rounded-full text-sm">
+									<div className="flex text-sm rounded-full">
 										<span className="sr-only">Open user menu</span>
 										<LazyLoadImage
-											className="h-8 w-8 rounded-full"
+											className="w-8 h-8 rounded-full"
 											src={
 												avatar
 													? avatar
@@ -90,7 +90,7 @@ export const Navigation: React.FunctionComponent<NavigationProps> = () => {
 									leaveFrom="transform opacity-100 scale-100"
 									leaveTo="transform opacity-0 scale-95"
 								>
-									<Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+									<Menu.Items className="absolute right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
 										<Menu.Item>
 											{({ active }) => (
 												<Link
@@ -100,6 +100,18 @@ export const Navigation: React.FunctionComponent<NavigationProps> = () => {
 													} block px-4 py-2 text-sm text-gray-700`}
 												>
 													Your Profile
+												</Link>
+											)}
+										</Menu.Item>
+										<Menu.Item>
+											{({ active }) => (
+												<Link
+													href={ROUTES_URL.STUDENT_BALANCE}
+													className={`${
+														active ? 'bg-gray-100' : ''
+													} block px-4 py-2 text-sm text-gray-700`}
+												>
+													Balance
 												</Link>
 											)}
 										</Menu.Item>

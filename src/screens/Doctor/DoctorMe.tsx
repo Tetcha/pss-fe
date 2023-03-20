@@ -76,7 +76,7 @@ const DoctorMe: React.FunctionComponent<DoctorMeProps> = () => {
 	return (
 		<>
 			<div className="w-full mx-auto loopple-min-height-10vh text-slate-500">
-				<div className="relative flex flex-col flex-auto min-w-0 p-4 overflow-hidden break-words border-0 shadow-blur rounded-2xl bg-white/80 bg-clip-border mb-4">
+				<div className="relative flex flex-col flex-auto min-w-0 p-4 mb-4 overflow-hidden break-words border-0 shadow-blur rounded-2xl bg-white/80 bg-clip-border">
 					<div className="flex flex-wrap -mx-3">
 						<div className="flex-none w-auto max-w-full px-3">
 							<div className="text-size-base ease-soft-in-out h-18.5 w-18.5 relative inline-flex items-center justify-center rounded-xl text-white transition-all duration-200 h-[100px] object-cover w-[100px]">
@@ -91,9 +91,9 @@ const DoctorMe: React.FunctionComponent<DoctorMeProps> = () => {
 							</div>
 						</div>
 						<div className="flex-none w-auto max-w-full px-3 my-auto">
-							<div className="h-full flex flex-col gap-1">
+							<div className="flex flex-col h-full gap-1">
 								<h5 className="mb-1 text-xl uppercase">{username}</h5>
-								<p className="mb-0 font-semibold leading-normal text-base">
+								<p className="mb-0 text-base font-semibold leading-normal">
 									{briefInfo ? briefInfo : 'Chuyên gia tư vấn tâm lý '}
 								</p>
 							</div>
@@ -101,9 +101,9 @@ const DoctorMe: React.FunctionComponent<DoctorMeProps> = () => {
 						<div className="w-full max-w-full px-3 mx-auto mt-4 sm:my-auto sm:mr-0 md:w-1/2 md:flex-none lg:w-4/12" />
 					</div>
 				</div>
-				<div className="w-full mt-6 mx-auto removable">
+				<div className="w-full mx-auto mt-6 removable">
 					<div className="flex flex-wrap -mx-3">
-						<div className="w-full max-w-full px-3 lg-max:mt-6 xl:w-4/12 mb-4">
+						<div className="w-full max-w-full px-3 mb-4 lg-max:mt-6 xl:w-4/12">
 							<div className="relative flex flex-col h-full min-w-0 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
 								<div className="p-4 pb-0 mb-0 bg-white border-b-0 rounded-t-2xl">
 									<div className="flex flex-wrap -mx-3">
@@ -119,7 +119,7 @@ const DoctorMe: React.FunctionComponent<DoctorMeProps> = () => {
 											</a>
 											<div
 												data-target="tooltip"
-												className="px-2 py-1 text-center text-white bg-black rounded-lg text-size-sm hidden"
+												className="hidden px-2 py-1 text-center text-white bg-black rounded-lg text-size-sm"
 												role="tooltip"
 												data-popper-placement="top"
 												style={{
@@ -169,10 +169,10 @@ const DoctorMe: React.FunctionComponent<DoctorMeProps> = () => {
 											<strong className="text-slate-700">Balance:</strong> &nbsp;
 											{balance.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}
 										</li>
-										<div className="flex items-center justify-end space-x-4 mt-2">
+										<div className="flex items-center justify-end mt-2 space-x-4">
 											<Link
 												href={ROUTES_URL.DOCTOR_UPDATE}
-												className="flex items-center bg-blue-600 hover:bg-blue-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100 cursor-pointer border-none"
+												className="flex items-center px-4 py-2 space-x-2 text-sm text-gray-100 transition duration-100 bg-blue-600 border-none rounded cursor-pointer hover:bg-blue-700"
 												type="button"
 											>
 												<EditOutlined type="icon" style={{ fontSize: '16px', color: '#fff' }} />
@@ -183,8 +183,8 @@ const DoctorMe: React.FunctionComponent<DoctorMeProps> = () => {
 								</div>
 							</div>
 						</div>
-						<div className="w-full max-w-full px-3 lg-max:mt-6 xl:w-4/12 mb-4">
-							<div className="relative flex flex-col h-full min-w-0 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border p-4 gap-4">
+						<div className="w-full max-w-full px-3 mb-4 lg-max:mt-6 xl:w-4/12">
+							<div className="relative flex flex-col h-full min-w-0 gap-4 p-4 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
 								<div className="bg-white border-b-0 rounded-t-2xl">
 									<h6 className="mb-0 text-xl font-bold">Skills</h6>
 								</div>
@@ -200,8 +200,8 @@ const DoctorMe: React.FunctionComponent<DoctorMeProps> = () => {
 								</Space>
 							</div>
 						</div>
-						<div className="w-full max-w-full px-3 lg-max:mt-6 xl:w-4/12 mb-4">
-							<div className="relative flex flex-col h-full min-w-0 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border p-4 gap-4">
+						<div className="w-full max-w-full px-3 mb-4 lg-max:mt-6 xl:w-4/12">
+							<div className="relative flex flex-col h-full min-w-0 gap-4 p-4 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
 								<div className="bg-white border-b-0 rounded-t-2xl">
 									<h6 className="mb-0 text-xl font-bold">Skills</h6>
 								</div>

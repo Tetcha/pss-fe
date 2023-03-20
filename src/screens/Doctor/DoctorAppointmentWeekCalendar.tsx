@@ -12,6 +12,7 @@ import { BookingListFilter } from 'src/interface/booking';
 import { SortOrder } from 'src/contexts/TableUtilContext';
 import { Booking, BookingSlotStatus } from 'src/models/booking';
 import { ENV_VARIABLES } from 'src/constants/env';
+import clsx from 'clsx';
 
 interface DoctorAppointmentWeekCalendarProps {}
 
@@ -87,6 +88,21 @@ const DoctorAppointmentWeekCalendar: React.FunctionComponent<
 		data: item,
 	}));
 
+	const compareTime = (hour: string, date: string) => {
+		const current = moment().format('YYYY-MM-DD hh:mm:ss A');
+		const slot = moment(`${date} ${hour}`, 'YYYY-MM-DD hh:mm:ss A').format('YYYY-MM-DD hh:mm:ss A');
+
+		if (moment(slot).isBefore(current)) {
+			return 'Completed';
+		}
+
+		if (moment(slot).isSame(current, 'hour')) {
+			return 'Join room';
+		}
+
+		return 'Not in time';
+	};
+
 	return (
 		<>
 			<div className="py-4 md:flex md:items-center md:justify-between">
@@ -102,15 +118,28 @@ const DoctorAppointmentWeekCalendar: React.FunctionComponent<
 							events={events}
 							slots={slots}
 							onCompare={(event, slot) => event.slotId === slot.id}
-							currentWeek={currentWeek.isoWeek()}
+							currentWeek={currentWeek.week()}
 							onDisplayEvent={(event) => (
 								<>
-									<Button
-										className="w-full h-auto font-medium text-gray-700 whitespace-normal bg-blue-300 border-none rounded-md hover:bg-blue-500 hover:text-white"
-										href={`${ENV_VARIABLES.CALL_URL}/room/${event.id}/doctor?token=${token}`}
-									>
-										Join
-									</Button>
+									{event.slot.date && (
+										<Button
+											disabled={!(compareTime(event.slot.endTime, event.slot.date) === 'Join room')}
+											className={clsx(
+												'w-full h-auto font-medium text-gray-700 whitespace-normal border-none rounded-md hover:text-white',
+												{
+													'bg-blue-300':
+														compareTime(event.slot.endTime, event.slot.date) === 'Completed',
+													'bg-green-300':
+														compareTime(event.slot.endTime, event.slot.date) === 'Join room',
+													'bg-red-300':
+														compareTime(event.slot.endTime, event.slot.date) === 'Not in time',
+												},
+											)}
+											href={`${ENV_VARIABLES.CALL_URL}/room/${event.id}/doctor?token=${token}`}
+										>
+											{compareTime(event.slot.endTime, event.slot.date)}
+										</Button>
+									)}
 								</>
 							)}
 						/>

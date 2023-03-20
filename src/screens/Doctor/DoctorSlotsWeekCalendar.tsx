@@ -84,6 +84,18 @@ const DoctorWeekCalendar: React.FunctionComponent<DoctorWeekCalendarProps> = () 
 		queryAvailableSlots.refetch();
 	}, [modal['slotEdit'], modal['multiSlotEdit']]);
 
+	const compareTime = (hour: string, date: string) => {
+		// hour = 02:00:00 AM
+		// date = 2021-08-01
+
+		console.log('Current:', moment().format('YYYY-MM-DD hh:mm:ss A'));
+
+		const current = moment().format('YYYY-MM-DD hh:mm:ss A');
+		const slot = moment(`${date} ${hour}`, 'YYYY-MM-DD hh:mm:ss A').format('YYYY-MM-DD hh:mm:ss A');
+
+		return moment(slot).isBefore(current);
+	};
+
 	return (
 		<>
 			<div className="py-4 md:flex md:items-center md:justify-between">
@@ -124,7 +136,8 @@ const DoctorWeekCalendar: React.FunctionComponent<DoctorWeekCalendarProps> = () 
 										</Button>
 									) : (
 										<>
-											{moment(event.date).isBefore(moment(), 'day') ? (
+											{moment(event.date).isBefore(moment(), 'day') ||
+											compareTime(event.endTime, event.date) ? (
 												<Button className="w-full h-auto font-medium text-gray-700 whitespace-normal bg-red-300 border-none rounded-md hover:bg-red-500 hover:text-white">
 													Expired
 												</Button>
