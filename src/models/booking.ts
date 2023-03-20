@@ -17,11 +17,13 @@ export enum BookingSlotStatus {
 
 export interface SlotHistory extends Pick<Slot, 'startTime' | 'endTime'> {
 	doctor: Doctor;
-	date: Moment;
+	date: string;
 }
 
 export interface BookingHistory extends Pick<Booking, 'id' | 'status'> {
 	cost: number;
 	slot: SlotHistory;
 	student: Student;
+	createAt: string;
+	status: BookingSlotStatus;
 }

@@ -44,6 +44,10 @@ const StatusTag: React.FunctionComponent<StatusTagProps> = ({ value, icon, class
 				return 'error';
 			case 'CURRENT':
 				return 'success';
+			case 'UP COMING':
+				return 'warning';
+			case 'COMPLETED':
+				return 'processing';
 			default:
 				return 'default';
 		}

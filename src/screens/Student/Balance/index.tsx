@@ -30,7 +30,7 @@ const StudentBalance: React.FunctionComponent<StudentBalanceProps> = () => {
 
 		console.log(amount);
 		http
-			.post('/transaction', { amount, redirectUrl: ENV_VARIABLES.ORIGIN_URL + '/student/balance' })
+			.post('/transaction', { amount, redirectUrl: window.location.href })
 			.then((res) => {
 				window.open(res.data);
 			})
